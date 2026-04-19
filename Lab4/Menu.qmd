@@ -1,0 +1,191 @@
+---
+execute:               # Default settings for code blocks
+  warning: false       # Do not print warnings
+  message: false       # Do not print messages
+  size: "scriptsize"   # Set code size to script size
+
+format:
+  pdf:        # Specify .pdf formatting options 
+    documentclass: article     # Document Class
+    number-sections: true      # Number Sections
+    reference-section-title: "References" # Title for reference section
+    code-line-numbers: true    # Line numbers printed in code
+    cap-location: top          # Captions at the top of tables 
+    geometry:
+      - top=0.75in
+      - left=0.75in
+      - bottom=0.75in
+      - right=0.75in
+format-links: [pdf]
+---
+```{r}
+#| echo: false
+
+default_chunk_hook  <- knitr::knit_hooks$get("chunk")
+
+latex_font_size <- c("Huge", "huge", "LARGE", "Large", 
+                     "large", "normalsize", "small", 
+                     "footnotesize", "scriptsize", "tiny")
+
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- default_chunk_hook(x, options)
+  if(options$size %in% latex_font_size) {
+    paste0("\n \\", options$size, "\n\n", 
+      x, 
+      "\n\n \\normalsize"
+    )
+  } else {
+    x
+  }
+})
+
+```
+
+```{r}
+#| label: load-packages
+#| include: false
+library(tidyverse)
+```
+
+<!-- Code For Building Menu Here -->
+```{r}
+#| echo: false
+#| results: asis
+
+breakfasts <- c("website/BerryMelonSmoothie.html",
+                "website/BiscuitsAndGravy.html",
+                "website/BreakfastCheesecake.html",
+                "website/BreakfastMuffins.html",
+                "website/ChiaParfait.html",
+                "website/GardenTomatoQuiche.html",
+                "website/OvernightOats.html",
+                "website/PumpkinToast.html",
+                "website/TropicalSmoothie.html")
+dinner <- c("website/AfricanPeanutSoup.html",
+            "website/Alfredo.html",
+            "website/ArugulaPasta.html",
+            "website/AutumnGrainBowl.html",
+            "website/BakedZiti.html",
+            "website/BBQChili.html",
+            "website/Bibimbap.html",
+            "website/BLTSalad.html",
+            "website/Burgers.html",
+            "website/CapreseSandwiches.html",
+            "website/EggplantParmesan.html",
+            "website/Enchiladas.html",
+            "website/FloridaRolls.html",
+            "website/KimchiGrilledCheese.html",
+            "website/Lasagna.html",
+            "website/LatinBowl.html",
+            "website/Meatloaf.html",
+            "website/PadThai.html",
+            "website/PastaAndPeas.html",
+            "website/Pizza.html",
+            "website/RedWineRagu.html",
+            "website/SalmonChowder.html",
+            "website/Shakshuka.html")
+
+# SOLUTION
+#(apologies for the sloppy code, as you mentioned, sometimes we shoot ourselves in the foot and don't realize until we've already bled out)
+
+
+library("rvest")
+
+counter = 1 # used to make recipe numbers dynamic in headers
+grocery.list = c() #initialize a grocery list vector containing the ingredients
+
+
+# randomly select our meals and store them all in one vector:
+selected.dinners = sample(dinner, 3)
+selected.breakfast = sample(breakfasts, 1)
+
+all.meals = c(selected.dinners, selected.breakfast)
+
+# Make grocery list before doing anythibg else
+for(file in all.meals){
+
+  recipe.item = read_html(file)
+  ingredients.section = html_element(recipe.item,"#ingredients")
+  ingredients = html_elements(ingredients.section,"li")
+
+  # add ingredients to grocery list
+  grocery.list = c(grocery.list, html_text(ingredients))
+
+  counter = counter + 1
+}
+
+# Print groceyr list
+cat("# Grocery List")
+cat("\n\n")
+
+formatted_list = paste("-", grocery.list) 
+cat(formatted_list, sep = "\n") 
+
+cat("\n\n\\newpage\n\n")
+
+counter = 1 # reinitialize counter 
+for(file in all.meals){
+  if(counter==length(all.meals)){
+    cat("## Breakfast Recipe")
+  }else{
+    cat(paste("## Dinner Recipe", counter))}
+
+
+  cat("\n")
+  cat("\n")
+  cat("\n")
+
+  recipe.item = read_html(file) # read the recipe in
+  
+  # get image
+  image.element = html_element(recipe.item,".img-fluid")
+  (src = html_attr(image.element, "src"))
+  (image.url = paste("website/",src, sep = ""))
+
+  # get ingredients
+  ingredients.section = html_element(recipe.item,"#ingredients")
+  ingredients = html_elements(ingredients.section,"li")
+
+  # get instructions
+  instructions.section = html_element(recipe.item,"#instructions")
+  instructions = html_elements(instructions.section,"li")
+  
+  # Image 
+  recipe.title <- recipe.item |> html_element("h1") |> html_text()
+  cat(paste('![', recipe.title, '](', image.url, "){width=50%}", sep="")) 
+
+  cat("\n")
+  cat("\n")
+  cat("\n")
+
+  # Ingredients
+  formatted_list <- paste("-", html_text(ingredients))
+  cat(formatted_list, sep = "\n")
+
+  cat("\n")
+  cat("\n")
+  cat("\n")
+
+  # Instructions
+  formatted_list <- paste("1.", html_text(instructions))
+  cat(formatted_list, sep = "\n")
+  
+  cat("\n")
+  cat("\n")
+  cat("\n")
+
+  cat("\\newpage")
+
+  cat("\n")
+  cat("\n")
+  cat("\n")
+
+  counter = counter+1
+
+
+
+}
+
+
+
+```
