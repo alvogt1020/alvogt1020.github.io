@@ -1,0 +1,767 @@
+---
+title: Lab Eleven -- Point Estimation and Resampling # Title of the document
+
+# Bibliography Details
+bibliography: Lab11References.bib  # Name of bib file in the same folder 
+bibliographystyle: apa            # Bibliography style
+
+execute:               # Default settings for code blocks
+  warning: false       # Do not print warnings
+  message: false       # Do not print messages
+  size: "scriptsize"   # Set code size to script size
+
+# Below will do html by default. To render the entire project
+# Use the following code:
+# quarto::quarto_render("Lab10WriteUp.qmd")
+format:
+  pdf:        # Specify .pdf formatting options 
+    documentclass: article     # Document Class
+    number-sections: true      # Number Sections
+    reference-section-title: "References" # Title for reference section
+    code-line-numbers: true    # Line numbers printed in code
+    cap-location: top          # Captions at the top of tables 
+    geometry:
+      - top=0.75in
+      - left=0.75in
+      - bottom=0.75in
+      - right=0.75in
+  html:       # Specify HTML formatting options 
+    number-sections: true      # Number Sections
+    code-fold: true            # Button to show code
+    code-line-numbers: true    # Line numbers printed in code
+    cap-location: top          # Captions at the top of tables and figures
+format-links: [pdf]
+---
+```{r}
+#| echo: false
+
+default_chunk_hook  <- knitr::knit_hooks$get("chunk")
+
+latex_font_size <- c("Huge", "huge", "LARGE", "Large", 
+                     "large", "normalsize", "small", 
+                     "footnotesize", "scriptsize", "tiny")
+
+knitr::knit_hooks$set(chunk = function(x, options) {
+  x <- default_chunk_hook(x, options)
+  if(options$size %in% latex_font_size) {
+    paste0("\n \\", options$size, "\n\n", 
+      x, 
+      "\n\n \\normalsize"
+    )
+  } else {
+    x
+  }
+})
+```
+
+```{r}
+#| label: load-packages
+#| include: false
+library(tidyverse)
+library(patchwork)
+library(knitr)
+```
+
+**Tips**
+
+* Complete the tasks below. Make sure to start your solutions in on a new line that starts with "**Solution**:".
+* Make sure to use the Quarto Cheatsheet. This will make completing and writing up the lab *much* easier.
+* Make sure to use "enter" to make your code readable, so it doesn't run off the page. I switched the Quarto document to automatically render to .pdf, so you can see what you're submitting by default. You can switch back for the highlighting by moving the html block above the pdf block in the YAML header.
+* Don't forget that you can copy-and-paste code when you're doing something similar as we did in class!
+* Make sure to plot all computed probabilities. This is good `ggplot` practice AND will help make sure you don't make a mistake when computing the probability.
+
+
+# Introduction
+When performing point estimation, there isn't just one *right* answer. For example, the Method of Moments (MOM) and Maximum Likelihood Estimates (MLEs) aren't always the same.
+
+One question that comes up, is why we calculate the sample variance as
+$$S_{n-1}^2 = \frac{1}{n-1} \sum_{i=1}^n (X_i -\bar{X})^2,$$
+when it is supposed to be the ``average squared distance from the mean, i.e., 
+$$S_n^2 = \frac{1}{n} \sum_{i=1}^n (X_i -\bar{X})^2.$$
+
+
+# Comparing Estimators
+
+## Initial Simulation
+In this lab, we will explore why we use $S_{n-1}^2$ and not $S_n^2$. To do this, we will generate data from four known distributions:
+
+* Poisson$(\lambda=2)$
+* Binomial$\left(n=50, p=\frac{5-\sqrt{21}}{10}\right)$
+* Normal$(\mu=0, \sigma=\sqrt{2})$
+* Exponential$\left(\lambda = \frac{1}{\sqrt{2}}\right).$
+
+**Remark**: Note that I have selected the parameters so that the true variance for all four models is 2.
+
+For each distribution, write a loop that completes the following 1000 times. Put `set.seed(7272)` at the top of your code chunk.
+
+* Generate a sample of size $n$ from the distribution.
+* Calculate and save $S_{n-1}^2$ and $S_n^2.$
+
+Start with $n=20$. Is there evidence that $S_{n-1}^2$ is a better estimator than $S_n^2$?
+
+Create a plot or combination of plots (using patchwork) to show the results across all four distributions. Make sure to create a corresponding table that numerically summarizes the results of the simulation. You should include
+\begin{align*}
+\textrm{Bias} &= \textrm{Average of Estimates} - \textrm{True Value}\\
+\textrm{Precision} &= \frac{1}{\textrm{Variance of Estimates}}\\
+\textrm{Mean Square Error} &= \textrm{Bias}^2 + \textrm{Variance of Estimates}.
+\end{align*}
+
+**Solution:**  
+*Poisson:*
+```{r}
+set.seed(7272)
+
+var.n1 = NA #initialized vector for S_{n-1}^2
+var.n = NA #initialized vector for S_{n}^2
+n = 20
+var.true = 2
+
+for(i in 1:1000){
+  x = rpois(n = n, lambda = 2)
+  mean.val = sum(x) / n
+  sqr.dev = (x-mean.val)^2
+  
+  var.n1[i] = sum(sqr.dev) / (n-1)
+  var.n[i] = sum(sqr.dev) / n
+}
+
+# Compare estimators
+bias.n1 = mean(var.n1 - var.true)
+bias.n = mean(var.n - var.true)
+
+precision.n1 = 1/var(var.n1)
+precision.n = 1/var(var.n)
+
+mse.n1 = bias.n1^2 + var(var.n1)
+mse.n = bias.n^2 + var(var.n)
+
+# Create numerical table
+poisson.comparison = tibble(
+  Estimator = c("Variance (n-1)", "Variance (n)"),
+  Bias = c(bias.n1, bias.n),
+  Precision = c(precision.n1,precision.n),
+  MSE = c(mse.n1, mse.n)
+)
+
+poisson.comparison |>
+  knitr::kable(digits = 2, caption = "Poisson Variance Estimator Comparison")
+
+# Create Plots
+ggdat = tibble(
+  value = c(var.n1, var.n),
+  estimator = rep(c("Variance (n-1)", "Variance (n)"), each = 1000)
+)
+
+ggdat |> ggplot() +
+  geom_density(aes(x=value, color=estimator))+
+  geom_vline(xintercept = var.true, col = "red") +
+  geom_hline(yintercept = 0) +
+  theme_bw() +
+  labs(x = "Variance Estimate", 
+       y = "Density",
+       color = "Estimator") +
+  ggtitle("Distribution of Variance Estimators\n(Poisson, Lambda=2)")
+```
+
+
+*Binomial:*
+```{r}
+set.seed(7272)
+
+var.n1 = NA #initialized vector for S_{n-1}^2
+var.n = NA #initialized vector for S_{n}^2
+n = 20
+var.true = 2
+
+for(i in 1:1000){
+  x = rbinom(n,50,(5-sqrt(21))/10)
+  mean.val = sum(x) / n
+  sqr.dev = (x-mean.val)^2
+  
+  var.n1[i] = sum(sqr.dev) / (n-1)
+  var.n[i] = sum(sqr.dev) / n
+}
+
+# Compare estimators
+bias.n1 = mean(var.n1 - var.true)
+bias.n = mean(var.n - var.true)
+
+precision.n1 = 1/var(var.n1)
+precision.n = 1/var(var.n)
+
+mse.n1 = bias.n1^2 + var(var.n1)
+mse.n = bias.n^2 + var(var.n)
+
+# Create numerical table
+binom.comparison = tibble(
+  Estimator = c("Variance (n-1)", "Variance (n)"),
+  Bias = c(bias.n1, bias.n),
+  Precision = c(precision.n1,precision.n),
+  MSE = c(mse.n1, mse.n)
+)
+
+binom.comparison |>
+  knitr::kable(digits = 2, caption = "Binomial Variance Estimator Comparison")
+
+# Create Plots
+ggdat = tibble(
+  value = c(var.n1, var.n),
+  estimator = rep(c("Variance (n-1)", "Variance (n)"), each = 1000)
+)
+
+ggdat |> ggplot() +
+  geom_density(aes(x=value, color=estimator))+
+  geom_vline(xintercept = var.true, col = "red") +
+  geom_hline(yintercept = 0) +
+  theme_bw() +
+  labs(x = "Variance Estimate", 
+       y = "Density",
+       color = "Estimator") +
+  ggtitle("Distribution of Variance Estimators\n(Binomial, n=50, p=(5-sqrt(21))/10)")
+```
+
+*Normal:*
+```{r}
+set.seed(7272)
+
+var.n1 = NA #initialized vector for S_{n-1}^2
+var.n = NA #initialized vector for S_{n}^2
+n = 20
+var.true = 2
+
+for(i in 1:1000){
+  x = rnorm(n,0,sqrt(2))
+  mean.val = sum(x) / n
+  sqr.dev = (x-mean.val)^2
+  
+  var.n1[i] = sum(sqr.dev) / (n-1)
+  var.n[i] = sum(sqr.dev) / n
+}
+
+# Compare estimators
+bias.n1 = mean(var.n1 - var.true)
+bias.n = mean(var.n - var.true)
+
+precision.n1 = 1/var(var.n1)
+precision.n = 1/var(var.n)
+
+mse.n1 = bias.n1^2 + var(var.n1)
+mse.n = bias.n^2 + var(var.n)
+
+# Create numerical table
+norm.comparison = tibble(
+  Estimator = c("Variance (n-1)", "Variance (n)"),
+  Bias = c(bias.n1, bias.n),
+  Precision = c(precision.n1,precision.n),
+  MSE = c(mse.n1, mse.n)
+)
+
+norm.comparison |>
+  knitr::kable(digits = 2, caption = "Normal Dist. Variance Estimator Comparison")
+
+# Create Plots
+ggdat = tibble(
+  value = c(var.n1, var.n),
+  estimator = rep(c("Variance (n-1)", "Variance (n)"), each = 1000)
+)
+
+ggdat |> ggplot() +
+  geom_density(aes(x=value, color=estimator))+
+  geom_vline(xintercept = var.true, col = "red") +
+  geom_hline(yintercept = 0) +
+  theme_bw() +
+  labs(x = "Variance Estimate", 
+       y = "Density",
+       color = "Estimator") +
+  ggtitle("Distribution of Variance Estimators\n(Normal, mu=0, p=sqrt(2)")
+```
+
+
+*Exponential:*
+```{r}
+set.seed(7272)
+
+var.n1 = NA #initialized vector for S_{n-1}^2
+var.n = NA #initialized vector for S_{n}^2
+n = 20
+var.true = 2
+
+for(i in 1:1000){
+  x = rexp(n,rate=1/sqrt(2))
+  mean.val = sum(x) / n
+  sqr.dev = (x-mean.val)^2
+  
+  var.n1[i] = sum(sqr.dev) / (n-1)
+  var.n[i] = sum(sqr.dev) / n
+}
+
+# Compare estimators
+bias.n1 = mean(var.n1 - var.true)
+bias.n = mean(var.n - var.true)
+
+precision.n1 = 1/var(var.n1)
+precision.n = 1/var(var.n)
+
+mse.n1 = bias.n1^2 + var(var.n1)
+mse.n = bias.n^2 + var(var.n)
+
+# Create numerical table
+exp.comparison = tibble(
+  Estimator = c("Variance (n-1)", "Variance (n)"),
+  Bias = c(bias.n1, bias.n),
+  Precision = c(precision.n1,precision.n),
+  MSE = c(mse.n1, mse.n)
+)
+
+exp.comparison |>
+  knitr::kable(digits = 2, caption = "Exp. Distr. Variance Estimator Comparison")
+
+# Create Plots
+ggdat = tibble(
+  value = c(var.n1, var.n),
+  estimator = rep(c("Variance (n-1)", "Variance (n)"), each = 1000)
+)
+
+ggdat |> ggplot() +
+  geom_density(aes(x=value, color=estimator))+
+  geom_vline(xintercept = var.true, col = "red") +
+  geom_hline(yintercept = 0) +
+  theme_bw() +
+  labs(x = "Variance Estimate", 
+       y = "Density",
+       color = "Estimator") +
+  ggtitle("Distribution of Variance Estimators\n(Exponential, lambda = 1/sqrt(2)")
+```
+
+
+## Simulation over various sample sizes
+Consider the effect of the sample size have on these results. Provide a graphical and numerical summary of what happens as $n$ increases -- say $n=20$, $n=50$, $n=100$, and $n=500$. Does the result in your initial simulation hold across samples? Or, do things change as the sample size changes? Ensure to set your randomization seed.
+
+**Solution:**  
+Note: I used `echo=FALSE` to make my PDF easier to look at whilst working on it (I took a "brute force" approach to this section). Apologies if this is an issue.
+
+*Generalizing the previous work into a function (code hidden):* 
+```{r}
+#| echo=FALSE
+
+distr.simulator = function(n, var.true, distr.name, title.name){
+  set.seed(7272)
+
+  var.n1 = NA
+  var.n = NA
+
+  for(i in 1:1000){
+  
+  x = case_when(
+      distr.name == "poisson"  ~ rpois(n, 2),
+      distr.name == "binomial" ~ rbinom(n, 50, (5 - sqrt(21))/10),
+      distr.name == "normal"  ~ rnorm(n, 0, sqrt(2)),
+      distr.name == "exponential"   ~ rexp(n, 1/sqrt(2))
+    )
+
+  mean.val = sum(x) / n
+  sqr.dev = (x-mean.val)^2
+  
+  var.n1[i] = sum(sqr.dev) / (n-1)
+  var.n[i] = sum(sqr.dev) / n
+}
+
+bias.n1 = mean(var.n1 - var.true)
+bias.n = mean(var.n - var.true)
+
+precision.n1 = 1/var(var.n1)
+precision.n = 1/var(var.n)
+
+mse.n1 = bias.n1^2 + var(var.n1)
+mse.n = bias.n^2 + var(var.n)
+  
+comparison = tibble(
+  Estimator = c("Variance (n-1)", "Variance (n)"),
+  Bias = c(bias.n1, bias.n),
+  Precision = c(precision.n1,precision.n),
+  MSE = c(mse.n1, mse.n)
+)
+
+
+ggdat = tibble(
+  value = c(var.n1, var.n),
+  estimator = rep(c("Variance (n-1)", "Variance (n)"), each = 1000)
+)
+
+box.plot = ggdat |> ggplot(aes(x = estimator, 
+                               y = value, 
+                               fill = estimator)) +
+  geom_boxplot(alpha=0.7) +
+  geom_hline(yintercept = var.true, col = "green") +
+  theme_bw() +
+  labs(x = "Estimator",
+       y = "Variance Estimate",
+       fill = "Estimator")
+
+density.plot = ggdat |> ggplot(aes(x=value, color=estimator)) +
+  geom_density()+
+  geom_vline(xintercept = var.true, col = "red") +
+  geom_hline(yintercept = 0) +
+  theme_bw() +
+  labs(x = "Variance Estimate", 
+       y = "Density",
+       color = "Estimator") +
+  ggtitle(title.name)
+
+return(list(
+    table = comparison,
+    box.plot = box.plot,
+    density.plot = density.plot
+  ))
+
+}
+```
+
+*Running the Simulations (code hidden):*
+Apologies for the looooong brute force coding below. This was just the most intuitive way for me to generate everything!
+
+**Poisson**
+```{r}
+#| echo=FALSE
+
+pois20 = distr.simulator(20, 2, "poisson", "Poisson, n = 20")
+pois50 = distr.simulator(50, 2, "poisson", "Poisson, n = 50")
+pois100 = distr.simulator(100, 2, "poisson", "Poisson, n = 100")
+pois500 = distr.simulator(500, 2, "poisson", "Poisson, n = 500")
+
+poisson.table = tibble(
+  n = c(20, 50, 100, 500),
+  `Bias (n-1)` = c(pois20$table$Bias[1], pois50$table$Bias[1], 
+                   pois100$table$Bias[1], pois500$table$Bias[1]
+  ),
+  `Bias (n)` = c(pois20$table$Bias[2], pois50$table$Bias[2], 
+                 pois100$table$Bias[2], pois500$table$Bias[2]
+  ),               
+  `Precision (n-1)` = c(pois20$table$Precision[1], pois50$table$Precision[1], 
+                        pois100$table$Precision[1], pois500$table$Precision[1]
+  ),                      
+  `Precision (n)` = c(pois20$table$Precision[2],      
+                      pois50$table$Precision[2], 
+                      pois100$table$Precision[2], pois500$table$Precision[2]
+  ),
+  `MSE (n-1)` = c(pois20$table$MSE[1], pois50$table$MSE[1], 
+                  pois100$table$MSE[1], pois500$table$MSE[1]
+  ),                
+  `MSE (n)` = c(pois20$table$MSE[2], pois50$table$MSE[2], 
+                pois100$table$MSE[2], pois500$table$MSE[2]
+  )
+)
+
+
+poisson.table |>
+  knitr::kable(digits = 4,
+               caption = "Poisson Variance Estimators Across Sample Sizes")
+
+# Plots (didn't use patchwork because they were too small)
+pois20$box.plot
+pois50$box.plot
+pois100$box.plot
+pois500$box.plot
+```
+
+**Binomial**
+```{r}
+#| echo=FALSE
+binom20 = distr.simulator(20, 2, "binomial", "Binomial, n = 20")
+binom50 = distr.simulator(50, 2, "binomial", "Binomial, n = 50")
+binom100 = distr.simulator(100, 2, "binomial", "Binomial, n = 100")
+binom500 = distr.simulator(500, 2, "binomial", "Binomial, n = 500")
+
+binom.table = tibble(
+  n = c(20, 50, 100, 500),
+  `Bias (n-1)` = c(binom20$table$Bias[1], binom50$table$Bias[1], 
+                   binom100$table$Bias[1], binom500$table$Bias[1]
+  ),
+  `Bias (n)` = c(binom20$table$Bias[2], binom50$table$Bias[2], 
+                 binom100$table$Bias[2], binom500$table$Bias[2]
+  ),               
+  `Precision (n-1)` = c(binom20$table$Precision[1], binom50$table$Precision[1], 
+                        binom100$table$Precision[1], binom500$table$Precision[1]
+  ),                      
+  `Precision (n)` = c(binom20$table$Precision[2],      
+                      binom50$table$Precision[2], 
+                      binom100$table$Precision[2], binom500$table$Precision[2]
+  ),
+  `MSE (n-1)` = c(binom20$table$MSE[1], binom50$table$MSE[1], 
+                  binom100$table$MSE[1], binom500$table$MSE[1]
+  ),                
+  `MSE (n)` = c(binom20$table$MSE[2], binom50$table$MSE[2], 
+                binom100$table$MSE[2], binom500$table$MSE[2]
+  )
+)
+
+
+binom.table |>
+  knitr::kable(digits = 4,
+               caption = "Binomial Variance Estimators Across Sample Sizes")
+
+# Plots (didn't use patchwork because they were too small)
+binom20$box.plot
+binom50$box.plot
+binom100$box.plot
+binom500$box.plot
+```
+
+
+**Normal**
+```{r}
+#| echo=FALSE
+norm20 = distr.simulator(20, 2, "normal", "Normal, n = 20")
+norm50 = distr.simulator(50, 2, "normal", "Normal, n = 50")
+norm100 = distr.simulator(100, 2, "normal", "Normal, n = 100")
+norm500 = distr.simulator(500, 2, "normal", "Normal, n = 500")
+
+norm.table = tibble(
+  n = c(20, 50, 100, 500),
+  `Bias (n-1)` = c(norm20$table$Bias[1], norm50$table$Bias[1], 
+                   norm100$table$Bias[1], norm500$table$Bias[1]
+  ),
+  `Bias (n)` = c(norm20$table$Bias[2], norm50$table$Bias[2], 
+                 norm100$table$Bias[2], norm500$table$Bias[2]
+  ),               
+  `Precision (n-1)` = c(norm20$table$Precision[1], norm50$table$Precision[1], 
+                        norm100$table$Precision[1], norm500$table$Precision[1]
+  ),                      
+  `Precision (n)` = c(norm20$table$Precision[2],      
+                      norm50$table$Precision[2], 
+                      norm100$table$Precision[2], norm500$table$Precision[2]
+  ),
+  `MSE (n-1)` = c(norm20$table$MSE[1], norm50$table$MSE[1], 
+                  norm100$table$MSE[1], norm500$table$MSE[1]
+  ),                
+  `MSE (n)` = c(norm20$table$MSE[2], norm50$table$MSE[2], 
+                norm100$table$MSE[2], norm500$table$MSE[2]
+  )
+)
+
+
+norm.table |>
+  knitr::kable(digits = 4,
+               caption = "Normal Distribution Variance Estimators Across Sample Sizes")
+
+# Plots (didn't use patchwork because they were too small)
+norm20$box.plot
+norm50$box.plot
+norm100$box.plot
+norm500$box.plot
+```
+
+
+**Exponential**
+```{r}
+#| echo=FALSE
+exp20 = distr.simulator(20, 2, "exponential", "Exponential, n = 20")
+exp50 = distr.simulator(50, 2, "exponential", "Exponential, n = 50")
+exp100 = distr.simulator(100, 2, "exponential", "Exponential, n = 100")
+exp500 = distr.simulator(500, 2, "exponential", "Exponential, n = 500")
+
+exp.table = tibble(
+  n = c(20, 50, 100, 500),
+  `Bias (n-1)` = c(exp20$table$Bias[1], exp50$table$Bias[1], 
+                   exp100$table$Bias[1], exp500$table$Bias[1]
+  ),
+  `Bias (n)` = c(exp20$table$Bias[2], exp50$table$Bias[2], 
+                 exp100$table$Bias[2], exp500$table$Bias[2]
+  ),               
+  `Precision (n-1)` = c(exp20$table$Precision[1], exp50$table$Precision[1], 
+                        exp100$table$Precision[1], exp500$table$Precision[1]
+  ),                      
+  `Precision (n)` = c(exp20$table$Precision[2],      
+                      exp50$table$Precision[2], 
+                      exp100$table$Precision[2], exp500$table$Precision[2]
+  ),
+  `MSE (n-1)` = c(exp20$table$MSE[1], exp50$table$MSE[1], 
+                  exp100$table$MSE[1], exp500$table$MSE[1]
+  ),                
+  `MSE (n)` = c(exp20$table$MSE[2], exp50$table$MSE[2], 
+                exp100$table$MSE[2], exp500$table$MSE[2]
+  )
+)
+
+
+exp.table |>
+  knitr::kable(digits = 4,
+               caption = "Exponential Distribution Variance Estimators Across Sample Sizes")
+
+# Plots (didn't use patchwork because they were too small)
+exp20$box.plot
+exp50$box.plot
+exp100$box.plot
+exp500$box.plot
+```
+
+
+
+**Commentary:**   
+Across all four of the distributions, we find that the results change with sample size. Specifically, as $n$ grows,the two density plots for each distribution (one for each variance measure) converge, and it becomes harder to differentiate between the density plot for $s^2_{n-1}$ and the density plot for $s^2_{n}$. This phenomenon is further supported by the numerical summary tables. As n increases, we notice that bias and MSE for both $s^2_{n-1}$ and $s^2_{n}$ approach 0, while precision increases for both.
+
+## Simulation
+You have written code to draw a random sample of various sizes from each distribution, and to calculate and store the calculated estimates. Rework your code to produce a density plot of the $s_{n-1}^2$ and $s_{n}^2$. Do you have a guess about their distribution? Ensure to set your randomization seed. 
+
+```{r}
+pois20$density.plot
+pois50$density.plot
+pois100$density.plot
+pois500$density.plot
+
+binom20$density.plot
+binom50$density.plot
+binom100$density.plot
+binom500$density.plot
+
+norm20$density.plot
+norm50$density.plot
+norm100$density.plot
+norm500$density.plot
+
+
+exp20$density.plot
+exp50$density.plot
+exp100$density.plot
+exp500$density.plot
+```
+
+**Commentary**
+Density plots for the four distributions with $n=100$, we can obtain a good estimate about the distributions for $s_{n-1}^2$ and $s_{n}^2$. The first thing the density plots demonstrate is that $s_{n-1}^2$ and $s_{n}^2$ have very similar distributions (despite $s_{n}^2$ being slightly biased toward the left), though what distribution this is depends on the distribution of the model, and the sample size, $n$.   
+
+*Small n:*
+For small n, the distributions for $s_{n-1}^2$ and $s_{n}^2$ in all distributions are right-skewed.
+
+*Large n:*
+With large enough $n(=500)$, $s_{n-1}^2$ and $s_{n}^2$ for the Poisson, Binomial, Normal, and Exponential distributions, all appear to approach a symmetric distribution. However, for the Exponential distribution, $s_{n-1}^2$ and $s_{n}^2$ still appears to follow a noticeably right-skewed distribution even at $n=100$, taking a bit longer than the others to approach this symmetric shape. 
+
+The graphs also illustrate the reduced variance/improved precision as $n$ increases, with observations further from the mean becoming less likely as $n$ increases.
+
+
+## Bootstrap
+Now, take *one* sample from each distribution. Instead of drawing a random sample at each iteration, sample *with replacement* from the one sample. Produce a density plot of the $s_{n-1}^2$ and $s_{n}^2$. Do we get roughly the same information as we do in the full simulation? Try this over several seeds -- what do you notice? Ensure to set your randomization seed.
+
+**NOTE:**   
+Turn off `#|echo=FALSE` to see my clunky code.
+
+```{r}
+#| echo=FALSE
+
+distr.bootstrap = function(n, var.true, distr.name, title.name){
+
+  var.n1 = NA
+  var.n = NA
+
+ x.orig = case_when(
+      distr.name == "poisson"  ~ rpois(n, 2),
+      distr.name == "binomial" ~ rbinom(n, 50, (5 - sqrt(21))/10),
+      distr.name == "normal"  ~ rnorm(n, 0, sqrt(2)),
+      distr.name == "exponential"   ~ rexp(n, 1/sqrt(2))
+    )
+
+  for(i in 1:1000){
+  
+  x = sample(x.orig, size = n, replace = TRUE)
+
+  mean.val = sum(x) / n
+  sqr.dev = (x-mean.val)^2
+  
+  var.n1[i] = sum(sqr.dev) / (n-1)
+  var.n[i] = sum(sqr.dev) / n
+}
+
+bias.n1 = mean(var.n1 - var.true)
+bias.n = mean(var.n - var.true)
+
+precision.n1 = 1/var(var.n1)
+precision.n = 1/var(var.n)
+
+mse.n1 = bias.n1^2 + var(var.n1)
+mse.n = bias.n^2 + var(var.n)
+  
+comparison = tibble(
+  Estimator = c("Variance (n-1)", "Variance (n)"),
+  Bias = c(bias.n1, bias.n),
+  Precision = c(precision.n1,precision.n),
+  MSE = c(mse.n1, mse.n)
+)
+
+
+ggdat = tibble(
+  value = c(var.n1, var.n),
+  estimator = rep(c("Variance (n-1)", "Variance (n)"), each = 1000)
+)
+
+plot = ggdat |> ggplot() +
+  geom_density(aes(x=value, color=estimator))+
+  geom_vline(xintercept = var.true, col = "red") +
+  geom_hline(yintercept = 0) +
+  theme_bw() +
+  labs(x = "Variance Estimate", 
+       y = "Density",
+       color = "Estimator") +
+  ggtitle(title.name)
+
+return(list(
+    table = comparison,
+    plot = plot
+  ))
+}
+```
+
+```{r}
+#| echo=FALSE
+
+set.seed(2567)
+
+pois.boot = distr.bootstrap(100, 2, "poisson", "Bootstrap: Poisson, n = 100")
+binom.boot = distr.bootstrap(100, 2, "binomial", "Bootstrap: Binomial, n = 100")
+norm.boot = distr.bootstrap(100, 2, "normal", "Bootstrap: Normal, n = 100")
+exp.boot = distr.bootstrap(100, 2, "exponential", "Bootstrap: Exponential, n = 100")
+
+boot.table = tibble(
+  Distribution = c("Poisson", "Binomial", "Normal","Exponential"),
+  `Bias (n-1)` = c(pois.boot$table$Bias[1], binom.boot$table$Bias[1], 
+                   norm.boot$table$Bias[1], exp.boot$table$Bias[1]),
+  `Bias (n)` = c(pois.boot$table$Bias[2], binom.boot$table$Bias[2], 
+                   norm.boot$table$Bias[2], exp.boot$table$Bias[2]),
+  `Precision (n-1)` = c(pois.boot$table$Precision[1], binom.boot$table$Precision[1],
+                        norm.boot$table$Precision[1], exp.boot$table$Precision[1]),
+  `Precision (n)` = c(pois.boot$table$Precision[2], binom.boot$table$Precision[2],
+                        norm.boot$table$Precision[2], exp.boot$table$Precision[2]),
+  `MSE (n-1)` = c(pois.boot$table$MSE[1], binom.boot$table$MSE[1],
+                        norm.boot$table$MSE[1], exp.boot$table$MSE[1]),
+  `MSE (n)` = c(pois.boot$table$MSE[2], binom.boot$table$MSE[2],
+                        norm.boot$table$MSE[2], exp.boot$table$MSE[2])
+)
+
+boot.table |>
+  knitr::kable(digits = 4,
+               caption = "Bootstrap Variance Estimators Across Distributions")
+
+```
+
+```{r}
+pois.boot$plot
+binom.boot$plot
+norm.boot$plot
+exp.boot$plot
+```
+
+**Commentary:**
+With a moderate sample size of $n=100$, we notice that with bootstrap sampling, the distributions for our estimators exhibit more variance and are less predictable. This is especially noticeable when changing seeds. For example, for one seed (234567), we notice the estimators for the Poisson distribution are significantally more biased than the others, whereas the Exponential distribution exhibits this behavior when the seed is (2567). This demonstrates how bootstrapping is highly dependent on the particular random sample (which is what the seed establishes). Despite the increased variance and bias, the distributions still are "somewhat" close to the true value of 2 (though that description is somewhat liberal).
+
+# Executive Summary
+Summarize the work you've done here to provide a brief (200-300 word) summary of the simulation and the results using your work in Lab 11. Your summary should be professional, clear, and all claims should be corroborated with statistical support.
+
+
+**Response:**
+In the above lab, we compare two variance point estimators, $S^2_{n-1}$ and $S^2_{n}$ to identify why using the $n-1$ version is standard practice. We compare the two point estimators through three primary measures (listed in order of priority): (1) Bias, (2) Precision, and (3) Mean Squared Error (MSE). That is to say, we first would like to compare each estimator's bias: if both are unbiased, we compare the precision, if both are biased, we compare the MSE.  
+
+To obtain these values, we simulated 1,000 samples for four distributions: Poisson, Binomial, Normal, and Exponential. Each of these distributions is parameterized such that the true variance is 2, allowing for clear and consistent analysis. For each distribution, we also compared numerical and graphical summaries for multiple n values (20, 50, 100, 500).
+
+The primary findings from this approach is that, regardless of distribution, $S^2_{n}$ is consistently biased downward and $S^2_{n-1}$ is consistently unbiased. This difference is more pronounced for small $n$: as $n$ increases for each of these distributions, the biases of the two estimators converge toward 0. Note that because only $S^2_{n-1}$ is unbiased, we do not need to analyze MSE. Furthermore, precision increases for both estimators with $n$, and the distributions for both estimators improve from right-skewed for small $n$ to symmetric/approximately normal for large $n$.  
+
+After obtaining our primary results, we study if outcomes change under a bootstrapping procedure, and if so, how. The predominant result from this analysis was that bootstrap sampling produces significantly more variable estimator distributions that change wildly with the sampling seed. The bootstrap results still loosely depicted the behavior we exhibited before, but with less reliability.
+
+Overall, this exercise confirms the advantage of using $S^2_{n-1}$ over $S^2_{n}$, particularly when obtaining large samples is not feasible.
