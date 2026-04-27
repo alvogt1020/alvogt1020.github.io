@@ -120,8 +120,7 @@ The data need to be cleaned. Note that the sample type (Healthy Donor or THP-1),
 **Solution:**
 I fill in the `separate(...)` function with the appropriate arguments to break up `sample` into multiple based on the criteria given.
 ```{r}
-dat.kitsberg.cleaned = separate(
-  data = dat.kitsberg,
+dat.kitsberg.cleaned = dat.kitsberg |> separate(
   col = "sample",
   into = c("SampleType","CellType","Treatment"),
   sep = "_"
@@ -169,8 +168,7 @@ I use `View(...)` to find the appropriate observation names, and the filter func
 ```{r}
 dat.kitsberg.cleaned = dplyr::filter(
                                  dat.kitsberg.cleaned, 
-                                 CellType == "mac" | 
-                                 CellType == "mono"
+                                 CellType %in% c("mac","mono")
                                  )
 ```
 
@@ -183,16 +181,18 @@ Clean up the data entry. Replace the shorthand the researchers used with the nea
 
 I use `View(...)` to see what each observation is named so that I can use a series of `if_else` statements to rename the observations.
 
+Then, I use nested `if_else(...)` statements because `SampleType` and `CellType` have two values that need to be renamed. Take `SampleType` for example: the first `if_else(...)` checks whether the value is `"primary"` and renames it `"Healthy Donor"`. The second `if_else(...)` is needed because values that are not `"primary"` still need to be checked to see whether they are `"THP1"`, and if so renames them to  `"THP-1"`. Any values that fail to match the conditionals remain unchanged, which includes any missing/NA values.
+
 ```{r}
 dat.kitsberg.cleaned = dat.kitsberg.cleaned |> 
                       mutate(
                       SampleType = if_else(SampleType == "primary", "Healthy Donor",
-                                   if_else(SampleType == "THP1","THP-1",SampleType)),
-                      CellType   = if_else(CellType == "mono", "Monocytes",
-                                   if_else(CellType == "mac", "Macrophages", CellType)),
-                      Treatment  = if_else(Treatment == "12hpi", "12 Hours Post-Infection",
-                                   if_else(Treatment == "uninfected", "Uninfected",Treatment))
-                     )
+                                   if_else(SampleType == "THP1", "THP-1", SampleType)),
+                      CellType = if_else(CellType == "mono", "Monocytes",
+                                 if_else(CellType == "mac", "Macrophages", CellType)),
+                      Treatment = if_else(Treatment == "12hpi", "12 Hours Post-Infection",
+                                  if_else(Treatment == "uninfected", "Uninfected",Treatment))
+                      )
 ```
 
 ## Part G
