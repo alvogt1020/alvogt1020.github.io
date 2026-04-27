@@ -116,3 +116,14 @@ x = heart.dat$TIME # pull the variable of interest from the data
 
 Thus, our Method of Moments estimate is $\hat{\lambda}_{MOM} \approx .007676903.$ We interpret this directly as the estimated daily death rate (because survival time is measured in days), and can plug that value back in to our expected value formula to find the expected survival time, $$E(X) = \frac{1}{\hat{\lambda}_{MOM}} \approx 130.2609 \text{ days}.$$
 
+## Maximum Likelihood Estimation
+A more robust method for point estimation is Maximum Likelihood Estimaion. This involves finding the parameter estimate that maximizes the likelihood function, $$L(\theta \mid x) = \prod_{i=1}^n f_X(x_i \mid \theta).$$
+
+In other words, we find the parameter estimate that maximizes the probability of observing the existing data. In practice, we often maximize the log-likelihood function, allowing us to work with sums instead of products. This does not change our final estimate because of the natural log's monotonicity:
+
+$$\ell(\theta \mid x) = \ln\left(L(\theta \mid x)\right)
+= \ln\left(\prod_{i=1}^n f_X(x_i \mid \theta)\right)
+= \sum_{i=1}^n \ln\left(f_X(x_i \mid \theta)\right)$$
+
+We can solve this computationally using `R`'s `optim()` function to find the minimum of $-\ell(\theta \mid x).$
+
