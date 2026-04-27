@@ -761,15 +761,15 @@ altBBinom4.15 = (2/3)*daltbbinom(x=2,n=3,a=a,b=b,theta=1.5)
 
 
 # Plots
-df.long = tibble(
-  outcome = rep(c("0-2", "1-2", "2-0", "2-1"), 7),
-  prob = c(binom1, binom2, binom3, binom4,
-           negBinom1, negBinom2, negBinom3, negBinom4,
-           betaBinom1, betaBinom2, betaBinom3, betaBinom4,
-           altBinom1.05, altBinom2.05, altBinom3.05, altBinom4.05,
-           altBinom1.15, altBinom2.15, altBinom3.15, altBinom4.15,
-           altBBinom1.05, altBBinom2.05, altBBinom3.05, altBBinom4.05,
-           altBBinom1.15, altBBinom2.15, altBBinom3.15, altBBinom4.15),
+df = tibble(
+  outcome = rep(c("0-2", "1-2", "2-1", "2-0"), 7),
+  prob = c(binom1, binom2, binom4, binom3,
+           negBinom1, negBinom2, negBinom4, negBinom3,
+           betaBinom1, betaBinom2, betaBinom4, betaBinom3,
+           altBinom1.05, altBinom2.05, altBinom4.05, altBinom3.05,
+           altBinom1.15, altBinom2.15, altBinom4.15, altBinom3.15,
+           altBBinom1.05, altBBinom2.05, altBBinom4.05, altBBinom3.05,
+           altBBinom1.15, altBBinom2.15, altBBinom4.15, altBBinom3.15),
   model = rep(c("Binomial",
                 "Negative Binomial",
                 "Beta-Binomial",
@@ -780,12 +780,15 @@ df.long = tibble(
               each = 4)
 )
 
+df = df |>
+  mutate(outcome = factor(outcome, levels = c("0-2", "1-2", "2-1", "2-0")))
+
 # graphs
 #| label: fig-outcome-comparison
 #| fig-cap: "Comparison of match outcome probabilities across models."
 #| fig-align: center
 
-df.long |>
+df |>
   ggplot(aes(x = outcome, y = prob, fill = model)) +
   geom_col(position = "dodge") +
   theme_bw() +

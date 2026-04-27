@@ -1225,15 +1225,15 @@ Figure&nbsp;10: PMF of Altham’s multiplicative Beta-Binomial distribution for 
 <span id="cb51-9"><a href="#cb51-9"></a></span>
 <span id="cb51-10"><a href="#cb51-10"></a></span>
 <span id="cb51-11"><a href="#cb51-11"></a><span class="co"># Plots</span></span>
-<span id="cb51-12"><a href="#cb51-12"></a>df.long <span class="ot">=</span> <span class="fu">tibble</span>(</span>
-<span id="cb51-13"><a href="#cb51-13"></a>  <span class="at">outcome =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"0-2"</span>, <span class="st">"1-2"</span>, <span class="st">"2-0"</span>, <span class="st">"2-1"</span>), <span class="dv">7</span>),</span>
-<span id="cb51-14"><a href="#cb51-14"></a>  <span class="at">prob =</span> <span class="fu">c</span>(binom1, binom2, binom3, binom4,</span>
-<span id="cb51-15"><a href="#cb51-15"></a>           negBinom1, negBinom2, negBinom3, negBinom4,</span>
-<span id="cb51-16"><a href="#cb51-16"></a>           betaBinom1, betaBinom2, betaBinom3, betaBinom4,</span>
-<span id="cb51-17"><a href="#cb51-17"></a>           altBinom1<span class="fl">.05</span>, altBinom2<span class="fl">.05</span>, altBinom3<span class="fl">.05</span>, altBinom4<span class="fl">.05</span>,</span>
-<span id="cb51-18"><a href="#cb51-18"></a>           altBinom1<span class="fl">.15</span>, altBinom2<span class="fl">.15</span>, altBinom3<span class="fl">.15</span>, altBinom4<span class="fl">.15</span>,</span>
-<span id="cb51-19"><a href="#cb51-19"></a>           altBBinom1<span class="fl">.05</span>, altBBinom2<span class="fl">.05</span>, altBBinom3<span class="fl">.05</span>, altBBinom4<span class="fl">.05</span>,</span>
-<span id="cb51-20"><a href="#cb51-20"></a>           altBBinom1<span class="fl">.15</span>, altBBinom2<span class="fl">.15</span>, altBBinom3<span class="fl">.15</span>, altBBinom4<span class="fl">.15</span>),</span>
+<span id="cb51-12"><a href="#cb51-12"></a>df <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb51-13"><a href="#cb51-13"></a>  <span class="at">outcome =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"0-2"</span>, <span class="st">"1-2"</span>, <span class="st">"2-1"</span>, <span class="st">"2-0"</span>), <span class="dv">7</span>),</span>
+<span id="cb51-14"><a href="#cb51-14"></a>  <span class="at">prob =</span> <span class="fu">c</span>(binom1, binom2, binom4, binom3,</span>
+<span id="cb51-15"><a href="#cb51-15"></a>           negBinom1, negBinom2, negBinom4, negBinom3,</span>
+<span id="cb51-16"><a href="#cb51-16"></a>           betaBinom1, betaBinom2, betaBinom4, betaBinom3,</span>
+<span id="cb51-17"><a href="#cb51-17"></a>           altBinom1<span class="fl">.05</span>, altBinom2<span class="fl">.05</span>, altBinom4<span class="fl">.05</span>, altBinom3<span class="fl">.05</span>,</span>
+<span id="cb51-18"><a href="#cb51-18"></a>           altBinom1<span class="fl">.15</span>, altBinom2<span class="fl">.15</span>, altBinom4<span class="fl">.15</span>, altBinom3<span class="fl">.15</span>,</span>
+<span id="cb51-19"><a href="#cb51-19"></a>           altBBinom1<span class="fl">.05</span>, altBBinom2<span class="fl">.05</span>, altBBinom4<span class="fl">.05</span>, altBBinom3<span class="fl">.05</span>,</span>
+<span id="cb51-20"><a href="#cb51-20"></a>           altBBinom1<span class="fl">.15</span>, altBBinom2<span class="fl">.15</span>, altBBinom4<span class="fl">.15</span>, altBBinom3<span class="fl">.15</span>),</span>
 <span id="cb51-21"><a href="#cb51-21"></a>  <span class="at">model =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Binomial"</span>,</span>
 <span id="cb51-22"><a href="#cb51-22"></a>                <span class="st">"Negative Binomial"</span>,</span>
 <span id="cb51-23"><a href="#cb51-23"></a>                <span class="st">"Beta-Binomial"</span>,</span>
@@ -1244,20 +1244,23 @@ Figure&nbsp;10: PMF of Altham’s multiplicative Beta-Binomial distribution for 
 <span id="cb51-28"><a href="#cb51-28"></a>              <span class="at">each =</span> <span class="dv">4</span>)</span>
 <span id="cb51-29"><a href="#cb51-29"></a>)</span>
 <span id="cb51-30"><a href="#cb51-30"></a></span>
-<span id="cb51-31"><a href="#cb51-31"></a><span class="co"># graphs</span></span>
-<span id="cb51-32"><a href="#cb51-32"></a><span class="co">#| label: fig-outcome-comparison</span></span>
-<span id="cb51-33"><a href="#cb51-33"></a><span class="co">#| fig-cap: "Comparison of match outcome probabilities across models."</span></span>
-<span id="cb51-34"><a href="#cb51-34"></a><span class="co">#| fig-align: center</span></span>
-<span id="cb51-35"><a href="#cb51-35"></a></span>
-<span id="cb51-36"><a href="#cb51-36"></a>df.long <span class="sc">|&gt;</span></span>
-<span id="cb51-37"><a href="#cb51-37"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> outcome, <span class="at">y =</span> prob, <span class="at">fill =</span> model)) <span class="sc">+</span></span>
-<span id="cb51-38"><a href="#cb51-38"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb51-39"><a href="#cb51-39"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb51-40"><a href="#cb51-40"></a>  <span class="fu">labs</span>(</span>
-<span id="cb51-41"><a href="#cb51-41"></a>    <span class="at">x =</span> <span class="st">"Match Outcome"</span>,</span>
-<span id="cb51-42"><a href="#cb51-42"></a>    <span class="at">y =</span> <span class="st">"Probability"</span>,</span>
-<span id="cb51-43"><a href="#cb51-43"></a>    <span class="at">fill =</span> <span class="st">"Model"</span></span>
-<span id="cb51-44"><a href="#cb51-44"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb51-31"><a href="#cb51-31"></a>df <span class="ot">=</span> df <span class="sc">|&gt;</span></span>
+<span id="cb51-32"><a href="#cb51-32"></a>  <span class="fu">mutate</span>(<span class="at">outcome =</span> <span class="fu">factor</span>(outcome, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"0-2"</span>, <span class="st">"1-2"</span>, <span class="st">"2-1"</span>, <span class="st">"2-0"</span>)))</span>
+<span id="cb51-33"><a href="#cb51-33"></a></span>
+<span id="cb51-34"><a href="#cb51-34"></a><span class="co"># graphs</span></span>
+<span id="cb51-35"><a href="#cb51-35"></a><span class="co">#| label: fig-outcome-comparison</span></span>
+<span id="cb51-36"><a href="#cb51-36"></a><span class="co">#| fig-cap: "Comparison of match outcome probabilities across models."</span></span>
+<span id="cb51-37"><a href="#cb51-37"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb51-38"><a href="#cb51-38"></a></span>
+<span id="cb51-39"><a href="#cb51-39"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb51-40"><a href="#cb51-40"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> outcome, <span class="at">y =</span> prob, <span class="at">fill =</span> model)) <span class="sc">+</span></span>
+<span id="cb51-41"><a href="#cb51-41"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb51-42"><a href="#cb51-42"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb51-43"><a href="#cb51-43"></a>  <span class="fu">labs</span>(</span>
+<span id="cb51-44"><a href="#cb51-44"></a>    <span class="at">x =</span> <span class="st">"Match Outcome"</span>,</span>
+<span id="cb51-45"><a href="#cb51-45"></a>    <span class="at">y =</span> <span class="st">"Probability"</span>,</span>
+<span id="cb51-46"><a href="#cb51-46"></a>    <span class="at">fill =</span> <span class="st">"Model"</span></span>
+<span id="cb51-47"><a href="#cb51-47"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
