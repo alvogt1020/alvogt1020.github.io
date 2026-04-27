@@ -420,9 +420,10 @@ Yes, I used a conditional statement to check if the recipe was the last recipe w
 ## Loops
 Did you use loops in your code? If yes, how. If not, are there places you could have used them but did something else?
 
-Yes, I used two for loops. The first of which I used to build the grocery list, the second I used to print each recipe's image, ingredients, and instructions.
 
 **Response:**
+Yes, I used two for loops. The first of which I used to build the grocery list, the second I used to print each recipe's image, ingredients, and instructions.
+
 
 ## Functions
 Did you use functions in your code? If yes, how. If not, are there places you could have used them but did something else?
