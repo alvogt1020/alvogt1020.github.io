@@ -110,7 +110,9 @@ heart.dat = read_csv("heart_failure_data.csv")
 
 x = heart.dat$TIME # pull the variable of interest from the data 
 (lambda.mom = 1 / mean(x, na.rm = T)) # solve for the point estimate
+
+(expected.value.mom = 1 / lambda.mom) # find the expected value using lambda hat
 ```
 
-Thus, our Method of Moments estimate is $\hat{\lambda}_{MOM} \approx .007676903.$
+Thus, our Method of Moments estimate is $\hat{\lambda}_{MOM} \approx .007676903.$ We interpret this directly as the estimated daily death rate (because survival time is measured in days), and can plug that value back in to our expected value formula to find the expected survival time, $$E(X) = \frac{1}{\hat{\lambda}_{MOM}} \approx 130.2609 \text{ days}.$$
 
