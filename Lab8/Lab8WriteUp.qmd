@@ -108,6 +108,9 @@ $$P(\text{A wins}) = P(X \ge 2) =  1 - P(X \le 1) = 1 - F(1)$$
 We can visualize this probability with both a PMF and CDF graph:
 
 ```{r}
+#| label: fig-binomial-pmf-cdf
+#| fig-cap: "PMF and CDF for X ~ Binomial(3, 0.7), highlighting P(X ≥ 2)."
+
 n = 3
 p = 0.7
 ggdat = tibble(x = 0:3) |>
@@ -162,6 +165,9 @@ dnbinom(0, r, p) + dnbinom(1, r, p)
 ```
 
 ```{r}
+#| label: fig-negbinom-pmf-cdf
+#| fig-cap: "PMF and CDF for X ~ NegBinomial(2, 0.7), highlighting P(X ≤ 1)."
+
 r = 2
 p = 0.7
 ggdat = tibble(x = 0:3) |>
@@ -215,7 +221,10 @@ b = 3
 dat = tibble(x = seq(0, 1, 0.001)) |>
   mutate(PDF = dbeta(x, a, b)
   )
-
+```
+```{r}
+#| label: fig-beta-density
+#| fig-cap: "Beta(7,3) distribution showing uncertainty in win probability."
 dat |>
   ggplot() +
     geom_line(aes(x = x,
@@ -261,7 +270,7 @@ pbeta(0.700001,a,b) - pbeta(0.699999,a,b)
 
 
 ```
-The output, $P \approx 5.34 \times 10^{-6}$ is, as expected, very close to 0.
+The output, $\approx 5.34 \times 10^{-6}$ is, as expected, very close to 0.
 
 ```{r}
 x = seq(0,1,0.001)
@@ -269,6 +278,11 @@ dat = tibble(
   x = x,
   PDF = dbeta(x,a,b)
 )
+```
+```{r}
+#| label: fig-beta-point
+#| fig-cap: "Density of Beta(7,3) with vertical line at p = 0.7."
+
 dat |>
     ggplot() +
       geom_line(aes(x = x,
@@ -302,13 +316,18 @@ dat = tibble(
   x = x,
   CDF = pbeta(x,a,b)
 )
+```
+```{r}
+#| label: fig-beta-cdf
+#| fig-cap: "CDF of Beta(7,3), highlighting probability that p ≥ 0.5."
 dat |>
     ggplot() +
       geom_line(aes(x = x,
                     y = CDF)) +
-        geom_linerange(data = dat |> filter(x>=0.50),
-                aes(x = x, ymin = 0, ymax = CDF),
-                color = "darkgoldenrod2", linewidth=0.5, alpha=0.30) +
+      geom_point(aes(x = 0.5, y = pbeta(0.5, 7, 3)),
+               color = "darkgoldenrod2", size = 2) +
+      geom_hline(yintercept = pbeta(0.5, 7, 3),
+                 color = "darkgoldenrod2") +
       geom_hline(yintercept = 0) +
       theme_bw() +
       xlab("p (win probability)") +
@@ -339,6 +358,11 @@ dat = tibble(
   x = x,
   CDF = pbeta(x,a,b)
 )
+```
+```{r}
+#| label: fig-beta-quantile
+#| fig-cap: "CDF of Beta(7,3) showing the 90th percentile."
+
 dat |>
     ggplot() +
       geom_line(aes(x = x,
@@ -421,14 +445,14 @@ $$c = \sum_{i=0}^n {n \choose i} p^i (1-p)^{n-i} \theta^{i(n-i)}$$
 *Creating the Function*
 ```{r}
 daltbinom = function(n, x, p, theta){
- if(x < 0 || x > n){
+ if(x < 0 || x > n || p < 0 || p > 1 || theta <= 0 || n < 0){
     pmf = 0
   }else{
   i = 0:n
   c = sum(choose(n,i) * p^i * (1-p)^(n-i) * theta^(i * (n-i)))
   
   pmf = (1/c) * choose(n,x) * p^x * (1-p)^(n-x) * theta^(x*(n-x))
-}
+  }
 }
 ```
 
@@ -448,12 +472,15 @@ daltbinom = function(n, x, p, theta){
     rep("1.5", 4)
   )
 ))
+```
+```{r}
+#| label: fig-altham-pmf
+#| fig-cap: "PMF of Altham’s multiplicative binomial for different values of θ."
 
 df |>
   ggplot(aes(x = x, 
              y = pmf, 
              color = theta)) +
-    geom_line() +
     geom_point() +
     theme_bw() +
     labs(
@@ -463,7 +490,7 @@ df |>
     )
 ```
 
-*Interpretation:* The most-likely outcome for the player with $\theta = 0.5$ is 3 (plot is increasing, so they are more likely to win more legs than less legs). Furthermore, the player with $\theta = 0.5$ has the highest chance of winning 3 legs compared to the other 2 players. The players with $\theta = 1$ and $\theta = 1.5$ don't see this strictly increasing pattern, and both are most likely to win 2 legs. What the three players *do* have in common, is that the least likely outcome for all 3 is winning 0 games. When theta increases, it seems to make outcomes near 2 more likely (higher value for 2 wins and "tighter" lines around it).
+*Interpretation:* The most-likely outcome for the player with $\theta = 0.5$ is 3 (plot is increasing, so they are more likely to win more legs than fewer legs). Furthermore, the player with $\theta = 0.5$ has the highest chance of winning all 3 legs (a dominant outcome) compared to the other 2 players. The players with $\theta = 1$ and $\theta = 1.5$ don't see this strictly increasing pattern, and both are most likely to win 2 legs. What the three players *do* have in common is that the least likely outcome for all 3 is winning 0 games. When theta increases, it seems to make more balanced outcomes more probable, so 2-1 and 1-2 results become more likely.
 
 ## Cumulative Distribution Function
 **Use your `daltbinom()` function to create a `paltbinom()` function for computing the CDF of this distribution. Use your function to plot the distribution where $p=0.70$ where $\theta=0.50$, $\theta=1$, and $\theta=1.50$.**
@@ -495,13 +522,16 @@ paltbinom = function(n, x, p, theta){
     rep("1.5", 4)
   )
 ))
+```
+```{r}
+#| label: fig-altham-cdf
+#| fig-cap: "CDF of Altham’s multiplicative binomial for different values of θ."
 
 df |>
   ggplot(aes(x = x, 
              y = cdf, 
              color = theta)) +
-    geom_line() +
-    geom_point() +
+    geom_point(position = position_dodge(width = 0.2), size = 2) +
     theme_bw() +
     labs(
       x = "Number of Legs Won (for A)",
@@ -526,6 +556,9 @@ The difference this time is that our CDF has the additional parameter, $\theta$.
 
 *Plot:*
 ```{r}
+#| label: fig-altham-winprob
+#| fig-cap: "Probability that Player A wins as a function of θ."
+
 df = tibble(
   theta = c(0.5, 1, 1.5),
   win_prob = 1 - sapply(c(0.5, 1, 1.5), function(t) paltbinom(3, 1, 0.7, t))
@@ -594,6 +627,11 @@ df = tibble(
     rep("1.5", 4)
   )
 )
+```
+
+```{r}
+#| label: fig-altham-betabinom-pmf
+#| fig-cap: "PMF of Altham’s multiplicative Beta-Binomial distribution for different values of θ."
 
 (df |>
   ggplot(aes(x = x, 
