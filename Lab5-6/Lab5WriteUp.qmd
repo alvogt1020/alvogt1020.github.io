@@ -292,7 +292,7 @@ kitsberg.summary |>
   knitr::kable(digits = 2)
 ```
 
-From the numerical summary, we see that the average amount of HCMV genomes in the nucleus is significantly higher for macrophages than monocytes. Furthermore, macrophages exhibit much more spread with a standard deviation 3x that of monocytes. The violin plots further enrich our understanding of the results. We see that healthy donors in general exhibit more spread than THP-1 donors (which aligns with the intuitive explanation that humans are more varied than artificial cells).
+From the numerical summary, we see that the average amount of HCMV genomes in the nucleus is noticeably higher for macrophages than monocytes. Furthermore, macrophages exhibit much more spread with a standard deviation 3x that of monocytes. The violin plots further enrich our understanding of the results. We see that healthy donors in general exhibit more spread than THP-1 donors (which aligns with the intuitive explanation that humans are more varied than artificial cells).
 
 **Note:**
 Parts C and D removed, to align with the revised version of the lab assignment.
@@ -478,18 +478,13 @@ In an `R` code block, combine your answers into one code block that completes th
 **Note**: You will use this in the next section
 
 ```{r}
-# Loading the data (part A)
-dat.bal = read_csv("ShipValuation-Bal25.csv")
+dat.bal.cleaned = read_csv("ShipValuation-Bal25.csv") |>
 
-# Creating price col (part B)
-dat.bal.cleaned = dat.bal |>
-        mutate(
-          price = 10 ^ SPLog / 1000000
-        )
+mutate(
+  price = 10 ^ SPLog / 1000000
+) |>
 
-# Creating OriginCountry (part C)
-dat.bal.cleaned = dat.bal.cleaned |>
-  mutate(
+mutate(
     OriginCountry = case_when(
       Japan == 1 ~ "Japan",
       `China, People's Republic Of` == 1 ~ "China",
@@ -498,11 +493,9 @@ dat.bal.cleaned = dat.bal.cleaned |>
       `Others Country Build` == 1 ~ "Other",
       TRUE ~ NA
     )
-  )
+  ) |>
 
-# Creating Manufacturer (part D)
-dat.bal.cleaned = dat.bal.cleaned |>
-  mutate(
+mutate(
     Manufacturer = case_when(
       Caterpillar == 1 ~ "Caterpillar",
       `MAN-B&W` == 1 ~ "MAN-B&W",
@@ -510,11 +503,9 @@ dat.bal.cleaned = dat.bal.cleaned |>
       Mitsubishi == 1 ~ "Mitsubishi",
       TRUE ~ NA
     )
-  )
+  ) |>
 
-# Creating PI.club (part E)
-dat.bal.cleaned = dat.bal.cleaned |>
-  mutate(
+mutate(
     PI.Club = case_when(
       `Japan P&I Club` == 1 ~ "Japan P&I Club",
       `Gard` == 1 ~ "Gard",
@@ -529,11 +520,9 @@ dat.bal.cleaned = dat.bal.cleaned |>
       `Unknown` == 1 ~ "Unknown",
       TRUE ~ NA
     )
-  )
+  ) |>
 
-# Creating Class (part F)
-dat.bal.cleaned = dat.bal.cleaned |>
-  mutate(
+mutate(
     Class = case_when(
       `Nippon Kaiji Kyokai (IACS)` == 1 ~ "Nippon Kaiji Kyokai (IACS)",
       `Lloyd's Register` == 1 ~ "Lloyd's Register",
@@ -545,11 +534,9 @@ dat.bal.cleaned = dat.bal.cleaned |>
       `Disclassed` == 1 ~ "Disclassed",
       TRUE ~ NA
     )
-  )
+  ) |>
 
-# Creating FlagState (part G)
-dat.bal.cleaned = dat.bal.cleaned |>
-  mutate(
+mutate(
     FlagState = case_when(
       `Panama` == 1 ~ "Panama",
       `Marshall Islands` == 1 ~ "Marshall Islands",
@@ -592,19 +579,23 @@ Choose a categorical variable. Create a plot and corresponding numerical summary
 **Solution:**
 For the visualization of any categorical variable, I choose to analyze the variable `OriginCountry`. I use a box plot to compare price across categories.
 ```{r}
-ggplot(dat.bal.cleaned) +                                    # Specify Data
-  geom_boxplot(aes(x = OriginCountry,                            # Specify x-axis
-               y = price)) +                                 # Specify y-axis
-  theme_bw() +                                               # A cleaner theme
-  labs(x = "Country of Origin",                              # Specify axis labels
+#| label: fig-ship-price-origin
+#| fig-cap: "Ship price by country of origin."
+
+ggplot(dat.bal.cleaned |> drop_na(OriginCountry, price)) +
+  geom_boxplot(aes(x = OriginCountry,
+                   y = price)) +
+  theme_bw() +
+  labs(x = "Country of Origin",
        y = "Price (Millions of $)") +
-  ggtitle("Ship Price by Country of Origin in Ship Valuation Data") # Plot title
+  ggtitle("Ship Price by Country of Origin")
 ```
 
 I then produce a corresponding numerical summary:
 
 ```{r}
 bal.summary = dat.bal.cleaned |>
+  drop_na(OriginCountry, price) |>
   group_by(OriginCountry) |>
   summarize(
     n = n(),

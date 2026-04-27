@@ -365,14 +365,13 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>dat.kitsberg.cleaned <span class="ot">=</span> <span class="fu">separate</span>(</span>
-<span id="cb2-2"><a href="#cb2-2"></a>  <span class="at">data =</span> dat.kitsberg,</span>
-<span id="cb2-3"><a href="#cb2-3"></a>  <span class="at">col =</span> <span class="st">"sample"</span>,</span>
-<span id="cb2-4"><a href="#cb2-4"></a>  <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"SampleType"</span>,<span class="st">"CellType"</span>,<span class="st">"Treatment"</span>),</span>
-<span id="cb2-5"><a href="#cb2-5"></a>  <span class="at">sep =</span> <span class="st">"_"</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a>)</span>
-<span id="cb2-7"><a href="#cb2-7"></a></span>
-<span id="cb2-8"><a href="#cb2-8"></a>dat.kitsberg.cleaned <span class="ot">=</span> dat.kitsberg.cleaned[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="co"># eliminate NA columns</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>dat.kitsberg.cleaned <span class="ot">=</span> dat.kitsberg <span class="sc">|&gt;</span> <span class="fu">separate</span>(</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="at">col =</span> <span class="st">"sample"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"SampleType"</span>,<span class="st">"CellType"</span>,<span class="st">"Treatment"</span>),</span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="at">sep =</span> <span class="st">"_"</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>)</span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a>dat.kitsberg.cleaned <span class="ot">=</span> dat.kitsberg.cleaned[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="co"># eliminate NA columns</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p></p>
@@ -423,9 +422,8 @@ window.Quarto = {
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>dat.kitsberg.cleaned <span class="ot">=</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
 <span id="cb5-2"><a href="#cb5-2"></a>                                 dat.kitsberg.cleaned, </span>
-<span id="cb5-3"><a href="#cb5-3"></a>                                 CellType <span class="sc">==</span> <span class="st">"mac"</span> <span class="sc">|</span> </span>
-<span id="cb5-4"><a href="#cb5-4"></a>                                 CellType <span class="sc">==</span> <span class="st">"mono"</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a>                                 )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-3"><a href="#cb5-3"></a>                                 CellType <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"mac"</span>,<span class="st">"mono"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4"></a>                                 )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p></p>
@@ -436,6 +434,7 @@ window.Quarto = {
 <p><strong>Hint</strong>: I would use the <code>mutate(...)</code> function. You will likely find <code>if_else(...)</code> or <code>case_when(...)</code> helpful.</p>
 <p><strong>Solution:</strong></p>
 <p>I use <code>View(...)</code> to see what each observation is named so that I can use a series of <code>if_else</code> statements to rename the observations.</p>
+<p>Then, I use nested <code>if_else(...)</code> statements because <code>SampleType</code> and <code>CellType</code> have two values that need to be renamed. Take <code>SampleType</code> for example: the first <code>if_else(...)</code> checks whether the value is <code>"primary"</code> and renames it <code>"Healthy Donor"</code>. The second <code>if_else(...)</code> is needed because values that are not <code>"primary"</code> still need to be checked to see whether they are <code>"THP1"</code>, and if so renames them to <code>"THP-1"</code>. Any values that fail to match the conditionals remain unchanged, which includes any missing/NA values.</p>
 <p></p>
 <div class="cell">
 <details class="code-fold">
@@ -443,12 +442,12 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>dat.kitsberg.cleaned <span class="ot">=</span> dat.kitsberg.cleaned <span class="sc">|&gt;</span> </span>
 <span id="cb6-2"><a href="#cb6-2"></a>                      <span class="fu">mutate</span>(</span>
 <span id="cb6-3"><a href="#cb6-3"></a>                      <span class="at">SampleType =</span> <span class="fu">if_else</span>(SampleType <span class="sc">==</span> <span class="st">"primary"</span>, <span class="st">"Healthy Donor"</span>,</span>
-<span id="cb6-4"><a href="#cb6-4"></a>                                   <span class="fu">if_else</span>(SampleType <span class="sc">==</span> <span class="st">"THP1"</span>,<span class="st">"THP-1"</span>,SampleType)),</span>
-<span id="cb6-5"><a href="#cb6-5"></a>                      <span class="at">CellType   =</span> <span class="fu">if_else</span>(CellType <span class="sc">==</span> <span class="st">"mono"</span>, <span class="st">"Monocytes"</span>,</span>
-<span id="cb6-6"><a href="#cb6-6"></a>                                   <span class="fu">if_else</span>(CellType <span class="sc">==</span> <span class="st">"mac"</span>, <span class="st">"Macrophages"</span>, CellType)),</span>
-<span id="cb6-7"><a href="#cb6-7"></a>                      <span class="at">Treatment  =</span> <span class="fu">if_else</span>(Treatment <span class="sc">==</span> <span class="st">"12hpi"</span>, <span class="st">"12 Hours Post-Infection"</span>,</span>
-<span id="cb6-8"><a href="#cb6-8"></a>                                   <span class="fu">if_else</span>(Treatment <span class="sc">==</span> <span class="st">"uninfected"</span>, <span class="st">"Uninfected"</span>,Treatment))</span>
-<span id="cb6-9"><a href="#cb6-9"></a>                     )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-4"><a href="#cb6-4"></a>                                   <span class="fu">if_else</span>(SampleType <span class="sc">==</span> <span class="st">"THP1"</span>, <span class="st">"THP-1"</span>, SampleType)),</span>
+<span id="cb6-5"><a href="#cb6-5"></a>                      <span class="at">CellType =</span> <span class="fu">if_else</span>(CellType <span class="sc">==</span> <span class="st">"mono"</span>, <span class="st">"Monocytes"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>                                 <span class="fu">if_else</span>(CellType <span class="sc">==</span> <span class="st">"mac"</span>, <span class="st">"Macrophages"</span>, CellType)),</span>
+<span id="cb6-7"><a href="#cb6-7"></a>                      <span class="at">Treatment =</span> <span class="fu">if_else</span>(Treatment <span class="sc">==</span> <span class="st">"12hpi"</span>, <span class="st">"12 Hours Post-Infection"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8"></a>                                  <span class="fu">if_else</span>(Treatment <span class="sc">==</span> <span class="st">"uninfected"</span>, <span class="st">"Uninfected"</span>,Treatment))</span>
+<span id="cb6-9"><a href="#cb6-9"></a>                      )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p></p>
@@ -462,51 +461,35 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Loading in the data (part A)</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>dat.kitsberg <span class="ot">=</span> <span class="fu">read_csv</span>(</span>
-<span id="cb7-3"><a href="#cb7-3"></a>  <span class="st">"/Users/alexvogt/Documents/GitHub/lab-5-6-data-wrangling-alvogt1020/Lab5Fig3B.csv"</span>,</span>
-<span id="cb7-4"><a href="#cb7-4"></a>  <span class="at">skip =</span> <span class="dv">1</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a>)</span>
-<span id="cb7-6"><a href="#cb7-6"></a></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co"># Separating columns (part B)</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a>dat.kitsberg.cleaned <span class="ot">=</span> <span class="fu">separate</span>(</span>
-<span id="cb7-9"><a href="#cb7-9"></a>  <span class="at">data =</span> dat.kitsberg,</span>
-<span id="cb7-10"><a href="#cb7-10"></a>  <span class="at">col =</span> <span class="st">"sample"</span>,</span>
-<span id="cb7-11"><a href="#cb7-11"></a>  <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"SampleType"</span>,<span class="st">"CellType"</span>,<span class="st">"Treatment"</span>),</span>
-<span id="cb7-12"><a href="#cb7-12"></a>  <span class="at">sep =</span> <span class="st">"_"</span></span>
-<span id="cb7-13"><a href="#cb7-13"></a>)</span>
-<span id="cb7-14"><a href="#cb7-14"></a></span>
-<span id="cb7-15"><a href="#cb7-15"></a>dat.kitsberg.cleaned <span class="ot">=</span> dat.kitsberg.cleaned[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="co"># eliminate NA columns</span></span>
-<span id="cb7-16"><a href="#cb7-16"></a></span>
-<span id="cb7-17"><a href="#cb7-17"></a><span class="co"># Retaining only observations from the treatment group (part C)</span></span>
-<span id="cb7-18"><a href="#cb7-18"></a>dat.kitsberg.cleaned <span class="ot">=</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
-<span id="cb7-19"><a href="#cb7-19"></a>  dat.kitsberg.cleaned,</span>
-<span id="cb7-20"><a href="#cb7-20"></a>  Treatment <span class="sc">==</span> <span class="st">"12hpi"</span></span>
-<span id="cb7-21"><a href="#cb7-21"></a>)</span>
-<span id="cb7-22"><a href="#cb7-22"></a></span>
-<span id="cb7-23"><a href="#cb7-23"></a><span class="co"># Coding "MDM" --&gt; "mac" (Part D)</span></span>
-<span id="cb7-24"><a href="#cb7-24"></a>dat.kitsberg.cleaned <span class="ot">=</span> dat.kitsberg.cleaned <span class="sc">|&gt;</span></span>
-<span id="cb7-25"><a href="#cb7-25"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb7-26"><a href="#cb7-26"></a>    <span class="at">CellType =</span> <span class="fu">if_else</span>(CellType <span class="sc">==</span> <span class="st">"MDM"</span>,<span class="st">"mac"</span>,CellType)</span>
-<span id="cb7-27"><a href="#cb7-27"></a>  )</span>
-<span id="cb7-28"><a href="#cb7-28"></a></span>
-<span id="cb7-29"><a href="#cb7-29"></a><span class="co"># Retaining only monocyte and macrophage data (part E)</span></span>
-<span id="cb7-30"><a href="#cb7-30"></a>dat.kitsberg.cleaned <span class="ot">=</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
-<span id="cb7-31"><a href="#cb7-31"></a>                                 dat.kitsberg.cleaned, </span>
-<span id="cb7-32"><a href="#cb7-32"></a>                                 CellType <span class="sc">==</span> <span class="st">"mac"</span> <span class="sc">|</span> </span>
-<span id="cb7-33"><a href="#cb7-33"></a>                                 CellType <span class="sc">==</span> <span class="st">"mono"</span></span>
-<span id="cb7-34"><a href="#cb7-34"></a>                                 )</span>
-<span id="cb7-35"><a href="#cb7-35"></a></span>
-<span id="cb7-36"><a href="#cb7-36"></a><span class="co"># Replacing shorthand with neater format (Part F)</span></span>
-<span id="cb7-37"><a href="#cb7-37"></a>dat.kitsberg.cleaned <span class="ot">=</span> dat.kitsberg.cleaned <span class="sc">|&gt;</span> </span>
-<span id="cb7-38"><a href="#cb7-38"></a>                      <span class="fu">mutate</span>(</span>
-<span id="cb7-39"><a href="#cb7-39"></a>                      <span class="at">SampleType =</span> <span class="fu">if_else</span>(SampleType <span class="sc">==</span> <span class="st">"primary"</span>, <span class="st">"Healthy Donor"</span>,</span>
-<span id="cb7-40"><a href="#cb7-40"></a>                                   <span class="fu">if_else</span>(SampleType <span class="sc">==</span> <span class="st">"THP1"</span>,<span class="st">"THP-1"</span>,SampleType)),</span>
-<span id="cb7-41"><a href="#cb7-41"></a>                      <span class="at">CellType   =</span> <span class="fu">if_else</span>(CellType <span class="sc">==</span> <span class="st">"mono"</span>, <span class="st">"Monocytes"</span>,</span>
-<span id="cb7-42"><a href="#cb7-42"></a>                                   <span class="fu">if_else</span>(CellType <span class="sc">==</span> <span class="st">"mac"</span>, <span class="st">"Macrophages"</span>, CellType)),</span>
-<span id="cb7-43"><a href="#cb7-43"></a>                      <span class="at">Treatment  =</span> <span class="fu">if_else</span>(Treatment <span class="sc">==</span> <span class="st">"12hpi"</span>, <span class="st">"12 Hours Post-Infection"</span>,</span>
-<span id="cb7-44"><a href="#cb7-44"></a>                                   <span class="fu">if_else</span>(Treatment <span class="sc">==</span> <span class="st">"uninfected"</span>, <span class="st">"Uninfected"</span>,Treatment))</span>
-<span id="cb7-45"><a href="#cb7-45"></a>                     )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>dat.kitsberg.cleaned <span class="ot">=</span> <span class="fu">read_csv</span>(</span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="st">"/Users/alexvogt/Documents/GitHub/lab-5-6-data-wrangling-alvogt1020/Lab5Fig3B.csv"</span>,</span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="at">skip =</span> <span class="dv">1</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="fu">separate</span>(</span>
+<span id="cb7-7"><a href="#cb7-7"></a>  <span class="at">col =</span> <span class="st">"sample"</span>,</span>
+<span id="cb7-8"><a href="#cb7-8"></a>  <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"SampleType"</span>,<span class="st">"CellType"</span>,<span class="st">"Treatment"</span>),</span>
+<span id="cb7-9"><a href="#cb7-9"></a>  <span class="at">sep =</span> <span class="st">"_"</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb7-13"><a href="#cb7-13"></a></span>
+<span id="cb7-14"><a href="#cb7-14"></a>dplyr<span class="sc">::</span><span class="fu">filter</span>(Treatment <span class="sc">==</span> <span class="st">"12hpi"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="fu">mutate</span>(</span>
+<span id="cb7-17"><a href="#cb7-17"></a>    <span class="at">CellType =</span> <span class="fu">if_else</span>(CellType <span class="sc">==</span> <span class="st">"MDM"</span>,<span class="st">"mac"</span>,CellType)</span>
+<span id="cb7-18"><a href="#cb7-18"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb7-19"><a href="#cb7-19"></a></span>
+<span id="cb7-20"><a href="#cb7-20"></a>dplyr<span class="sc">::</span><span class="fu">filter</span>(CellType <span class="sc">==</span> <span class="st">"mac"</span> <span class="sc">|</span> CellType <span class="sc">==</span> <span class="st">"mono"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-21"><a href="#cb7-21"></a></span>
+<span id="cb7-22"><a href="#cb7-22"></a><span class="fu">mutate</span>(</span>
+<span id="cb7-23"><a href="#cb7-23"></a>  <span class="at">SampleType =</span> <span class="fu">if_else</span>(SampleType <span class="sc">==</span> <span class="st">"primary"</span>, <span class="st">"Healthy Donor"</span>,</span>
+<span id="cb7-24"><a href="#cb7-24"></a>                                   <span class="fu">if_else</span>(SampleType <span class="sc">==</span> <span class="st">"THP1"</span>,<span class="st">"THP-1"</span>,SampleType)),</span>
+<span id="cb7-25"><a href="#cb7-25"></a>                       <span class="at">CellType   =</span> <span class="fu">if_else</span>(CellType <span class="sc">==</span> <span class="st">"mono"</span>, <span class="st">"Monocytes"</span>,</span>
+<span id="cb7-26"><a href="#cb7-26"></a>                                   <span class="fu">if_else</span>(CellType <span class="sc">==</span> <span class="st">"mac"</span>, <span class="st">"Macrophages"</span>, CellType)),</span>
+<span id="cb7-27"><a href="#cb7-27"></a>                       <span class="at">Treatment  =</span> <span class="fu">if_else</span>(Treatment <span class="sc">==</span> <span class="st">"12hpi"</span>, <span class="st">"12 Hours Post-Infection"</span>,</span>
+<span id="cb7-28"><a href="#cb7-28"></a>                                   <span class="fu">if_else</span>(Treatment <span class="sc">==</span> <span class="st">"uninfected"</span>, <span class="st">"Uninfected"</span>,Treatment))</span>
+<span id="cb7-29"><a href="#cb7-29"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p></p>
@@ -526,17 +509,24 @@ window.Quarto = {
 <span id="cb8-2"><a href="#cb8-2"></a>    <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">x =</span> CellType, </span>
 <span id="cb8-3"><a href="#cb8-3"></a>                    <span class="at">y =</span> <span class="st">`</span><span class="at">viruses within nucleus</span><span class="st">`</span>),</span>
 <span id="cb8-4"><a href="#cb8-4"></a>                <span class="at">fill =</span> <span class="st">"lightgrey"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a>    <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> CellType, </span>
-<span id="cb8-6"><a href="#cb8-6"></a>                     <span class="at">y =</span> <span class="st">`</span><span class="at">viruses within nucleus</span><span class="st">`</span>), <span class="at">width =</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cell Type"</span>,</span>
-<span id="cb8-9"><a href="#cb8-9"></a>         <span class="at">y =</span> <span class="st">"HCMV Genomes in the Nucleus"</span>)<span class="sc">+</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>SampleType)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-5"><a href="#cb8-5"></a>    <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">x =</span> CellType, </span>
+<span id="cb8-6"><a href="#cb8-6"></a>                    <span class="at">y =</span> <span class="st">`</span><span class="at">viruses within nucleus</span><span class="st">`</span>),</span>
+<span id="cb8-7"><a href="#cb8-7"></a>              <span class="at">width =</span> <span class="fl">0.08</span>,</span>
+<span id="cb8-8"><a href="#cb8-8"></a>              <span class="at">height =</span> <span class="fl">0.03</span>) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Cell Type"</span>,</span>
+<span id="cb8-11"><a href="#cb8-11"></a>         <span class="at">y =</span> <span class="st">"HCMV Genomes in the Nucleus"</span>)<span class="sc">+</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>SampleType)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab5WriteUp_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-hcmv" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-hcmv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: HCMV genomes in the nucleus for monocytes and macrophages by sample type (Healthy Donor vs THP-1).
+</figcaption>
+<div aria-describedby="fig-hcmv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Lab5WriteUp_files/figure-html/fig-hcmv-1.png" class="img-fluid figure-img" width="672">
+</div>
 </figure>
 </div>
 </div>
@@ -637,7 +627,7 @@ Table&nbsp;1: HCMV Genomes in the Nucleus
 </div>
 </div>
 <p></p>
-<p>From the numerical summary, we see that the average amount of HCMV genomes in the nucleus is significantly higher for macrophages than monocytes. Furthermore, macrophages exhibit much more spread with a standard deviation 3x that of monocytes. The violin plots further enrich our understanding of the results. We see that healthy donors in general exhibit more spread than THP-1 donors (which aligns with the intuitive explanation that humans are more varied than artificial cells).</p>
+<p>From the numerical summary, we see that the average amount of HCMV genomes in the nucleus is noticeably higher for macrophages than monocytes. Furthermore, macrophages exhibit much more spread with a standard deviation 3x that of monocytes. The violin plots further enrich our understanding of the results. We see that healthy donors in general exhibit more spread than THP-1 donors (which aligns with the intuitive explanation that humans are more varied than artificial cells).</p>
 <p><strong>Note:</strong> Parts C and D removed, to align with the revised version of the lab assignment.</p>
 </section>
 </section>
@@ -832,90 +822,77 @@ Table&nbsp;1: HCMV Genomes in the Nucleus
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Loading the data (part A)</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>dat.bal <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"ShipValuation-Bal25.csv"</span>)</span>
-<span id="cb17-3"><a href="#cb17-3"></a></span>
-<span id="cb17-4"><a href="#cb17-4"></a><span class="co"># Creating price col (part B)</span></span>
-<span id="cb17-5"><a href="#cb17-5"></a>dat.bal.cleaned <span class="ot">=</span> dat.bal <span class="sc">|&gt;</span></span>
-<span id="cb17-6"><a href="#cb17-6"></a>        <span class="fu">mutate</span>(</span>
-<span id="cb17-7"><a href="#cb17-7"></a>          <span class="at">price =</span> <span class="dv">10</span> <span class="sc">^</span> SPLog <span class="sc">/</span> <span class="dv">1000000</span></span>
-<span id="cb17-8"><a href="#cb17-8"></a>        )</span>
-<span id="cb17-9"><a href="#cb17-9"></a></span>
-<span id="cb17-10"><a href="#cb17-10"></a><span class="co"># Creating OriginCountry (part C)</span></span>
-<span id="cb17-11"><a href="#cb17-11"></a>dat.bal.cleaned <span class="ot">=</span> dat.bal.cleaned <span class="sc">|&gt;</span></span>
-<span id="cb17-12"><a href="#cb17-12"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb17-13"><a href="#cb17-13"></a>    <span class="at">OriginCountry =</span> <span class="fu">case_when</span>(</span>
-<span id="cb17-14"><a href="#cb17-14"></a>      Japan <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Japan"</span>,</span>
-<span id="cb17-15"><a href="#cb17-15"></a>      <span class="st">`</span><span class="at">China, People's Republic Of</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"China"</span>,</span>
-<span id="cb17-16"><a href="#cb17-16"></a>      Philippines <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Philippines"</span>,</span>
-<span id="cb17-17"><a href="#cb17-17"></a>      <span class="st">`</span><span class="at">Korea, South</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"South Korea"</span>,</span>
-<span id="cb17-18"><a href="#cb17-18"></a>      <span class="st">`</span><span class="at">Others Country Build</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Other"</span>,</span>
-<span id="cb17-19"><a href="#cb17-19"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA</span></span>
-<span id="cb17-20"><a href="#cb17-20"></a>    )</span>
-<span id="cb17-21"><a href="#cb17-21"></a>  )</span>
-<span id="cb17-22"><a href="#cb17-22"></a></span>
-<span id="cb17-23"><a href="#cb17-23"></a><span class="co"># Creating Manufacturer (part D)</span></span>
-<span id="cb17-24"><a href="#cb17-24"></a>dat.bal.cleaned <span class="ot">=</span> dat.bal.cleaned <span class="sc">|&gt;</span></span>
-<span id="cb17-25"><a href="#cb17-25"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb17-26"><a href="#cb17-26"></a>    <span class="at">Manufacturer =</span> <span class="fu">case_when</span>(</span>
-<span id="cb17-27"><a href="#cb17-27"></a>      Caterpillar <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Caterpillar"</span>,</span>
-<span id="cb17-28"><a href="#cb17-28"></a>      <span class="st">`</span><span class="at">MAN-B&amp;W</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"MAN-B&amp;W"</span>,</span>
-<span id="cb17-29"><a href="#cb17-29"></a>      Wartsila <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Wartsila"</span>,</span>
-<span id="cb17-30"><a href="#cb17-30"></a>      Mitsubishi <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Mitsubishi"</span>,</span>
-<span id="cb17-31"><a href="#cb17-31"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA</span></span>
-<span id="cb17-32"><a href="#cb17-32"></a>    )</span>
-<span id="cb17-33"><a href="#cb17-33"></a>  )</span>
-<span id="cb17-34"><a href="#cb17-34"></a></span>
-<span id="cb17-35"><a href="#cb17-35"></a><span class="co"># Creating PI.club (part E)</span></span>
-<span id="cb17-36"><a href="#cb17-36"></a>dat.bal.cleaned <span class="ot">=</span> dat.bal.cleaned <span class="sc">|&gt;</span></span>
-<span id="cb17-37"><a href="#cb17-37"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb17-38"><a href="#cb17-38"></a>    <span class="at">PI.Club =</span> <span class="fu">case_when</span>(</span>
-<span id="cb17-39"><a href="#cb17-39"></a>      <span class="st">`</span><span class="at">Japan P&amp;I Club</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Japan P&amp;I Club"</span>,</span>
-<span id="cb17-40"><a href="#cb17-40"></a>      <span class="st">`</span><span class="at">Gard</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Gard"</span>,</span>
-<span id="cb17-41"><a href="#cb17-41"></a>      <span class="st">`</span><span class="at">West of England</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"West of England"</span>,</span>
-<span id="cb17-42"><a href="#cb17-42"></a>      <span class="st">`</span><span class="at">North of England</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"North of England"</span>,</span>
-<span id="cb17-43"><a href="#cb17-43"></a>      <span class="st">`</span><span class="at">UK P&amp;I</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"UK P&amp;I"</span>,</span>
-<span id="cb17-44"><a href="#cb17-44"></a>      <span class="st">`</span><span class="at">Britannia P&amp;I</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Britannia P&amp;I"</span>,</span>
-<span id="cb17-45"><a href="#cb17-45"></a>      <span class="st">`</span><span class="at">London P&amp;I Club</span><span class="st">`</span><span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"London P&amp;I Club"</span>,</span>
-<span id="cb17-46"><a href="#cb17-46"></a>      <span class="st">`</span><span class="at">Skuld</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Skuld"</span>,</span>
-<span id="cb17-47"><a href="#cb17-47"></a>      <span class="st">`</span><span class="at">Steamship Mutual</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Steamship Mutual"</span>,</span>
-<span id="cb17-48"><a href="#cb17-48"></a>      <span class="st">`</span><span class="at">Others</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Others"</span>,</span>
-<span id="cb17-49"><a href="#cb17-49"></a>      <span class="st">`</span><span class="at">Unknown</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Unknown"</span>,</span>
-<span id="cb17-50"><a href="#cb17-50"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA</span></span>
-<span id="cb17-51"><a href="#cb17-51"></a>    )</span>
-<span id="cb17-52"><a href="#cb17-52"></a>  )</span>
-<span id="cb17-53"><a href="#cb17-53"></a></span>
-<span id="cb17-54"><a href="#cb17-54"></a><span class="co"># Creating Class (part F)</span></span>
-<span id="cb17-55"><a href="#cb17-55"></a>dat.bal.cleaned <span class="ot">=</span> dat.bal.cleaned <span class="sc">|&gt;</span></span>
-<span id="cb17-56"><a href="#cb17-56"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb17-57"><a href="#cb17-57"></a>    <span class="at">Class =</span> <span class="fu">case_when</span>(</span>
-<span id="cb17-58"><a href="#cb17-58"></a>      <span class="st">`</span><span class="at">Nippon Kaiji Kyokai (IACS)</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Nippon Kaiji Kyokai (IACS)"</span>,</span>
-<span id="cb17-59"><a href="#cb17-59"></a>      <span class="st">`</span><span class="at">Lloyd's Register</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Lloyd's Register"</span>,</span>
-<span id="cb17-60"><a href="#cb17-60"></a>      <span class="st">`</span><span class="at">Bureau Veritas (IACS)</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Bureau Veritas (IACS)"</span>,</span>
-<span id="cb17-61"><a href="#cb17-61"></a>      <span class="st">`</span><span class="at">Det Norske Veritas (IACS)</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Det Norske Veritas (IACS)"</span>,</span>
-<span id="cb17-62"><a href="#cb17-62"></a>      <span class="st">`</span><span class="at">American Bureau of Shipping (IACS)</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"American Bureau of Shipping (IACS)"</span>,</span>
-<span id="cb17-63"><a href="#cb17-63"></a>      <span class="st">`</span><span class="at">Others Class</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Others Class"</span>,</span>
-<span id="cb17-64"><a href="#cb17-64"></a>      <span class="st">`</span><span class="at">With Two Classes</span><span class="st">`</span><span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"With Two Classes"</span>,</span>
-<span id="cb17-65"><a href="#cb17-65"></a>      <span class="st">`</span><span class="at">Disclassed</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Disclassed"</span>,</span>
-<span id="cb17-66"><a href="#cb17-66"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA</span></span>
-<span id="cb17-67"><a href="#cb17-67"></a>    )</span>
-<span id="cb17-68"><a href="#cb17-68"></a>  )</span>
-<span id="cb17-69"><a href="#cb17-69"></a></span>
-<span id="cb17-70"><a href="#cb17-70"></a><span class="co"># Creating FlagState (part G)</span></span>
-<span id="cb17-71"><a href="#cb17-71"></a>dat.bal.cleaned <span class="ot">=</span> dat.bal.cleaned <span class="sc">|&gt;</span></span>
-<span id="cb17-72"><a href="#cb17-72"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb17-73"><a href="#cb17-73"></a>    <span class="at">FlagState =</span> <span class="fu">case_when</span>(</span>
-<span id="cb17-74"><a href="#cb17-74"></a>      <span class="st">`</span><span class="at">Panama</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Panama"</span>,</span>
-<span id="cb17-75"><a href="#cb17-75"></a>      <span class="st">`</span><span class="at">Marshall Islands</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Marshall Islands"</span>,</span>
-<span id="cb17-76"><a href="#cb17-76"></a>      <span class="st">`</span><span class="at">Liberia</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Liberia"</span>,</span>
-<span id="cb17-77"><a href="#cb17-77"></a>      <span class="st">`</span><span class="at">Malta</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Malta"</span>,</span>
-<span id="cb17-78"><a href="#cb17-78"></a>      <span class="st">`</span><span class="at">Hong Kong, China</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Hong Kong"</span>,</span>
-<span id="cb17-79"><a href="#cb17-79"></a>      <span class="st">`</span><span class="at">Singapore</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Singapore"</span>,</span>
-<span id="cb17-80"><a href="#cb17-80"></a>      <span class="st">`</span><span class="at">Others Flag</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Others Flag"</span>,</span>
-<span id="cb17-81"><a href="#cb17-81"></a>      <span class="st">`</span><span class="at">With two flags</span><span class="st">`</span><span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"With two flags"</span>,</span>
-<span id="cb17-82"><a href="#cb17-82"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA</span></span>
-<span id="cb17-83"><a href="#cb17-83"></a>    )</span>
-<span id="cb17-84"><a href="#cb17-84"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>dat.bal.cleaned <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"ShipValuation-Bal25.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="fu">mutate</span>(</span>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="at">price =</span> <span class="dv">10</span> <span class="sc">^</span> SPLog <span class="sc">/</span> <span class="dv">1000000</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb17-6"><a href="#cb17-6"></a></span>
+<span id="cb17-7"><a href="#cb17-7"></a><span class="fu">mutate</span>(</span>
+<span id="cb17-8"><a href="#cb17-8"></a>    <span class="at">OriginCountry =</span> <span class="fu">case_when</span>(</span>
+<span id="cb17-9"><a href="#cb17-9"></a>      Japan <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Japan"</span>,</span>
+<span id="cb17-10"><a href="#cb17-10"></a>      <span class="st">`</span><span class="at">China, People's Republic Of</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"China"</span>,</span>
+<span id="cb17-11"><a href="#cb17-11"></a>      Philippines <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Philippines"</span>,</span>
+<span id="cb17-12"><a href="#cb17-12"></a>      <span class="st">`</span><span class="at">Korea, South</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"South Korea"</span>,</span>
+<span id="cb17-13"><a href="#cb17-13"></a>      <span class="st">`</span><span class="at">Others Country Build</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Other"</span>,</span>
+<span id="cb17-14"><a href="#cb17-14"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA</span></span>
+<span id="cb17-15"><a href="#cb17-15"></a>    )</span>
+<span id="cb17-16"><a href="#cb17-16"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb17-17"><a href="#cb17-17"></a></span>
+<span id="cb17-18"><a href="#cb17-18"></a><span class="fu">mutate</span>(</span>
+<span id="cb17-19"><a href="#cb17-19"></a>    <span class="at">Manufacturer =</span> <span class="fu">case_when</span>(</span>
+<span id="cb17-20"><a href="#cb17-20"></a>      Caterpillar <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Caterpillar"</span>,</span>
+<span id="cb17-21"><a href="#cb17-21"></a>      <span class="st">`</span><span class="at">MAN-B&amp;W</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"MAN-B&amp;W"</span>,</span>
+<span id="cb17-22"><a href="#cb17-22"></a>      Wartsila <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Wartsila"</span>,</span>
+<span id="cb17-23"><a href="#cb17-23"></a>      Mitsubishi <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Mitsubishi"</span>,</span>
+<span id="cb17-24"><a href="#cb17-24"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA</span></span>
+<span id="cb17-25"><a href="#cb17-25"></a>    )</span>
+<span id="cb17-26"><a href="#cb17-26"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb17-27"><a href="#cb17-27"></a></span>
+<span id="cb17-28"><a href="#cb17-28"></a><span class="fu">mutate</span>(</span>
+<span id="cb17-29"><a href="#cb17-29"></a>    <span class="at">PI.Club =</span> <span class="fu">case_when</span>(</span>
+<span id="cb17-30"><a href="#cb17-30"></a>      <span class="st">`</span><span class="at">Japan P&amp;I Club</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Japan P&amp;I Club"</span>,</span>
+<span id="cb17-31"><a href="#cb17-31"></a>      <span class="st">`</span><span class="at">Gard</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Gard"</span>,</span>
+<span id="cb17-32"><a href="#cb17-32"></a>      <span class="st">`</span><span class="at">West of England</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"West of England"</span>,</span>
+<span id="cb17-33"><a href="#cb17-33"></a>      <span class="st">`</span><span class="at">North of England</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"North of England"</span>,</span>
+<span id="cb17-34"><a href="#cb17-34"></a>      <span class="st">`</span><span class="at">UK P&amp;I</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"UK P&amp;I"</span>,</span>
+<span id="cb17-35"><a href="#cb17-35"></a>      <span class="st">`</span><span class="at">Britannia P&amp;I</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Britannia P&amp;I"</span>,</span>
+<span id="cb17-36"><a href="#cb17-36"></a>      <span class="st">`</span><span class="at">London P&amp;I Club</span><span class="st">`</span><span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"London P&amp;I Club"</span>,</span>
+<span id="cb17-37"><a href="#cb17-37"></a>      <span class="st">`</span><span class="at">Skuld</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Skuld"</span>,</span>
+<span id="cb17-38"><a href="#cb17-38"></a>      <span class="st">`</span><span class="at">Steamship Mutual</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Steamship Mutual"</span>,</span>
+<span id="cb17-39"><a href="#cb17-39"></a>      <span class="st">`</span><span class="at">Others</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Others"</span>,</span>
+<span id="cb17-40"><a href="#cb17-40"></a>      <span class="st">`</span><span class="at">Unknown</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Unknown"</span>,</span>
+<span id="cb17-41"><a href="#cb17-41"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA</span></span>
+<span id="cb17-42"><a href="#cb17-42"></a>    )</span>
+<span id="cb17-43"><a href="#cb17-43"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb17-44"><a href="#cb17-44"></a></span>
+<span id="cb17-45"><a href="#cb17-45"></a><span class="fu">mutate</span>(</span>
+<span id="cb17-46"><a href="#cb17-46"></a>    <span class="at">Class =</span> <span class="fu">case_when</span>(</span>
+<span id="cb17-47"><a href="#cb17-47"></a>      <span class="st">`</span><span class="at">Nippon Kaiji Kyokai (IACS)</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Nippon Kaiji Kyokai (IACS)"</span>,</span>
+<span id="cb17-48"><a href="#cb17-48"></a>      <span class="st">`</span><span class="at">Lloyd's Register</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Lloyd's Register"</span>,</span>
+<span id="cb17-49"><a href="#cb17-49"></a>      <span class="st">`</span><span class="at">Bureau Veritas (IACS)</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Bureau Veritas (IACS)"</span>,</span>
+<span id="cb17-50"><a href="#cb17-50"></a>      <span class="st">`</span><span class="at">Det Norske Veritas (IACS)</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Det Norske Veritas (IACS)"</span>,</span>
+<span id="cb17-51"><a href="#cb17-51"></a>      <span class="st">`</span><span class="at">American Bureau of Shipping (IACS)</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"American Bureau of Shipping (IACS)"</span>,</span>
+<span id="cb17-52"><a href="#cb17-52"></a>      <span class="st">`</span><span class="at">Others Class</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Others Class"</span>,</span>
+<span id="cb17-53"><a href="#cb17-53"></a>      <span class="st">`</span><span class="at">With Two Classes</span><span class="st">`</span><span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"With Two Classes"</span>,</span>
+<span id="cb17-54"><a href="#cb17-54"></a>      <span class="st">`</span><span class="at">Disclassed</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Disclassed"</span>,</span>
+<span id="cb17-55"><a href="#cb17-55"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA</span></span>
+<span id="cb17-56"><a href="#cb17-56"></a>    )</span>
+<span id="cb17-57"><a href="#cb17-57"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb17-58"><a href="#cb17-58"></a></span>
+<span id="cb17-59"><a href="#cb17-59"></a><span class="fu">mutate</span>(</span>
+<span id="cb17-60"><a href="#cb17-60"></a>    <span class="at">FlagState =</span> <span class="fu">case_when</span>(</span>
+<span id="cb17-61"><a href="#cb17-61"></a>      <span class="st">`</span><span class="at">Panama</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Panama"</span>,</span>
+<span id="cb17-62"><a href="#cb17-62"></a>      <span class="st">`</span><span class="at">Marshall Islands</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Marshall Islands"</span>,</span>
+<span id="cb17-63"><a href="#cb17-63"></a>      <span class="st">`</span><span class="at">Liberia</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Liberia"</span>,</span>
+<span id="cb17-64"><a href="#cb17-64"></a>      <span class="st">`</span><span class="at">Malta</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Malta"</span>,</span>
+<span id="cb17-65"><a href="#cb17-65"></a>      <span class="st">`</span><span class="at">Hong Kong, China</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Hong Kong"</span>,</span>
+<span id="cb17-66"><a href="#cb17-66"></a>      <span class="st">`</span><span class="at">Singapore</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Singapore"</span>,</span>
+<span id="cb17-67"><a href="#cb17-67"></a>      <span class="st">`</span><span class="at">Others Flag</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Others Flag"</span>,</span>
+<span id="cb17-68"><a href="#cb17-68"></a>      <span class="st">`</span><span class="at">With two flags</span><span class="st">`</span><span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"With two flags"</span>,</span>
+<span id="cb17-69"><a href="#cb17-69"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="cn">NA</span></span>
+<span id="cb17-70"><a href="#cb17-70"></a>    )</span>
+<span id="cb17-71"><a href="#cb17-71"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p></p>
@@ -946,18 +923,23 @@ Table&nbsp;1: HCMV Genomes in the Nucleus
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">ggplot</span>(dat.bal.cleaned) <span class="sc">+</span>                                    <span class="co"># Specify Data</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> OriginCountry,                            <span class="co"># Specify x-axis</span></span>
-<span id="cb18-3"><a href="#cb18-3"></a>               <span class="at">y =</span> price)) <span class="sc">+</span>                                 <span class="co"># Specify y-axis</span></span>
-<span id="cb18-4"><a href="#cb18-4"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span>                                               <span class="co"># A cleaner theme</span></span>
-<span id="cb18-5"><a href="#cb18-5"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Country of Origin"</span>,                              <span class="co"># Specify axis labels</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">ggplot</span>(dat.bal.cleaned <span class="sc">|&gt;</span> <span class="fu">drop_na</span>(OriginCountry, price)) <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> OriginCountry,</span>
+<span id="cb18-3"><a href="#cb18-3"></a>                   <span class="at">y =</span> price)) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Country of Origin"</span>,</span>
 <span id="cb18-6"><a href="#cb18-6"></a>       <span class="at">y =</span> <span class="st">"Price (Millions of $)"</span>) <span class="sc">+</span></span>
-<span id="cb18-7"><a href="#cb18-7"></a>  <span class="fu">ggtitle</span>(<span class="st">"Ship Price by Country of Origin in Ship Valuation Data"</span>) <span class="co"># Plot title</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb18-7"><a href="#cb18-7"></a>  <span class="fu">ggtitle</span>(<span class="st">"Ship Price by Country of Origin"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab5WriteUp_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-ship-price-origin" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-ship-price-origin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Ship price by country of origin.
+</figcaption>
+<div aria-describedby="fig-ship-price-origin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Lab5WriteUp_files/figure-html/fig-ship-price-origin-1.png" class="img-fluid figure-img" width="672">
+</div>
 </figure>
 </div>
 </div>
@@ -969,17 +951,18 @@ Table&nbsp;1: HCMV Genomes in the Nucleus
 <details class="code-fold">
 <summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>bal.summary <span class="ot">=</span> dat.bal.cleaned <span class="sc">|&gt;</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">group_by</span>(OriginCountry) <span class="sc">|&gt;</span></span>
-<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb19-4"><a href="#cb19-4"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb19-5"><a href="#cb19-5"></a>    <span class="st">`</span><span class="at">Missing Price</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(price)),</span>
-<span id="cb19-6"><a href="#cb19-6"></a>    <span class="st">`</span><span class="at">Mean Price</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb19-7"><a href="#cb19-7"></a>    <span class="st">`</span><span class="at">SD Price</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sd</span>(price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb19-8"><a href="#cb19-8"></a>    <span class="st">`</span><span class="at">Median Price</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">median</span>(price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb19-9"><a href="#cb19-9"></a>    <span class="st">`</span><span class="at">IQR Price</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">IQR</span>(price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb19-10"><a href="#cb19-10"></a>  )</span>
-<span id="cb19-11"><a href="#cb19-11"></a></span>
-<span id="cb19-12"><a href="#cb19-12"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(bal.summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">drop_na</span>(OriginCountry, price) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">group_by</span>(OriginCountry) <span class="sc">|&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb19-5"><a href="#cb19-5"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb19-6"><a href="#cb19-6"></a>    <span class="st">`</span><span class="at">Missing Price</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">is.na</span>(price)),</span>
+<span id="cb19-7"><a href="#cb19-7"></a>    <span class="st">`</span><span class="at">Mean Price</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">mean</span>(price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb19-8"><a href="#cb19-8"></a>    <span class="st">`</span><span class="at">SD Price</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sd</span>(price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb19-9"><a href="#cb19-9"></a>    <span class="st">`</span><span class="at">Median Price</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">median</span>(price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb19-10"><a href="#cb19-10"></a>    <span class="st">`</span><span class="at">IQR Price</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">IQR</span>(price, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-11"><a href="#cb19-11"></a>  )</span>
+<span id="cb19-12"><a href="#cb19-12"></a></span>
+<span id="cb19-13"><a href="#cb19-13"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(bal.summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -1049,15 +1032,6 @@ Table&nbsp;1: HCMV Genomes in the Nucleus
 <td style="text-align: right;">11.20</td>
 <td style="text-align: right;">11.450</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">NA</td>
-<td style="text-align: right;">200</td>
-<td style="text-align: right;">200</td>
-<td style="text-align: right;">NaN</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -1089,7 +1063,7 @@ Table&nbsp;1: HCMV Genomes in the Nucleus
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Lab5WriteUp_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Lab5WriteUp_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
