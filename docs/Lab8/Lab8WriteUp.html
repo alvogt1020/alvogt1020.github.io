@@ -378,9 +378,14 @@ window.Quarto = {
 <span id="cb3-29"><a href="#cb3-29"></a>PMF.plot <span class="sc">|</span> CDF.plot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-binomial-pmf-cdf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-binomial-pmf-cdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: PMF and CDF for X ~ Binomial(3, 0.7), highlighting P(X ≥ 2).
+</figcaption>
+<div aria-describedby="fig-binomial-pmf-cdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Lab8WriteUp_files/figure-html/fig-binomial-pmf-cdf-1.png" class="img-fluid figure-img" width="672">
+</div>
 </figure>
 </div>
 </div>
@@ -444,9 +449,14 @@ window.Quarto = {
 <span id="cb6-30"><a href="#cb6-30"></a>PMF.plot <span class="sc">|</span> CDF.plot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-negbinom-pmf-cdf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-negbinom-pmf-cdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: PMF and CDF for X ~ NegBinomial(2, 0.7), highlighting P(X ≤ 1).
+</figcaption>
+<div aria-describedby="fig-negbinom-pmf-cdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Lab8WriteUp_files/figure-html/fig-negbinom-pmf-cdf-1.png" class="img-fluid figure-img" width="672">
+</div>
 </figure>
 </div>
 </div>
@@ -476,21 +486,32 @@ window.Quarto = {
 <span id="cb7-2"><a href="#cb7-2"></a>b <span class="ot">=</span> <span class="dv">3</span></span>
 <span id="cb7-3"><a href="#cb7-3"></a>dat <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.001</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">mutate</span>(<span class="at">PDF =</span> <span class="fu">dbeta</span>(x, a, b)</span>
-<span id="cb7-5"><a href="#cb7-5"></a>  )</span>
-<span id="cb7-6"><a href="#cb7-6"></a></span>
-<span id="cb7-7"><a href="#cb7-7"></a>dat <span class="sc">|&gt;</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb7-10"><a href="#cb7-10"></a>                  <span class="at">y =</span> PDF)) <span class="sc">+</span></span>
-<span id="cb7-11"><a href="#cb7-11"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a>    <span class="fu">xlab</span>(<span class="st">"p (win probability)"</span>) <span class="sc">+</span></span>
-<span id="cb7-13"><a href="#cb7-13"></a>    <span class="fu">ylab</span>(<span class="st">"Density"</span>) <span class="sc">+</span></span>
-<span id="cb7-14"><a href="#cb7-14"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-5"><a href="#cb7-5"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p></p>
+<p></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>dat <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb8-4"><a href="#cb8-4"></a>                  <span class="at">y =</span> PDF)) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>    <span class="fu">xlab</span>(<span class="st">"p (win probability)"</span>) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>    <span class="fu">ylab</span>(<span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-beta-density" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-beta-density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Beta(7,3) distribution showing uncertainty in win probability.
+</figcaption>
+<div aria-describedby="fig-beta-density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Lab8WriteUp_files/figure-html/fig-beta-density-1.png" class="img-fluid figure-img" width="672">
+</div>
 </figure>
 </div>
 </div>
@@ -508,18 +529,18 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>a <span class="ot">=</span> <span class="dv">7</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a>b <span class="ot">=</span> <span class="dv">3</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a>mu.integrand <span class="ot">=</span> <span class="cf">function</span>(p) {(p <span class="sc">*</span> <span class="fu">dbeta</span>(p,a,b))}</span>
-<span id="cb8-4"><a href="#cb8-4"></a>(<span class="at">mu =</span> <span class="fu">integrate</span>(mu.integrand, <span class="at">lower =</span> <span class="dv">0</span>, <span class="at">upper =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>a <span class="ot">=</span> <span class="dv">7</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>b <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a>mu.integrand <span class="ot">=</span> <span class="cf">function</span>(p) {(p <span class="sc">*</span> <span class="fu">dbeta</span>(p,a,b))}</span>
+<span id="cb9-4"><a href="#cb9-4"></a>(<span class="at">mu =</span> <span class="fu">integrate</span>(mu.integrand, <span class="at">lower =</span> <span class="dv">0</span>, <span class="at">upper =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.7 with absolute error &lt; 7.8e-15</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>var.integrand <span class="ot">=</span> <span class="cf">function</span>(p) {((p <span class="sc">-</span> mu<span class="sc">$</span>value)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">dbeta</span>(p,a,b))}</span>
-<span id="cb10-2"><a href="#cb10-2"></a>(<span class="at">var =</span> <span class="fu">integrate</span>(var.integrand, <span class="at">lower =</span> <span class="dv">0</span>, <span class="at">upper =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>var.integrand <span class="ot">=</span> <span class="cf">function</span>(p) {((p <span class="sc">-</span> mu<span class="sc">$</span>value)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">dbeta</span>(p,a,b))}</span>
+<span id="cb11-2"><a href="#cb11-2"></a>(<span class="at">var =</span> <span class="fu">integrate</span>(var.integrand, <span class="at">lower =</span> <span class="dv">0</span>, <span class="at">upper =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>0.01909091 with absolute error &lt; 2.1e-16</code></pre>
@@ -536,38 +557,50 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>a <span class="ot">=</span> <span class="dv">7</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a>b <span class="ot">=</span> <span class="dv">3</span></span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="fu">pbeta</span>(<span class="fl">0.700001</span>,a,b) <span class="sc">-</span> <span class="fu">pbeta</span>(<span class="fl">0.699999</span>,a,b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>a <span class="ot">=</span> <span class="dv">7</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>b <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="fu">pbeta</span>(<span class="fl">0.700001</span>,a,b) <span class="sc">-</span> <span class="fu">pbeta</span>(<span class="fl">0.699999</span>,a,b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5.336559e-06</code></pre>
 </div>
 </div>
-<p> The output, <span class="math inline">\(P \approx 5.34 \times 10^{-6}\)</span> is, as expected, very close to 0.</p>
+<p> The output, <span class="math inline">\(\approx 5.34 \times 10^{-6}\)</span> is, as expected, very close to 0.</p>
 <p></p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>x <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.001</span>)</span>
-<span id="cb14-2"><a href="#cb14-2"></a>dat <span class="ot">=</span> <span class="fu">tibble</span>(</span>
-<span id="cb14-3"><a href="#cb14-3"></a>  <span class="at">x =</span> x,</span>
-<span id="cb14-4"><a href="#cb14-4"></a>  <span class="at">PDF =</span> <span class="fu">dbeta</span>(x,a,b)</span>
-<span id="cb14-5"><a href="#cb14-5"></a>)</span>
-<span id="cb14-6"><a href="#cb14-6"></a>dat <span class="sc">|&gt;</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb14-8"><a href="#cb14-8"></a>      <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb14-9"><a href="#cb14-9"></a>                    <span class="at">y =</span> PDF)) <span class="sc">+</span></span>
-<span id="cb14-10"><a href="#cb14-10"></a>      <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb14-11"><a href="#cb14-11"></a>      <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.7</span>, <span class="at">color=</span><span class="st">"darkorchid2"</span>) <span class="sc">+</span></span>
-<span id="cb14-12"><a href="#cb14-12"></a>      <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb14-13"><a href="#cb14-13"></a>      <span class="fu">xlab</span>(<span class="st">"p (win probability)"</span>) <span class="sc">+</span></span>
-<span id="cb14-14"><a href="#cb14-14"></a>      <span class="fu">ylab</span>(<span class="st">"Density"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>x <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.001</span>)</span>
+<span id="cb15-2"><a href="#cb15-2"></a>dat <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="at">x =</span> x,</span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="at">PDF =</span> <span class="fu">dbeta</span>(x,a,b)</span>
+<span id="cb15-5"><a href="#cb15-5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p></p>
+<p></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>dat <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>      <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb16-4"><a href="#cb16-4"></a>                    <span class="at">y =</span> PDF)) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a>      <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a>      <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.7</span>, <span class="at">color=</span><span class="st">"darkorchid2"</span>) <span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a>      <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a>      <span class="fu">xlab</span>(<span class="st">"p (win probability)"</span>) <span class="sc">+</span></span>
+<span id="cb16-9"><a href="#cb16-9"></a>      <span class="fu">ylab</span>(<span class="st">"Density"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-beta-point" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-beta-point-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Density of Beta(7,3) with vertical line at p = 0.7.
+</figcaption>
+<div aria-describedby="fig-beta-point-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Lab8WriteUp_files/figure-html/fig-beta-point-1.png" class="img-fluid figure-img" width="672">
+</div>
 </figure>
 </div>
 </div>
@@ -582,9 +615,9 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>a <span class="ot">=</span> <span class="dv">7</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a>b <span class="ot">=</span> <span class="dv">3</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbeta</span>(<span class="fl">0.5</span>,a,b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>a <span class="ot">=</span> <span class="dv">7</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>b <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbeta</span>(<span class="fl">0.5</span>,a,b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9101562</code></pre>
@@ -596,27 +629,40 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>x <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.001</span>)</span>
-<span id="cb17-2"><a href="#cb17-2"></a>dat <span class="ot">=</span> <span class="fu">tibble</span>(</span>
-<span id="cb17-3"><a href="#cb17-3"></a>  <span class="at">x =</span> x,</span>
-<span id="cb17-4"><a href="#cb17-4"></a>  <span class="at">CDF =</span> <span class="fu">pbeta</span>(x,a,b)</span>
-<span id="cb17-5"><a href="#cb17-5"></a>)</span>
-<span id="cb17-6"><a href="#cb17-6"></a>dat <span class="sc">|&gt;</span></span>
-<span id="cb17-7"><a href="#cb17-7"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb17-8"><a href="#cb17-8"></a>      <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb17-9"><a href="#cb17-9"></a>                    <span class="at">y =</span> CDF)) <span class="sc">+</span></span>
-<span id="cb17-10"><a href="#cb17-10"></a>        <span class="fu">geom_linerange</span>(<span class="at">data =</span> dat <span class="sc">|&gt;</span> <span class="fu">filter</span>(x<span class="sc">&gt;=</span><span class="fl">0.50</span>),</span>
-<span id="cb17-11"><a href="#cb17-11"></a>                <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> CDF),</span>
-<span id="cb17-12"><a href="#cb17-12"></a>                <span class="at">color =</span> <span class="st">"darkgoldenrod2"</span>, <span class="at">linewidth=</span><span class="fl">0.5</span>, <span class="at">alpha=</span><span class="fl">0.30</span>) <span class="sc">+</span></span>
-<span id="cb17-13"><a href="#cb17-13"></a>      <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb17-14"><a href="#cb17-14"></a>      <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb17-15"><a href="#cb17-15"></a>      <span class="fu">xlab</span>(<span class="st">"p (win probability)"</span>) <span class="sc">+</span></span>
-<span id="cb17-16"><a href="#cb17-16"></a>      <span class="fu">ylab</span>(<span class="st">"Cumulative Probability"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>x <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.001</span>)</span>
+<span id="cb19-2"><a href="#cb19-2"></a>dat <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="at">x =</span> x,</span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="at">CDF =</span> <span class="fu">pbeta</span>(x,a,b)</span>
+<span id="cb19-5"><a href="#cb19-5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p></p>
+<p></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>dat <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a>      <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb20-4"><a href="#cb20-4"></a>                    <span class="at">y =</span> CDF)) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a>      <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">0.5</span>, <span class="at">y =</span> <span class="fu">pbeta</span>(<span class="fl">0.5</span>, <span class="dv">7</span>, <span class="dv">3</span>)),</span>
+<span id="cb20-6"><a href="#cb20-6"></a>               <span class="at">color =</span> <span class="st">"darkgoldenrod2"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a>      <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">pbeta</span>(<span class="fl">0.5</span>, <span class="dv">7</span>, <span class="dv">3</span>),</span>
+<span id="cb20-8"><a href="#cb20-8"></a>                 <span class="at">color =</span> <span class="st">"darkgoldenrod2"</span>) <span class="sc">+</span></span>
+<span id="cb20-9"><a href="#cb20-9"></a>      <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb20-10"><a href="#cb20-10"></a>      <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb20-11"><a href="#cb20-11"></a>      <span class="fu">xlab</span>(<span class="st">"p (win probability)"</span>) <span class="sc">+</span></span>
+<span id="cb20-12"><a href="#cb20-12"></a>      <span class="fu">ylab</span>(<span class="st">"Cumulative Probability"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-beta-cdf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-beta-cdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: CDF of Beta(7,3), highlighting probability that p ≥ 0.5.
+</figcaption>
+<div aria-describedby="fig-beta-cdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Lab8WriteUp_files/figure-html/fig-beta-cdf-1.png" class="img-fluid figure-img" width="672">
+</div>
 </figure>
 </div>
 </div>
@@ -633,9 +679,9 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>a <span class="ot">=</span> <span class="dv">7</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a>b <span class="ot">=</span> <span class="dv">3</span></span>
-<span id="cb18-3"><a href="#cb18-3"></a><span class="fu">qbeta</span>(<span class="fl">0.9</span>,a,b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>a <span class="ot">=</span> <span class="dv">7</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>b <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="fu">qbeta</span>(<span class="fl">0.9</span>,a,b)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.8705027</code></pre>
@@ -646,27 +692,39 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>x <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.001</span>)</span>
-<span id="cb20-2"><a href="#cb20-2"></a>dat <span class="ot">=</span> <span class="fu">tibble</span>(</span>
-<span id="cb20-3"><a href="#cb20-3"></a>  <span class="at">x =</span> x,</span>
-<span id="cb20-4"><a href="#cb20-4"></a>  <span class="at">CDF =</span> <span class="fu">pbeta</span>(x,a,b)</span>
-<span id="cb20-5"><a href="#cb20-5"></a>)</span>
-<span id="cb20-6"><a href="#cb20-6"></a>dat <span class="sc">|&gt;</span></span>
-<span id="cb20-7"><a href="#cb20-7"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb20-8"><a href="#cb20-8"></a>      <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb20-9"><a href="#cb20-9"></a>                    <span class="at">y =</span> CDF)) <span class="sc">+</span></span>
-<span id="cb20-10"><a href="#cb20-10"></a>      <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">qbeta</span>(<span class="fl">0.9</span>, a, b), <span class="at">y =</span> <span class="fl">0.9</span>),</span>
-<span id="cb20-11"><a href="#cb20-11"></a>           <span class="at">color =</span> <span class="st">"darkgoldenrod2"</span>) <span class="sc">+</span></span>
-<span id="cb20-12"><a href="#cb20-12"></a>      <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb20-13"><a href="#cb20-13"></a>      <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.9</span>, <span class="at">color =</span> <span class="st">"darkgoldenrod2"</span>) <span class="sc">+</span></span>
-<span id="cb20-14"><a href="#cb20-14"></a>      <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb20-15"><a href="#cb20-15"></a>      <span class="fu">xlab</span>(<span class="st">"p (win probability)"</span>) <span class="sc">+</span></span>
-<span id="cb20-16"><a href="#cb20-16"></a>      <span class="fu">ylab</span>(<span class="st">"Cumulative Probability"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>x <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.001</span>)</span>
+<span id="cb23-2"><a href="#cb23-2"></a>dat <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="at">x =</span> x,</span>
+<span id="cb23-4"><a href="#cb23-4"></a>  <span class="at">CDF =</span> <span class="fu">pbeta</span>(x,a,b)</span>
+<span id="cb23-5"><a href="#cb23-5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p></p>
+<p></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>dat <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>    <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a>      <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb24-4"><a href="#cb24-4"></a>                    <span class="at">y =</span> CDF)) <span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5"></a>      <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">qbeta</span>(<span class="fl">0.9</span>, a, b), <span class="at">y =</span> <span class="fl">0.9</span>),</span>
+<span id="cb24-6"><a href="#cb24-6"></a>           <span class="at">color =</span> <span class="st">"darkgoldenrod2"</span>) <span class="sc">+</span></span>
+<span id="cb24-7"><a href="#cb24-7"></a>      <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb24-8"><a href="#cb24-8"></a>      <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.9</span>, <span class="at">color =</span> <span class="st">"darkgoldenrod2"</span>) <span class="sc">+</span></span>
+<span id="cb24-9"><a href="#cb24-9"></a>      <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb24-10"><a href="#cb24-10"></a>      <span class="fu">xlab</span>(<span class="st">"p (win probability)"</span>) <span class="sc">+</span></span>
+<span id="cb24-11"><a href="#cb24-11"></a>      <span class="fu">ylab</span>(<span class="st">"Cumulative Probability"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-beta-quantile" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-beta-quantile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: CDF of Beta(7,3) showing the 90th percentile.
+</figcaption>
+<div aria-describedby="fig-beta-quantile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Lab8WriteUp_files/figure-html/fig-beta-quantile-1.png" class="img-fluid figure-img" width="672">
+</div>
 </figure>
 </div>
 </div>
@@ -681,8 +739,8 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">library</span>(extraDistr)</span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbbinom</span>(<span class="at">q=</span><span class="dv">1</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">alpha =</span> <span class="dv">7</span>, <span class="at">beta =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">library</span>(extraDistr)</span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbbinom</span>(<span class="at">q=</span><span class="dv">1</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">alpha =</span> <span class="dv">7</span>, <span class="at">beta =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.7636364</code></pre>
@@ -709,18 +767,18 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>x <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a>p <span class="ot">=</span> <span class="fl">0.7</span></span>
-<span id="cb23-3"><a href="#cb23-3"></a>n <span class="ot">=</span> <span class="dv">3</span></span>
-<span id="cb23-4"><a href="#cb23-4"></a>pmf <span class="ot">=</span> <span class="fu">dbinom</span>(x,<span class="at">size =</span> n, <span class="at">prob =</span> p)</span>
-<span id="cb23-5"><a href="#cb23-5"></a>(<span class="at">mu =</span> <span class="fu">sum</span>(x<span class="sc">*</span>pmf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>x <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>p <span class="ot">=</span> <span class="fl">0.7</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a>n <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a>pmf <span class="ot">=</span> <span class="fu">dbinom</span>(x,<span class="at">size =</span> n, <span class="at">prob =</span> p)</span>
+<span id="cb27-5"><a href="#cb27-5"></a>(<span class="at">mu =</span> <span class="fu">sum</span>(x<span class="sc">*</span>pmf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.1</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>(<span class="at">var =</span> <span class="fu">sum</span>((x<span class="sc">-</span>mu)<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>pmf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>(<span class="at">var =</span> <span class="fu">sum</span>((x<span class="sc">-</span>mu)<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>pmf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.63</code></pre>
@@ -732,19 +790,19 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>x <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a>a <span class="ot">=</span> <span class="dv">7</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a>b <span class="ot">=</span> <span class="dv">3</span></span>
-<span id="cb27-4"><a href="#cb27-4"></a>n <span class="ot">=</span> <span class="dv">3</span></span>
-<span id="cb27-5"><a href="#cb27-5"></a>pmf <span class="ot">=</span> <span class="fu">dbbinom</span>(x, <span class="at">size=</span>n, <span class="at">alpha =</span> a, <span class="at">beta =</span> b)</span>
-<span id="cb27-6"><a href="#cb27-6"></a>(<span class="at">mu =</span> <span class="fu">sum</span>(x<span class="sc">*</span>pmf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>x <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">3</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>a <span class="ot">=</span> <span class="dv">7</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a>b <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb31-4"><a href="#cb31-4"></a>n <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb31-5"><a href="#cb31-5"></a>pmf <span class="ot">=</span> <span class="fu">dbbinom</span>(x, <span class="at">size=</span>n, <span class="at">alpha =</span> a, <span class="at">beta =</span> b)</span>
+<span id="cb31-6"><a href="#cb31-6"></a>(<span class="at">mu =</span> <span class="fu">sum</span>(x<span class="sc">*</span>pmf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.1</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>(<span class="at">var =</span> <span class="fu">sum</span>((x<span class="sc">-</span>mu)<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>pmf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>(<span class="at">var =</span> <span class="fu">sum</span>((x<span class="sc">-</span>mu)<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span>pmf))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.7445455</code></pre>
@@ -767,16 +825,16 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>daltbinom <span class="ot">=</span> <span class="cf">function</span>(n, x, p, theta){</span>
-<span id="cb31-2"><a href="#cb31-2"></a> <span class="cf">if</span>(x <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">||</span> x <span class="sc">&gt;</span> n){</span>
-<span id="cb31-3"><a href="#cb31-3"></a>    pmf <span class="ot">=</span> <span class="dv">0</span></span>
-<span id="cb31-4"><a href="#cb31-4"></a>  }<span class="cf">else</span>{</span>
-<span id="cb31-5"><a href="#cb31-5"></a>  i <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>n</span>
-<span id="cb31-6"><a href="#cb31-6"></a>  c <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">choose</span>(n,i) <span class="sc">*</span> p<span class="sc">^</span>i <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span>(n<span class="sc">-</span>i) <span class="sc">*</span> theta<span class="sc">^</span>(i <span class="sc">*</span> (n<span class="sc">-</span>i)))</span>
-<span id="cb31-7"><a href="#cb31-7"></a>  </span>
-<span id="cb31-8"><a href="#cb31-8"></a>  pmf <span class="ot">=</span> (<span class="dv">1</span><span class="sc">/</span>c) <span class="sc">*</span> <span class="fu">choose</span>(n,x) <span class="sc">*</span> p<span class="sc">^</span>x <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span>(n<span class="sc">-</span>x) <span class="sc">*</span> theta<span class="sc">^</span>(x<span class="sc">*</span>(n<span class="sc">-</span>x))</span>
-<span id="cb31-9"><a href="#cb31-9"></a>}</span>
-<span id="cb31-10"><a href="#cb31-10"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>daltbinom <span class="ot">=</span> <span class="cf">function</span>(n, x, p, theta){</span>
+<span id="cb35-2"><a href="#cb35-2"></a> <span class="cf">if</span>(x <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">||</span> x <span class="sc">&gt;</span> n <span class="sc">||</span> p <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">||</span> p <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">||</span> theta <span class="sc">&lt;=</span> <span class="dv">0</span> <span class="sc">||</span> n <span class="sc">&lt;</span> <span class="dv">0</span>){</span>
+<span id="cb35-3"><a href="#cb35-3"></a>    pmf <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb35-4"><a href="#cb35-4"></a>  }<span class="cf">else</span>{</span>
+<span id="cb35-5"><a href="#cb35-5"></a>  i <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>n</span>
+<span id="cb35-6"><a href="#cb35-6"></a>  c <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">choose</span>(n,i) <span class="sc">*</span> p<span class="sc">^</span>i <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span>(n<span class="sc">-</span>i) <span class="sc">*</span> theta<span class="sc">^</span>(i <span class="sc">*</span> (n<span class="sc">-</span>i)))</span>
+<span id="cb35-7"><a href="#cb35-7"></a>  </span>
+<span id="cb35-8"><a href="#cb35-8"></a>  pmf <span class="ot">=</span> (<span class="dv">1</span><span class="sc">/</span>c) <span class="sc">*</span> <span class="fu">choose</span>(n,x) <span class="sc">*</span> p<span class="sc">^</span>x <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span>(n<span class="sc">-</span>x) <span class="sc">*</span> theta<span class="sc">^</span>(x<span class="sc">*</span>(n<span class="sc">-</span>x))</span>
+<span id="cb35-9"><a href="#cb35-9"></a>  }</span>
+<span id="cb35-10"><a href="#cb35-10"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p></p>
@@ -785,19 +843,19 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>(<span class="at">df =</span> <span class="fu">tibble</span>(</span>
-<span id="cb32-2"><a href="#cb32-2"></a>  <span class="at">x =</span> <span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">3</span>),</span>
-<span id="cb32-3"><a href="#cb32-3"></a>  <span class="at">pmf =</span> <span class="fu">c</span>(</span>
-<span id="cb32-4"><a href="#cb32-4"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">daltbinom</span>(<span class="dv">3</span>, xi, <span class="fl">0.7</span>, <span class="fl">0.5</span>)),</span>
-<span id="cb32-5"><a href="#cb32-5"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">daltbinom</span>(<span class="dv">3</span>, xi, <span class="fl">0.7</span>, <span class="dv">1</span>)),</span>
-<span id="cb32-6"><a href="#cb32-6"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">daltbinom</span>(<span class="dv">3</span>, xi, <span class="fl">0.7</span>, <span class="fl">1.5</span>))</span>
-<span id="cb32-7"><a href="#cb32-7"></a>  ),</span>
-<span id="cb32-8"><a href="#cb32-8"></a>  <span class="at">theta =</span> <span class="fu">c</span>(</span>
-<span id="cb32-9"><a href="#cb32-9"></a>    <span class="fu">rep</span>(<span class="st">"0.5"</span>, <span class="dv">4</span>),</span>
-<span id="cb32-10"><a href="#cb32-10"></a>    <span class="fu">rep</span>(<span class="st">"1"</span>, <span class="dv">4</span>),</span>
-<span id="cb32-11"><a href="#cb32-11"></a>    <span class="fu">rep</span>(<span class="st">"1.5"</span>, <span class="dv">4</span>)</span>
-<span id="cb32-12"><a href="#cb32-12"></a>  )</span>
-<span id="cb32-13"><a href="#cb32-13"></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>(<span class="at">df =</span> <span class="fu">tibble</span>(</span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="at">x =</span> <span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">3</span>),</span>
+<span id="cb36-3"><a href="#cb36-3"></a>  <span class="at">pmf =</span> <span class="fu">c</span>(</span>
+<span id="cb36-4"><a href="#cb36-4"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">daltbinom</span>(<span class="dv">3</span>, xi, <span class="fl">0.7</span>, <span class="fl">0.5</span>)),</span>
+<span id="cb36-5"><a href="#cb36-5"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">daltbinom</span>(<span class="dv">3</span>, xi, <span class="fl">0.7</span>, <span class="dv">1</span>)),</span>
+<span id="cb36-6"><a href="#cb36-6"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">daltbinom</span>(<span class="dv">3</span>, xi, <span class="fl">0.7</span>, <span class="fl">1.5</span>))</span>
+<span id="cb36-7"><a href="#cb36-7"></a>  ),</span>
+<span id="cb36-8"><a href="#cb36-8"></a>  <span class="at">theta =</span> <span class="fu">c</span>(</span>
+<span id="cb36-9"><a href="#cb36-9"></a>    <span class="fu">rep</span>(<span class="st">"0.5"</span>, <span class="dv">4</span>),</span>
+<span id="cb36-10"><a href="#cb36-10"></a>    <span class="fu">rep</span>(<span class="st">"1"</span>, <span class="dv">4</span>),</span>
+<span id="cb36-11"><a href="#cb36-11"></a>    <span class="fu">rep</span>(<span class="st">"1.5"</span>, <span class="dv">4</span>)</span>
+<span id="cb36-12"><a href="#cb36-12"></a>  )</span>
+<span id="cb36-13"><a href="#cb36-13"></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 3
@@ -816,31 +874,39 @@ window.Quarto = {
 11     2 0.555  1.5  
 12     3 0.192  1.5  </code></pre>
 </div>
+</div>
+<p></p>
+<p></p>
+<div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>df <span class="sc">|&gt;</span></span>
-<span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, </span>
-<span id="cb34-3"><a href="#cb34-3"></a>             <span class="at">y =</span> pmf, </span>
-<span id="cb34-4"><a href="#cb34-4"></a>             <span class="at">color =</span> theta)) <span class="sc">+</span></span>
-<span id="cb34-5"><a href="#cb34-5"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb34-6"><a href="#cb34-6"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb34-7"><a href="#cb34-7"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb34-8"><a href="#cb34-8"></a>    <span class="fu">labs</span>(</span>
-<span id="cb34-9"><a href="#cb34-9"></a>      <span class="at">x =</span> <span class="st">"Number of Legs Won (for A)"</span>,</span>
-<span id="cb34-10"><a href="#cb34-10"></a>      <span class="at">y =</span> <span class="st">"Probability"</span>,</span>
-<span id="cb34-11"><a href="#cb34-11"></a>      <span class="at">color =</span> <span class="st">"Theta"</span></span>
-<span id="cb34-12"><a href="#cb34-12"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb38-3"><a href="#cb38-3"></a>             <span class="at">y =</span> pmf, </span>
+<span id="cb38-4"><a href="#cb38-4"></a>             <span class="at">color =</span> theta)) <span class="sc">+</span></span>
+<span id="cb38-5"><a href="#cb38-5"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb38-6"><a href="#cb38-6"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb38-7"><a href="#cb38-7"></a>    <span class="fu">labs</span>(</span>
+<span id="cb38-8"><a href="#cb38-8"></a>      <span class="at">x =</span> <span class="st">"Number of Legs Won (for A)"</span>,</span>
+<span id="cb38-9"><a href="#cb38-9"></a>      <span class="at">y =</span> <span class="st">"Probability"</span>,</span>
+<span id="cb38-10"><a href="#cb38-10"></a>      <span class="at">color =</span> <span class="st">"Theta"</span></span>
+<span id="cb38-11"><a href="#cb38-11"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-altham-pmf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-altham-pmf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: PMF of Altham’s multiplicative binomial for different values of θ.
+</figcaption>
+<div aria-describedby="fig-altham-pmf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Lab8WriteUp_files/figure-html/fig-altham-pmf-1.png" class="img-fluid figure-img" width="672">
+</div>
 </figure>
 </div>
 </div>
 </div>
 <p></p>
-<p><em>Interpretation:</em> The most-likely outcome for the player with <span class="math inline">\(\theta = 0.5\)</span> is 3 (plot is increasing, so they are more likely to win more legs than less legs). Furthermore, the player with <span class="math inline">\(\theta = 0.5\)</span> has the highest chance of winning 3 legs compared to the other 2 players. The players with <span class="math inline">\(\theta = 1\)</span> and <span class="math inline">\(\theta = 1.5\)</span> don’t see this strictly increasing pattern, and both are most likely to win 2 legs. What the three players <em>do</em> have in common, is that the least likely outcome for all 3 is winning 0 games. When theta increases, it seems to make outcomes near 2 more likely (higher value for 2 wins and “tighter” lines around it).</p>
+<p><em>Interpretation:</em> The most-likely outcome for the player with <span class="math inline">\(\theta = 0.5\)</span> is 3 (plot is increasing, so they are more likely to win more legs than fewer legs). Furthermore, the player with <span class="math inline">\(\theta = 0.5\)</span> has the highest chance of winning all 3 legs (a dominant outcome) compared to the other 2 players. The players with <span class="math inline">\(\theta = 1\)</span> and <span class="math inline">\(\theta = 1.5\)</span> don’t see this strictly increasing pattern, and both are most likely to win 2 legs. What the three players <em>do</em> have in common is that the least likely outcome for all 3 is winning 0 games. When theta increases, it seems to make more balanced outcomes more probable, so 2-1 and 1-2 results become more likely.</p>
 </section>
 <section id="cumulative-distribution-function" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="cumulative-distribution-function"><span class="header-section-number">3.2</span> Cumulative Distribution Function</h2>
@@ -850,13 +916,13 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>paltbinom <span class="ot">=</span> <span class="cf">function</span>(n, x, p, theta){</span>
-<span id="cb35-2"><a href="#cb35-2"></a>  cdf <span class="ot">=</span> <span class="dv">0</span></span>
-<span id="cb35-3"><a href="#cb35-3"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>x){</span>
-<span id="cb35-4"><a href="#cb35-4"></a>    cdf <span class="ot">=</span> cdf <span class="sc">+</span> <span class="fu">daltbinom</span>(n, i, p, theta)</span>
-<span id="cb35-5"><a href="#cb35-5"></a>  }</span>
-<span id="cb35-6"><a href="#cb35-6"></a>  <span class="fu">return</span>(cdf)</span>
-<span id="cb35-7"><a href="#cb35-7"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>paltbinom <span class="ot">=</span> <span class="cf">function</span>(n, x, p, theta){</span>
+<span id="cb39-2"><a href="#cb39-2"></a>  cdf <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb39-3"><a href="#cb39-3"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>x){</span>
+<span id="cb39-4"><a href="#cb39-4"></a>    cdf <span class="ot">=</span> cdf <span class="sc">+</span> <span class="fu">daltbinom</span>(n, i, p, theta)</span>
+<span id="cb39-5"><a href="#cb39-5"></a>  }</span>
+<span id="cb39-6"><a href="#cb39-6"></a>  <span class="fu">return</span>(cdf)</span>
+<span id="cb39-7"><a href="#cb39-7"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p></p>
@@ -865,19 +931,19 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>(<span class="at">df =</span> <span class="fu">tibble</span>(</span>
-<span id="cb36-2"><a href="#cb36-2"></a>  <span class="at">x =</span> <span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">3</span>),</span>
-<span id="cb36-3"><a href="#cb36-3"></a>  <span class="at">cdf =</span> <span class="fu">c</span>(</span>
-<span id="cb36-4"><a href="#cb36-4"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">paltbinom</span>(<span class="dv">3</span>, xi, <span class="fl">0.7</span>, <span class="fl">0.5</span>)),</span>
-<span id="cb36-5"><a href="#cb36-5"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">paltbinom</span>(<span class="dv">3</span>, xi, <span class="fl">0.7</span>, <span class="dv">1</span>)),</span>
-<span id="cb36-6"><a href="#cb36-6"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">paltbinom</span>(<span class="dv">3</span>, xi, <span class="fl">0.7</span>, <span class="fl">1.5</span>))</span>
-<span id="cb36-7"><a href="#cb36-7"></a>  ),</span>
-<span id="cb36-8"><a href="#cb36-8"></a>  <span class="at">theta =</span> <span class="fu">c</span>(</span>
-<span id="cb36-9"><a href="#cb36-9"></a>    <span class="fu">rep</span>(<span class="st">"0.5"</span>, <span class="dv">4</span>),</span>
-<span id="cb36-10"><a href="#cb36-10"></a>    <span class="fu">rep</span>(<span class="st">"1"</span>, <span class="dv">4</span>),</span>
-<span id="cb36-11"><a href="#cb36-11"></a>    <span class="fu">rep</span>(<span class="st">"1.5"</span>, <span class="dv">4</span>)</span>
-<span id="cb36-12"><a href="#cb36-12"></a>  )</span>
-<span id="cb36-13"><a href="#cb36-13"></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>(<span class="at">df =</span> <span class="fu">tibble</span>(</span>
+<span id="cb40-2"><a href="#cb40-2"></a>  <span class="at">x =</span> <span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">3</span>),</span>
+<span id="cb40-3"><a href="#cb40-3"></a>  <span class="at">cdf =</span> <span class="fu">c</span>(</span>
+<span id="cb40-4"><a href="#cb40-4"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">paltbinom</span>(<span class="dv">3</span>, xi, <span class="fl">0.7</span>, <span class="fl">0.5</span>)),</span>
+<span id="cb40-5"><a href="#cb40-5"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">paltbinom</span>(<span class="dv">3</span>, xi, <span class="fl">0.7</span>, <span class="dv">1</span>)),</span>
+<span id="cb40-6"><a href="#cb40-6"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">paltbinom</span>(<span class="dv">3</span>, xi, <span class="fl">0.7</span>, <span class="fl">1.5</span>))</span>
+<span id="cb40-7"><a href="#cb40-7"></a>  ),</span>
+<span id="cb40-8"><a href="#cb40-8"></a>  <span class="at">theta =</span> <span class="fu">c</span>(</span>
+<span id="cb40-9"><a href="#cb40-9"></a>    <span class="fu">rep</span>(<span class="st">"0.5"</span>, <span class="dv">4</span>),</span>
+<span id="cb40-10"><a href="#cb40-10"></a>    <span class="fu">rep</span>(<span class="st">"1"</span>, <span class="dv">4</span>),</span>
+<span id="cb40-11"><a href="#cb40-11"></a>    <span class="fu">rep</span>(<span class="st">"1.5"</span>, <span class="dv">4</span>)</span>
+<span id="cb40-12"><a href="#cb40-12"></a>  )</span>
+<span id="cb40-13"><a href="#cb40-13"></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 3
@@ -896,25 +962,33 @@ window.Quarto = {
 11     2 0.808  1.5  
 12     3 1      1.5  </code></pre>
 </div>
+</div>
+<p></p>
+<p></p>
+<div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>df <span class="sc">|&gt;</span></span>
-<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, </span>
-<span id="cb38-3"><a href="#cb38-3"></a>             <span class="at">y =</span> cdf, </span>
-<span id="cb38-4"><a href="#cb38-4"></a>             <span class="at">color =</span> theta)) <span class="sc">+</span></span>
-<span id="cb38-5"><a href="#cb38-5"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb38-6"><a href="#cb38-6"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb38-7"><a href="#cb38-7"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb38-8"><a href="#cb38-8"></a>    <span class="fu">labs</span>(</span>
-<span id="cb38-9"><a href="#cb38-9"></a>      <span class="at">x =</span> <span class="st">"Number of Legs Won (for A)"</span>,</span>
-<span id="cb38-10"><a href="#cb38-10"></a>      <span class="at">y =</span> <span class="st">"Cumulative Probability"</span>,</span>
-<span id="cb38-11"><a href="#cb38-11"></a>      <span class="at">color =</span> <span class="st">"Theta"</span></span>
-<span id="cb38-12"><a href="#cb38-12"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb42-3"><a href="#cb42-3"></a>             <span class="at">y =</span> cdf, </span>
+<span id="cb42-4"><a href="#cb42-4"></a>             <span class="at">color =</span> theta)) <span class="sc">+</span></span>
+<span id="cb42-5"><a href="#cb42-5"></a>    <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.2</span>), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb42-6"><a href="#cb42-6"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb42-7"><a href="#cb42-7"></a>    <span class="fu">labs</span>(</span>
+<span id="cb42-8"><a href="#cb42-8"></a>      <span class="at">x =</span> <span class="st">"Number of Legs Won (for A)"</span>,</span>
+<span id="cb42-9"><a href="#cb42-9"></a>      <span class="at">y =</span> <span class="st">"Cumulative Probability"</span>,</span>
+<span id="cb42-10"><a href="#cb42-10"></a>      <span class="at">color =</span> <span class="st">"Theta"</span></span>
+<span id="cb42-11"><a href="#cb42-11"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-altham-cdf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-altham-cdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: CDF of Altham’s multiplicative binomial for different values of θ.
+</figcaption>
+<div aria-describedby="fig-altham-cdf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Lab8WriteUp_files/figure-html/fig-altham-cdf-1.png" class="img-fluid figure-img" width="672">
+</div>
 </figure>
 </div>
 </div>
@@ -931,7 +1005,7 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">sapply</span>(<span class="fu">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="fl">1.5</span>), <span class="cf">function</span>(t) <span class="fu">paltbinom</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="fl">0.7</span>, t))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">sapply</span>(<span class="fu">c</span>(<span class="fl">0.5</span>,<span class="dv">1</span>,<span class="fl">1.5</span>), <span class="cf">function</span>(t) <span class="fu">paltbinom</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="fl">0.7</span>, t))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.8592417 0.7840000 0.7469930</code></pre>
@@ -943,26 +1017,30 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>df <span class="ot">=</span> <span class="fu">tibble</span>(</span>
-<span id="cb41-2"><a href="#cb41-2"></a>  <span class="at">theta =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>),</span>
-<span id="cb41-3"><a href="#cb41-3"></a>  <span class="at">win_prob =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sapply</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>), <span class="cf">function</span>(t) <span class="fu">paltbinom</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="fl">0.7</span>, t))</span>
-<span id="cb41-4"><a href="#cb41-4"></a>)</span>
-<span id="cb41-5"><a href="#cb41-5"></a></span>
-<span id="cb41-6"><a href="#cb41-6"></a>df <span class="sc">|&gt;</span></span>
-<span id="cb41-7"><a href="#cb41-7"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> theta, </span>
-<span id="cb41-8"><a href="#cb41-8"></a>             <span class="at">y =</span> win_prob)) <span class="sc">+</span></span>
-<span id="cb41-9"><a href="#cb41-9"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb41-10"><a href="#cb41-10"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb41-11"><a href="#cb41-11"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb41-12"><a href="#cb41-12"></a>  <span class="fu">labs</span>(</span>
-<span id="cb41-13"><a href="#cb41-13"></a>    <span class="at">x =</span> <span class="st">"Theta"</span>,</span>
-<span id="cb41-14"><a href="#cb41-14"></a>    <span class="at">y =</span> <span class="st">"Probability A Wins (2 or more legs)"</span></span>
-<span id="cb41-15"><a href="#cb41-15"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>df <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb45-2"><a href="#cb45-2"></a>  <span class="at">theta =</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="at">by =</span> <span class="fl">0.005</span>),</span>
+<span id="cb45-3"><a href="#cb45-3"></a>  <span class="at">win_prob =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">sapply</span>(theta, <span class="cf">function</span>(t) <span class="fu">paltbinom</span>(<span class="dv">3</span>, <span class="dv">1</span>, <span class="fl">0.7</span>, t))</span>
+<span id="cb45-4"><a href="#cb45-4"></a>)</span>
+<span id="cb45-5"><a href="#cb45-5"></a></span>
+<span id="cb45-6"><a href="#cb45-6"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb45-7"><a href="#cb45-7"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> theta, </span>
+<span id="cb45-8"><a href="#cb45-8"></a>             <span class="at">y =</span> win_prob)) <span class="sc">+</span></span>
+<span id="cb45-9"><a href="#cb45-9"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb45-10"><a href="#cb45-10"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb45-11"><a href="#cb45-11"></a>  <span class="fu">labs</span>(</span>
+<span id="cb45-12"><a href="#cb45-12"></a>    <span class="at">x =</span> <span class="st">"Theta"</span>,</span>
+<span id="cb45-13"><a href="#cb45-13"></a>    <span class="at">y =</span> <span class="st">"Probability A Wins (2 or more legs)"</span></span>
+<span id="cb45-14"><a href="#cb45-14"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-altham-winprob" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-altham-winprob-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Probability that Player A wins as a function of θ.
+</figcaption>
+<div aria-describedby="fig-altham-winprob-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Lab8WriteUp_files/figure-html/fig-altham-winprob-1.png" class="img-fluid figure-img" width="672">
+</div>
 </figure>
 </div>
 </div>
@@ -986,22 +1064,22 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>daltbbinom <span class="ot">=</span> <span class="cf">function</span>(x, n, a, b, theta){</span>
-<span id="cb42-2"><a href="#cb42-2"></a></span>
-<span id="cb42-3"><a href="#cb42-3"></a>  integrand <span class="ot">=</span> <span class="cf">function</span>(p){</span>
-<span id="cb42-4"><a href="#cb42-4"></a></span>
-<span id="cb42-5"><a href="#cb42-5"></a>    i <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>n</span>
-<span id="cb42-6"><a href="#cb42-6"></a>    c <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">choose</span>(n,i) <span class="sc">*</span> p<span class="sc">^</span>i <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span>(n<span class="sc">-</span>i) <span class="sc">*</span> theta<span class="sc">^</span>(i<span class="sc">*</span>(n<span class="sc">-</span>i)))</span>
-<span id="cb42-7"><a href="#cb42-7"></a></span>
-<span id="cb42-8"><a href="#cb42-8"></a>    alt <span class="ot">=</span> (<span class="dv">1</span><span class="sc">/</span>c) <span class="sc">*</span> <span class="fu">choose</span>(n,x) <span class="sc">*</span> p<span class="sc">^</span>x <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span>(n<span class="sc">-</span>x) <span class="sc">*</span> theta<span class="sc">^</span>(x<span class="sc">*</span>(n<span class="sc">-</span>x))</span>
-<span id="cb42-9"><a href="#cb42-9"></a></span>
-<span id="cb42-10"><a href="#cb42-10"></a>    beta <span class="ot">=</span> <span class="fu">dbeta</span>(p, a, b)</span>
-<span id="cb42-11"><a href="#cb42-11"></a></span>
-<span id="cb42-12"><a href="#cb42-12"></a>    alt <span class="sc">*</span> beta</span>
-<span id="cb42-13"><a href="#cb42-13"></a>  }</span>
-<span id="cb42-14"><a href="#cb42-14"></a>  result <span class="ot">=</span> <span class="fu">integrate</span>(integrand, <span class="at">lower =</span> <span class="dv">0</span>, <span class="at">upper =</span> <span class="dv">1</span>)</span>
-<span id="cb42-15"><a href="#cb42-15"></a>  result<span class="sc">$</span>value</span>
-<span id="cb42-16"><a href="#cb42-16"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>daltbbinom <span class="ot">=</span> <span class="cf">function</span>(x, n, a, b, theta){</span>
+<span id="cb46-2"><a href="#cb46-2"></a></span>
+<span id="cb46-3"><a href="#cb46-3"></a>  integrand <span class="ot">=</span> <span class="cf">function</span>(p){</span>
+<span id="cb46-4"><a href="#cb46-4"></a></span>
+<span id="cb46-5"><a href="#cb46-5"></a>    i <span class="ot">=</span> <span class="dv">0</span><span class="sc">:</span>n</span>
+<span id="cb46-6"><a href="#cb46-6"></a>    c <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">choose</span>(n,i) <span class="sc">*</span> p<span class="sc">^</span>i <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span>(n<span class="sc">-</span>i) <span class="sc">*</span> theta<span class="sc">^</span>(i<span class="sc">*</span>(n<span class="sc">-</span>i)))</span>
+<span id="cb46-7"><a href="#cb46-7"></a></span>
+<span id="cb46-8"><a href="#cb46-8"></a>    alt <span class="ot">=</span> (<span class="dv">1</span><span class="sc">/</span>c) <span class="sc">*</span> <span class="fu">choose</span>(n,x) <span class="sc">*</span> p<span class="sc">^</span>x <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span>(n<span class="sc">-</span>x) <span class="sc">*</span> theta<span class="sc">^</span>(x<span class="sc">*</span>(n<span class="sc">-</span>x))</span>
+<span id="cb46-9"><a href="#cb46-9"></a></span>
+<span id="cb46-10"><a href="#cb46-10"></a>    beta <span class="ot">=</span> <span class="fu">dbeta</span>(p, a, b)</span>
+<span id="cb46-11"><a href="#cb46-11"></a></span>
+<span id="cb46-12"><a href="#cb46-12"></a>    alt <span class="sc">*</span> beta</span>
+<span id="cb46-13"><a href="#cb46-13"></a>  }</span>
+<span id="cb46-14"><a href="#cb46-14"></a>  result <span class="ot">=</span> <span class="fu">integrate</span>(integrand, <span class="at">lower =</span> <span class="dv">0</span>, <span class="at">upper =</span> <span class="dv">1</span>)</span>
+<span id="cb46-15"><a href="#cb46-15"></a>  result<span class="sc">$</span>value</span>
+<span id="cb46-16"><a href="#cb46-16"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p> <em>Plot:</em></p>
@@ -1009,39 +1087,49 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>df <span class="ot">=</span> <span class="fu">tibble</span>(</span>
-<span id="cb43-2"><a href="#cb43-2"></a>  <span class="at">x =</span> <span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">3</span>),</span>
-<span id="cb43-3"><a href="#cb43-3"></a></span>
-<span id="cb43-4"><a href="#cb43-4"></a>  <span class="at">pmf =</span> <span class="fu">c</span>(</span>
-<span id="cb43-5"><a href="#cb43-5"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">daltbbinom</span>(xi, <span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="fl">0.5</span>)),</span>
-<span id="cb43-6"><a href="#cb43-6"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">daltbbinom</span>(xi, <span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">1</span>)),</span>
-<span id="cb43-7"><a href="#cb43-7"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">daltbbinom</span>(xi, <span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="fl">1.5</span>))</span>
-<span id="cb43-8"><a href="#cb43-8"></a>  ),</span>
-<span id="cb43-9"><a href="#cb43-9"></a></span>
-<span id="cb43-10"><a href="#cb43-10"></a>  <span class="at">theta =</span> <span class="fu">c</span>(</span>
-<span id="cb43-11"><a href="#cb43-11"></a>    <span class="fu">rep</span>(<span class="st">"0.5"</span>, <span class="dv">4</span>),</span>
-<span id="cb43-12"><a href="#cb43-12"></a>    <span class="fu">rep</span>(<span class="st">"1"</span>, <span class="dv">4</span>),</span>
-<span id="cb43-13"><a href="#cb43-13"></a>    <span class="fu">rep</span>(<span class="st">"1.5"</span>, <span class="dv">4</span>)</span>
-<span id="cb43-14"><a href="#cb43-14"></a>  )</span>
-<span id="cb43-15"><a href="#cb43-15"></a>)</span>
-<span id="cb43-16"><a href="#cb43-16"></a></span>
-<span id="cb43-17"><a href="#cb43-17"></a>(df <span class="sc">|&gt;</span></span>
-<span id="cb43-18"><a href="#cb43-18"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, </span>
-<span id="cb43-19"><a href="#cb43-19"></a>             <span class="at">y =</span> pmf, </span>
-<span id="cb43-20"><a href="#cb43-20"></a>             <span class="at">color =</span> theta)) <span class="sc">+</span></span>
-<span id="cb43-21"><a href="#cb43-21"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb43-22"><a href="#cb43-22"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb43-23"><a href="#cb43-23"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb43-24"><a href="#cb43-24"></a>  <span class="fu">labs</span>(</span>
-<span id="cb43-25"><a href="#cb43-25"></a>    <span class="at">x =</span> <span class="st">"Number of Legs Won (for A)"</span>,</span>
-<span id="cb43-26"><a href="#cb43-26"></a>    <span class="at">y =</span> <span class="st">"Probability"</span>,</span>
-<span id="cb43-27"><a href="#cb43-27"></a>    <span class="at">color =</span> <span class="st">"Theta"</span></span>
-<span id="cb43-28"><a href="#cb43-28"></a>  ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>df <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb47-2"><a href="#cb47-2"></a>  <span class="at">x =</span> <span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">3</span>),</span>
+<span id="cb47-3"><a href="#cb47-3"></a></span>
+<span id="cb47-4"><a href="#cb47-4"></a>  <span class="at">pmf =</span> <span class="fu">c</span>(</span>
+<span id="cb47-5"><a href="#cb47-5"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">daltbbinom</span>(xi, <span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="fl">0.5</span>)),</span>
+<span id="cb47-6"><a href="#cb47-6"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">daltbbinom</span>(xi, <span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">1</span>)),</span>
+<span id="cb47-7"><a href="#cb47-7"></a>    <span class="fu">sapply</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">3</span>, <span class="cf">function</span>(xi) <span class="fu">daltbbinom</span>(xi, <span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="fl">1.5</span>))</span>
+<span id="cb47-8"><a href="#cb47-8"></a>  ),</span>
+<span id="cb47-9"><a href="#cb47-9"></a></span>
+<span id="cb47-10"><a href="#cb47-10"></a>  <span class="at">theta =</span> <span class="fu">c</span>(</span>
+<span id="cb47-11"><a href="#cb47-11"></a>    <span class="fu">rep</span>(<span class="st">"0.5"</span>, <span class="dv">4</span>),</span>
+<span id="cb47-12"><a href="#cb47-12"></a>    <span class="fu">rep</span>(<span class="st">"1"</span>, <span class="dv">4</span>),</span>
+<span id="cb47-13"><a href="#cb47-13"></a>    <span class="fu">rep</span>(<span class="st">"1.5"</span>, <span class="dv">4</span>)</span>
+<span id="cb47-14"><a href="#cb47-14"></a>  )</span>
+<span id="cb47-15"><a href="#cb47-15"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p></p>
+<p></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>(df <span class="sc">|&gt;</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb48-3"><a href="#cb48-3"></a>             <span class="at">y =</span> pmf, </span>
+<span id="cb48-4"><a href="#cb48-4"></a>             <span class="at">color =</span> theta)) <span class="sc">+</span></span>
+<span id="cb48-5"><a href="#cb48-5"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb48-6"><a href="#cb48-6"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb48-7"><a href="#cb48-7"></a>  <span class="fu">labs</span>(</span>
+<span id="cb48-8"><a href="#cb48-8"></a>    <span class="at">x =</span> <span class="st">"Number of Legs Won (for A)"</span>,</span>
+<span id="cb48-9"><a href="#cb48-9"></a>    <span class="at">y =</span> <span class="st">"Probability"</span>,</span>
+<span id="cb48-10"><a href="#cb48-10"></a>    <span class="at">color =</span> <span class="st">"Theta"</span></span>
+<span id="cb48-11"><a href="#cb48-11"></a>  ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-altham-betabinom-pmf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-altham-betabinom-pmf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: PMF of Altham’s multiplicative Beta-Binomial distribution for different values of θ.
+</figcaption>
+<div aria-describedby="fig-altham-betabinom-pmf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Lab8WriteUp_files/figure-html/fig-altham-betabinom-pmf-1.png" class="img-fluid figure-img" width="672">
+</div>
 </figure>
 </div>
 </div>
@@ -1070,7 +1158,9 @@ window.Quarto = {
 <li><strong>Althman Beta-Binomial with <span class="math inline">\(\theta=0.50\)</span> and <span class="math inline">\(\theta=1.5\)</span></strong></li>
 </ul>
 <p><strong>Comment on the differences in the context of a best two-out-of-three match.</strong></p>
-<p><strong>Solution:</strong> <em>Binomial Outcomes:</em> <span class="math display">\[P(0-2) = f(0) + \frac{1}{3}f(1)\]</span> <span class="math display">\[P(1-2) = \frac{2}{3}f(1)\]</span> <span class="math display">\[P(2-0) = f(3) + \frac{1}{3}f(2)\]</span> <span class="math display">\[P(2-1) = \frac{2}{3}f(2)\]</span></p>
+<p><strong>Solution:</strong> <em>Binomial Outcomes:</em> <span class="math display">\[P(0-2) = f(0) + \frac{1}{3}f(1)\]</span> <span class="math display">\[P(1-2) = \frac{2}{3}f(1)\]</span></p>
+<p>This is because there are 3 equally likely ways to have exactly one win: 1 of them gives a 0–2 result and 2 of them give a 1–2 result. Therefore, we split <span class="math inline">\(f(1)\)</span> using <span class="math inline">\(\frac{1}{3}\)</span> and <span class="math inline">\(\frac{2}{3}\)</span></p>
+<p><span class="math display">\[P(2-0) = f(3) + \frac{1}{3}f(2)\]</span> <span class="math display">\[P(2-1) = \frac{2}{3}f(2)\]</span></p>
 <p><em>Negative Binomial Outcomes:</em> <span class="math display">\[P(0-2) = (1 - p)^2 \]</span> <span class="math display">\[P(1-2) = 2p(1-p)^2 \]</span> <span class="math display">\[P(2-0) = P(X=0) = f(0) \]</span> <span class="math display">\[P(2-1) = P(X=1) = f(1)\]</span></p>
 <p><em>Beta-Binomial Outcomes:</em> Note: these are the same as Binomial, except now <span class="math inline">\(P\)</span> is not fixed, but instead a random variable that follows the Beta distribution (<span class="math inline">\(P \sim \text{Beta}(\alpha, \beta)\)</span>). <span class="math display">\[P(0-2) = f(0) + \frac{1}{3}f(1)\]</span> <span class="math display">\[P(1-2) = \frac{2}{3}f(1)\]</span> <span class="math display">\[P(2-0) = f(3) + \frac{1}{3}f(2)\]</span> <span class="math display">\[P(2-1) = \frac{2}{3}f(2)\]</span></p>
 <p><em>Altham Binomial Outcomes:</em> Note: these are the same as the Binomial, except the PMF is a different function with parameters <span class="math inline">\(\theta = 0.50\)</span> and <span class="math inline">\(\theta = 1.5\)</span> for the two separate cases. <span class="math display">\[P(0-2) = f(0) + \frac{1}{3}f(1)\]</span> <span class="math display">\[P(1-2) = \frac{2}{3}f(1)\]</span> <span class="math display">\[P(2-0) = f(3) + \frac{1}{3}f(2)\]</span> <span class="math display">\[P(2-1) = \frac{2}{3}f(2)\]</span></p>
@@ -1079,201 +1169,100 @@ window.Quarto = {
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="co"># Probabilities</span></span>
-<span id="cb44-2"><a href="#cb44-2"></a>p<span class="ot">=</span><span class="fl">0.7</span></span>
-<span id="cb44-3"><a href="#cb44-3"></a>a<span class="ot">=</span><span class="dv">7</span></span>
-<span id="cb44-4"><a href="#cb44-4"></a>b<span class="ot">=</span><span class="dv">3</span></span>
-<span id="cb44-5"><a href="#cb44-5"></a>  <span class="co">#Binomial</span></span>
-<span id="cb44-6"><a href="#cb44-6"></a>  binom1 <span class="ot">=</span> <span class="fu">dbinom</span>(<span class="at">x=</span><span class="dv">0</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">prob=</span>p) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">dbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">prob=</span>p)</span>
-<span id="cb44-7"><a href="#cb44-7"></a>  binom2 <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">dbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">prob=</span>p)</span>
-<span id="cb44-8"><a href="#cb44-8"></a>  binom3 <span class="ot">=</span> <span class="fu">dbinom</span>(<span class="at">x=</span><span class="dv">3</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">prob=</span>p) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">dbinom</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">prob=</span>p)</span>
-<span id="cb44-9"><a href="#cb44-9"></a>  binom4 <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">dbinom</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">prob=</span>p)</span>
-<span id="cb44-10"><a href="#cb44-10"></a></span>
-<span id="cb44-11"><a href="#cb44-11"></a>  <span class="co">#Negative Binomial</span></span>
-<span id="cb44-12"><a href="#cb44-12"></a>  negBinom1 <span class="ot">=</span> (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb44-13"><a href="#cb44-13"></a>  negBinom2 <span class="ot">=</span> <span class="dv">2</span><span class="sc">*</span>p<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb44-14"><a href="#cb44-14"></a>  negBinom3 <span class="ot">=</span> <span class="fu">dnbinom</span>(<span class="at">x=</span><span class="dv">0</span>,<span class="at">size=</span><span class="dv">2</span>,<span class="at">prob=</span>p)</span>
-<span id="cb44-15"><a href="#cb44-15"></a>  negBinom4 <span class="ot">=</span> <span class="fu">dnbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">size=</span><span class="dv">2</span>,<span class="at">prob=</span>p)</span>
-<span id="cb44-16"><a href="#cb44-16"></a></span>
-<span id="cb44-17"><a href="#cb44-17"></a>  <span class="co">#Beta Binomial</span></span>
-<span id="cb44-18"><a href="#cb44-18"></a>  betaBinom1 <span class="ot">=</span> <span class="fu">dbbinom</span>(<span class="at">x=</span><span class="dv">0</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">alpha=</span>a,<span class="at">beta=</span>b) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">dbbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">alpha=</span>a,<span class="at">beta=</span>b) </span>
-<span id="cb44-19"><a href="#cb44-19"></a>  betaBinom2 <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">dbbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">alpha=</span>a,<span class="at">beta=</span>b) </span>
-<span id="cb44-20"><a href="#cb44-20"></a>  betaBinom3 <span class="ot">=</span> <span class="fu">dbbinom</span>(<span class="at">x=</span><span class="dv">3</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">alpha=</span>a,<span class="at">beta=</span>b) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">dbbinom</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">alpha=</span>a,<span class="at">beta=</span>b)</span>
-<span id="cb44-21"><a href="#cb44-21"></a>  betaBinom4 <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">dbbinom</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">alpha=</span>a,<span class="at">beta=</span>b)</span>
-<span id="cb44-22"><a href="#cb44-22"></a></span>
-<span id="cb44-23"><a href="#cb44-23"></a>  <span class="co">#Altham Binomial</span></span>
-<span id="cb44-24"><a href="#cb44-24"></a>  altBinom1<span class="fl">.05</span> <span class="ot">=</span> <span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">0</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">0.5</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">1</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">0.5</span>)</span>
-<span id="cb44-25"><a href="#cb44-25"></a>  altBinom2<span class="fl">.05</span> <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">1</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">0.5</span>)</span>
-<span id="cb44-26"><a href="#cb44-26"></a>  altBinom3<span class="fl">.05</span> <span class="ot">=</span> <span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">3</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">0.5</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">2</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">0.5</span>)</span>
-<span id="cb44-27"><a href="#cb44-27"></a>  altBinom4<span class="fl">.05</span> <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">2</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">0.5</span>)</span>
-<span id="cb44-28"><a href="#cb44-28"></a></span>
-<span id="cb44-29"><a href="#cb44-29"></a>  altBinom1<span class="fl">.15</span> <span class="ot">=</span> <span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">0</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">1.5</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">1</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">1.5</span>)</span>
-<span id="cb44-30"><a href="#cb44-30"></a>  altBinom2<span class="fl">.15</span> <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">1</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">1.5</span>)</span>
-<span id="cb44-31"><a href="#cb44-31"></a>  altBinom3<span class="fl">.15</span> <span class="ot">=</span> <span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">3</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">1.5</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">2</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">1.5</span>)</span>
-<span id="cb44-32"><a href="#cb44-32"></a>  altBinom4<span class="fl">.15</span> <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">2</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">1.5</span>)</span>
-<span id="cb44-33"><a href="#cb44-33"></a></span>
-<span id="cb44-34"><a href="#cb44-34"></a><span class="co">#Altham Beta Binomial</span></span>
-<span id="cb44-35"><a href="#cb44-35"></a>altBBinom1<span class="fl">.05</span> <span class="ot">=</span> <span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">0</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">0.5</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">0.5</span>)</span>
-<span id="cb44-36"><a href="#cb44-36"></a>altBBinom2<span class="fl">.05</span> <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">0.5</span>)</span>
-<span id="cb44-37"><a href="#cb44-37"></a>altBBinom3<span class="fl">.05</span> <span class="ot">=</span> <span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">3</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">0.5</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">0.5</span>)</span>
-<span id="cb44-38"><a href="#cb44-38"></a>altBBinom4<span class="fl">.05</span> <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">0.5</span>)</span>
-<span id="cb44-39"><a href="#cb44-39"></a></span>
-<span id="cb44-40"><a href="#cb44-40"></a>altBBinom1<span class="fl">.15</span> <span class="ot">=</span> <span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">0</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">1.5</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">1.5</span>)</span>
-<span id="cb44-41"><a href="#cb44-41"></a>altBBinom2<span class="fl">.15</span> <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">1.5</span>)</span>
-<span id="cb44-42"><a href="#cb44-42"></a>altBBinom3<span class="fl">.15</span> <span class="ot">=</span> <span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">3</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">1.5</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">1.5</span>)</span>
-<span id="cb44-43"><a href="#cb44-43"></a>altBBinom4<span class="fl">.15</span> <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">1.5</span>)</span>
-<span id="cb44-44"><a href="#cb44-44"></a></span>
-<span id="cb44-45"><a href="#cb44-45"></a><span class="co"># Plots</span></span>
-<span id="cb44-46"><a href="#cb44-46"></a><span class="co"># putting data tg</span></span>
-<span id="cb44-47"><a href="#cb44-47"></a>  df <span class="ot">=</span> <span class="fu">tibble</span>(</span>
-<span id="cb44-48"><a href="#cb44-48"></a>    <span class="at">outcome =</span> <span class="fu">c</span>(<span class="st">"0-2"</span>, <span class="st">"1-2"</span>, <span class="st">"2-0"</span>, <span class="st">"2-1"</span>),</span>
-<span id="cb44-49"><a href="#cb44-49"></a></span>
-<span id="cb44-50"><a href="#cb44-50"></a>    <span class="at">binomial =</span> <span class="fu">c</span>(binom1, binom2, binom3, binom4),</span>
-<span id="cb44-51"><a href="#cb44-51"></a>    <span class="at">negativeBinomial =</span> <span class="fu">c</span>(negBinom1, negBinom2, negBinom3, negBinom4),</span>
-<span id="cb44-52"><a href="#cb44-52"></a>    <span class="at">betaBinomial =</span> <span class="fu">c</span>(betaBinom1, betaBinom2, betaBinom3, betaBinom4),</span>
-<span id="cb44-53"><a href="#cb44-53"></a>    <span class="at">althamBinomial.05 =</span> <span class="fu">c</span>(altBinom1<span class="fl">.05</span>, altBinom2<span class="fl">.05</span>, altBinom3<span class="fl">.05</span>, altBinom4<span class="fl">.05</span>),</span>
-<span id="cb44-54"><a href="#cb44-54"></a>    <span class="at">althamBinomial.15 =</span> <span class="fu">c</span>(altBinom1<span class="fl">.15</span>, altBinom2<span class="fl">.15</span>, altBinom3<span class="fl">.15</span>, altBinom4<span class="fl">.15</span>),</span>
-<span id="cb44-55"><a href="#cb44-55"></a>    <span class="at">althamBBinom.05 =</span> <span class="fu">c</span>(altBBinom1<span class="fl">.05</span>, altBBinom2<span class="fl">.05</span>, altBBinom3<span class="fl">.05</span>, altBBinom4<span class="fl">.05</span>),</span>
-<span id="cb44-56"><a href="#cb44-56"></a>    <span class="at">althamBBinom.15 =</span> <span class="fu">c</span>(altBBinom1<span class="fl">.15</span>, altBBinom2<span class="fl">.15</span>, altBBinom3<span class="fl">.15</span>, altBBinom4<span class="fl">.15</span>)</span>
-<span id="cb44-57"><a href="#cb44-57"></a>)</span>
-<span id="cb44-58"><a href="#cb44-58"></a></span>
-<span id="cb44-59"><a href="#cb44-59"></a><span class="co"># graphs</span></span>
-<span id="cb44-60"><a href="#cb44-60"></a></span>
-<span id="cb44-61"><a href="#cb44-61"></a>  <span class="co">#binom</span></span>
-<span id="cb44-62"><a href="#cb44-62"></a>  df <span class="sc">|&gt;</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb44-63"><a href="#cb44-63"></a>    <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> outcome, </span>
-<span id="cb44-64"><a href="#cb44-64"></a>                 <span class="at">y =</span> binomial),</span>
-<span id="cb44-65"><a href="#cb44-65"></a>                 <span class="at">fill =</span> <span class="st">"darkorchid2"</span>) <span class="sc">+</span></span>
-<span id="cb44-66"><a href="#cb44-66"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb44-67"><a href="#cb44-67"></a>    <span class="fu">ylab</span>(<span class="st">"Probability"</span>) <span class="sc">+</span></span>
-<span id="cb44-68"><a href="#cb44-68"></a>    <span class="fu">xlab</span>(<span class="st">"Match Outcome"</span>) <span class="sc">+</span></span>
-<span id="cb44-69"><a href="#cb44-69"></a>    <span class="fu">ggtitle</span>(<span class="st">"Binomial"</span>) <span class="sc">+</span></span>
-<span id="cb44-70"><a href="#cb44-70"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="co"># Probabilities</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a>p<span class="ot">=</span><span class="fl">0.7</span></span>
+<span id="cb49-3"><a href="#cb49-3"></a>a<span class="ot">=</span><span class="dv">7</span></span>
+<span id="cb49-4"><a href="#cb49-4"></a>b<span class="ot">=</span><span class="dv">3</span></span>
+<span id="cb49-5"><a href="#cb49-5"></a>  <span class="co">#Binomial</span></span>
+<span id="cb49-6"><a href="#cb49-6"></a>  binom1 <span class="ot">=</span> <span class="fu">dbinom</span>(<span class="at">x=</span><span class="dv">0</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">prob=</span>p) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">dbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">prob=</span>p)</span>
+<span id="cb49-7"><a href="#cb49-7"></a>  binom2 <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">dbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">prob=</span>p)</span>
+<span id="cb49-8"><a href="#cb49-8"></a>  binom3 <span class="ot">=</span> <span class="fu">dbinom</span>(<span class="at">x=</span><span class="dv">3</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">prob=</span>p) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">dbinom</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">prob=</span>p)</span>
+<span id="cb49-9"><a href="#cb49-9"></a>  binom4 <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">dbinom</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">prob=</span>p)</span>
+<span id="cb49-10"><a href="#cb49-10"></a></span>
+<span id="cb49-11"><a href="#cb49-11"></a>  <span class="co">#Negative Binomial</span></span>
+<span id="cb49-12"><a href="#cb49-12"></a>  negBinom1 <span class="ot">=</span> (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb49-13"><a href="#cb49-13"></a>  negBinom2 <span class="ot">=</span> <span class="dv">2</span><span class="sc">*</span>p<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb49-14"><a href="#cb49-14"></a>  negBinom3 <span class="ot">=</span> <span class="fu">dnbinom</span>(<span class="at">x=</span><span class="dv">0</span>,<span class="at">size=</span><span class="dv">2</span>,<span class="at">prob=</span>p)</span>
+<span id="cb49-15"><a href="#cb49-15"></a>  negBinom4 <span class="ot">=</span> <span class="fu">dnbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">size=</span><span class="dv">2</span>,<span class="at">prob=</span>p)</span>
+<span id="cb49-16"><a href="#cb49-16"></a></span>
+<span id="cb49-17"><a href="#cb49-17"></a>  <span class="co">#Beta Binomial</span></span>
+<span id="cb49-18"><a href="#cb49-18"></a>  betaBinom1 <span class="ot">=</span> <span class="fu">dbbinom</span>(<span class="at">x=</span><span class="dv">0</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">alpha=</span>a,<span class="at">beta=</span>b) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">dbbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">alpha=</span>a,<span class="at">beta=</span>b) </span>
+<span id="cb49-19"><a href="#cb49-19"></a>  betaBinom2 <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">dbbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">alpha=</span>a,<span class="at">beta=</span>b) </span>
+<span id="cb49-20"><a href="#cb49-20"></a>  betaBinom3 <span class="ot">=</span> <span class="fu">dbbinom</span>(<span class="at">x=</span><span class="dv">3</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">alpha=</span>a,<span class="at">beta=</span>b) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">dbbinom</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">alpha=</span>a,<span class="at">beta=</span>b)</span>
+<span id="cb49-21"><a href="#cb49-21"></a>  betaBinom4 <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">dbbinom</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="at">size=</span><span class="dv">3</span>,<span class="at">alpha=</span>a,<span class="at">beta=</span>b)</span>
+<span id="cb49-22"><a href="#cb49-22"></a></span>
+<span id="cb49-23"><a href="#cb49-23"></a>  <span class="co">#Altham Binomial</span></span>
+<span id="cb49-24"><a href="#cb49-24"></a>  altBinom1<span class="fl">.05</span> <span class="ot">=</span> <span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">0</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">0.5</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">1</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">0.5</span>)</span>
+<span id="cb49-25"><a href="#cb49-25"></a>  altBinom2<span class="fl">.05</span> <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">1</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">0.5</span>)</span>
+<span id="cb49-26"><a href="#cb49-26"></a>  altBinom3<span class="fl">.05</span> <span class="ot">=</span> <span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">3</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">0.5</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">2</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">0.5</span>)</span>
+<span id="cb49-27"><a href="#cb49-27"></a>  altBinom4<span class="fl">.05</span> <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">2</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">0.5</span>)</span>
+<span id="cb49-28"><a href="#cb49-28"></a></span>
+<span id="cb49-29"><a href="#cb49-29"></a>  altBinom1<span class="fl">.15</span> <span class="ot">=</span> <span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">0</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">1.5</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">1</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">1.5</span>)</span>
+<span id="cb49-30"><a href="#cb49-30"></a>  altBinom2<span class="fl">.15</span> <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">1</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">1.5</span>)</span>
+<span id="cb49-31"><a href="#cb49-31"></a>  altBinom3<span class="fl">.15</span> <span class="ot">=</span> <span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">3</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">1.5</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">2</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">1.5</span>)</span>
+<span id="cb49-32"><a href="#cb49-32"></a>  altBinom4<span class="fl">.15</span> <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbinom</span>(<span class="at">n=</span><span class="dv">3</span>,<span class="at">x=</span><span class="dv">2</span>,<span class="at">p=</span>p,<span class="at">theta=</span><span class="fl">1.5</span>)</span>
+<span id="cb49-33"><a href="#cb49-33"></a></span>
+<span id="cb49-34"><a href="#cb49-34"></a><span class="co">#Altham Beta Binomial</span></span>
+<span id="cb49-35"><a href="#cb49-35"></a>altBBinom1<span class="fl">.05</span> <span class="ot">=</span> <span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">0</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb49-36"><a href="#cb49-36"></a>                (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">0.5</span>)</span>
+<span id="cb49-37"><a href="#cb49-37"></a>altBBinom2<span class="fl">.05</span> <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">0.5</span>)</span>
+<span id="cb49-38"><a href="#cb49-38"></a>altBBinom3<span class="fl">.05</span> <span class="ot">=</span> <span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">3</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">0.5</span>) </span>
+<span id="cb49-39"><a href="#cb49-39"></a>                <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.03497286</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>  <span class="co">#neg binom</span></span>
-<span id="cb45-2"><a href="#cb45-2"></a>  df <span class="sc">|&gt;</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb45-3"><a href="#cb45-3"></a>        <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> outcome, </span>
-<span id="cb45-4"><a href="#cb45-4"></a>                    <span class="at">y =</span> negativeBinomial),</span>
-<span id="cb45-5"><a href="#cb45-5"></a>                    <span class="at">fill =</span> <span class="st">"darkorchid2"</span>) <span class="sc">+</span></span>
-<span id="cb45-6"><a href="#cb45-6"></a>        <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb45-7"><a href="#cb45-7"></a>        <span class="fu">ylab</span>(<span class="st">"Probability"</span>) <span class="sc">+</span></span>
-<span id="cb45-8"><a href="#cb45-8"></a>        <span class="fu">xlab</span>(<span class="st">"Match Outcome"</span>) <span class="sc">+</span></span>
-<span id="cb45-9"><a href="#cb45-9"></a>        <span class="fu">ggtitle</span>(<span class="st">"Negative Binomial"</span>) <span class="sc">+</span></span>
-<span id="cb45-10"><a href="#cb45-10"></a>        <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>altBBinom4<span class="fl">.05</span> <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">0.5</span>)</span>
+<span id="cb51-2"><a href="#cb51-2"></a></span>
+<span id="cb51-3"><a href="#cb51-3"></a>altBBinom1<span class="fl">.15</span> <span class="ot">=</span> <span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">0</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">1.5</span>) <span class="sc">+</span> </span>
+<span id="cb51-4"><a href="#cb51-4"></a>                (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">1.5</span>)</span>
+<span id="cb51-5"><a href="#cb51-5"></a>altBBinom2<span class="fl">.15</span> <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">1</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">1.5</span>)</span>
+<span id="cb51-6"><a href="#cb51-6"></a>altBBinom3<span class="fl">.15</span> <span class="ot">=</span> <span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">3</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">1.5</span>) <span class="sc">+</span> </span>
+<span id="cb51-7"><a href="#cb51-7"></a>                (<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">1.5</span>)</span>
+<span id="cb51-8"><a href="#cb51-8"></a>altBBinom4<span class="fl">.15</span> <span class="ot">=</span> (<span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>)<span class="sc">*</span><span class="fu">daltbbinom</span>(<span class="at">x=</span><span class="dv">2</span>,<span class="at">n=</span><span class="dv">3</span>,<span class="at">a=</span>a,<span class="at">b=</span>b,<span class="at">theta=</span><span class="fl">1.5</span>)</span>
+<span id="cb51-9"><a href="#cb51-9"></a></span>
+<span id="cb51-10"><a href="#cb51-10"></a></span>
+<span id="cb51-11"><a href="#cb51-11"></a><span class="co"># Plots</span></span>
+<span id="cb51-12"><a href="#cb51-12"></a>df.long <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb51-13"><a href="#cb51-13"></a>  <span class="at">outcome =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"0-2"</span>, <span class="st">"1-2"</span>, <span class="st">"2-0"</span>, <span class="st">"2-1"</span>), <span class="dv">7</span>),</span>
+<span id="cb51-14"><a href="#cb51-14"></a>  <span class="at">prob =</span> <span class="fu">c</span>(binom1, binom2, binom3, binom4,</span>
+<span id="cb51-15"><a href="#cb51-15"></a>           negBinom1, negBinom2, negBinom3, negBinom4,</span>
+<span id="cb51-16"><a href="#cb51-16"></a>           betaBinom1, betaBinom2, betaBinom3, betaBinom4,</span>
+<span id="cb51-17"><a href="#cb51-17"></a>           altBinom1<span class="fl">.05</span>, altBinom2<span class="fl">.05</span>, altBinom3<span class="fl">.05</span>, altBinom4<span class="fl">.05</span>,</span>
+<span id="cb51-18"><a href="#cb51-18"></a>           altBinom1<span class="fl">.15</span>, altBinom2<span class="fl">.15</span>, altBinom3<span class="fl">.15</span>, altBinom4<span class="fl">.15</span>,</span>
+<span id="cb51-19"><a href="#cb51-19"></a>           altBBinom1<span class="fl">.05</span>, altBBinom2<span class="fl">.05</span>, altBBinom3<span class="fl">.05</span>, altBBinom4<span class="fl">.05</span>,</span>
+<span id="cb51-20"><a href="#cb51-20"></a>           altBBinom1<span class="fl">.15</span>, altBBinom2<span class="fl">.15</span>, altBBinom3<span class="fl">.15</span>, altBBinom4<span class="fl">.15</span>),</span>
+<span id="cb51-21"><a href="#cb51-21"></a>  <span class="at">model =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Binomial"</span>,</span>
+<span id="cb51-22"><a href="#cb51-22"></a>                <span class="st">"Negative Binomial"</span>,</span>
+<span id="cb51-23"><a href="#cb51-23"></a>                <span class="st">"Beta-Binomial"</span>,</span>
+<span id="cb51-24"><a href="#cb51-24"></a>                <span class="st">"Altham Binomial (0.5)"</span>,</span>
+<span id="cb51-25"><a href="#cb51-25"></a>                <span class="st">"Altham Binomial (1.5)"</span>,</span>
+<span id="cb51-26"><a href="#cb51-26"></a>                <span class="st">"Altham Beta-Binomial (0.5)"</span>,</span>
+<span id="cb51-27"><a href="#cb51-27"></a>                <span class="st">"Altham Beta-Binomial (1.5)"</span>),</span>
+<span id="cb51-28"><a href="#cb51-28"></a>              <span class="at">each =</span> <span class="dv">4</span>)</span>
+<span id="cb51-29"><a href="#cb51-29"></a>)</span>
+<span id="cb51-30"><a href="#cb51-30"></a></span>
+<span id="cb51-31"><a href="#cb51-31"></a><span class="co"># graphs</span></span>
+<span id="cb51-32"><a href="#cb51-32"></a><span class="co">#| label: fig-outcome-comparison</span></span>
+<span id="cb51-33"><a href="#cb51-33"></a><span class="co">#| fig-cap: "Comparison of match outcome probabilities across models."</span></span>
+<span id="cb51-34"><a href="#cb51-34"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb51-35"><a href="#cb51-35"></a></span>
+<span id="cb51-36"><a href="#cb51-36"></a>df.long <span class="sc">|&gt;</span></span>
+<span id="cb51-37"><a href="#cb51-37"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> outcome, <span class="at">y =</span> prob, <span class="at">fill =</span> model)) <span class="sc">+</span></span>
+<span id="cb51-38"><a href="#cb51-38"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb51-39"><a href="#cb51-39"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb51-40"><a href="#cb51-40"></a>  <span class="fu">labs</span>(</span>
+<span id="cb51-41"><a href="#cb51-41"></a>    <span class="at">x =</span> <span class="st">"Match Outcome"</span>,</span>
+<span id="cb51-42"><a href="#cb51-42"></a>    <span class="at">y =</span> <span class="st">"Probability"</span>,</span>
+<span id="cb51-43"><a href="#cb51-43"></a>    <span class="at">fill =</span> <span class="st">"Model"</span></span>
+<span id="cb51-44"><a href="#cb51-44"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-25-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>  <span class="co">#beta binom</span></span>
-<span id="cb46-2"><a href="#cb46-2"></a>  df <span class="sc">|&gt;</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb46-3"><a href="#cb46-3"></a>        <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> outcome, </span>
-<span id="cb46-4"><a href="#cb46-4"></a>                    <span class="at">y =</span> betaBinomial),</span>
-<span id="cb46-5"><a href="#cb46-5"></a>                    <span class="at">fill =</span> <span class="st">"darkorchid2"</span>) <span class="sc">+</span></span>
-<span id="cb46-6"><a href="#cb46-6"></a>        <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb46-7"><a href="#cb46-7"></a>        <span class="fu">ylab</span>(<span class="st">"Probability"</span>) <span class="sc">+</span></span>
-<span id="cb46-8"><a href="#cb46-8"></a>        <span class="fu">xlab</span>(<span class="st">"Match Outcome"</span>) <span class="sc">+</span></span>
-<span id="cb46-9"><a href="#cb46-9"></a>        <span class="fu">ggtitle</span>(<span class="st">"Beta Binomial"</span>) <span class="sc">+</span></span>
-<span id="cb46-10"><a href="#cb46-10"></a>        <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-25-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>  <span class="co">#Alt 0.5</span></span>
-<span id="cb47-2"><a href="#cb47-2"></a>  df <span class="sc">|&gt;</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb47-3"><a href="#cb47-3"></a>        <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> outcome, </span>
-<span id="cb47-4"><a href="#cb47-4"></a>                    <span class="at">y =</span> althamBinomial<span class="fl">.05</span>),</span>
-<span id="cb47-5"><a href="#cb47-5"></a>                    <span class="at">fill =</span> <span class="st">"darkorchid2"</span>) <span class="sc">+</span></span>
-<span id="cb47-6"><a href="#cb47-6"></a>        <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb47-7"><a href="#cb47-7"></a>        <span class="fu">ylab</span>(<span class="st">"Probability"</span>) <span class="sc">+</span></span>
-<span id="cb47-8"><a href="#cb47-8"></a>        <span class="fu">xlab</span>(<span class="st">"Match Outcome"</span>) <span class="sc">+</span></span>
-<span id="cb47-9"><a href="#cb47-9"></a>        <span class="fu">ggtitle</span>(<span class="st">"Altham's Multiplicative Binomial (Theta = 0.5)"</span>) <span class="sc">+</span></span>
-<span id="cb47-10"><a href="#cb47-10"></a>        <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-25-4.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>  <span class="co">#Alt 1.5</span></span>
-<span id="cb48-2"><a href="#cb48-2"></a>  df <span class="sc">|&gt;</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb48-3"><a href="#cb48-3"></a>        <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> outcome, </span>
-<span id="cb48-4"><a href="#cb48-4"></a>                    <span class="at">y =</span> althamBinomial<span class="fl">.15</span>),</span>
-<span id="cb48-5"><a href="#cb48-5"></a>                    <span class="at">fill =</span> <span class="st">"darkorchid2"</span>) <span class="sc">+</span></span>
-<span id="cb48-6"><a href="#cb48-6"></a>        <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb48-7"><a href="#cb48-7"></a>        <span class="fu">ylab</span>(<span class="st">"Probability"</span>) <span class="sc">+</span></span>
-<span id="cb48-8"><a href="#cb48-8"></a>        <span class="fu">xlab</span>(<span class="st">"Match Outcome"</span>) <span class="sc">+</span></span>
-<span id="cb48-9"><a href="#cb48-9"></a>        <span class="fu">ggtitle</span>(<span class="st">"Altham's Multiplicative Binomial (Theta = 1.5)"</span>) <span class="sc">+</span></span>
-<span id="cb48-10"><a href="#cb48-10"></a>        <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-25-5.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>  <span class="co"># alt beta binom 0.5</span></span>
-<span id="cb49-2"><a href="#cb49-2"></a>  df <span class="sc">|&gt;</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb49-3"><a href="#cb49-3"></a>        <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> outcome, </span>
-<span id="cb49-4"><a href="#cb49-4"></a>                    <span class="at">y =</span> althamBBinom<span class="fl">.05</span>),</span>
-<span id="cb49-5"><a href="#cb49-5"></a>                    <span class="at">fill =</span> <span class="st">"darkorchid2"</span>) <span class="sc">+</span></span>
-<span id="cb49-6"><a href="#cb49-6"></a>        <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb49-7"><a href="#cb49-7"></a>        <span class="fu">ylab</span>(<span class="st">"Probability"</span>) <span class="sc">+</span></span>
-<span id="cb49-8"><a href="#cb49-8"></a>        <span class="fu">xlab</span>(<span class="st">"Match Outcome"</span>) <span class="sc">+</span></span>
-<span id="cb49-9"><a href="#cb49-9"></a>        <span class="fu">ggtitle</span>(<span class="st">"Altham's Multiplicative Beta-Binomial (Theta = 0.5)"</span>) <span class="sc">+</span></span>
-<span id="cb49-10"><a href="#cb49-10"></a>        <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-25-6.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>  <span class="co"># alt beta binom 1.5</span></span>
-<span id="cb50-2"><a href="#cb50-2"></a>  df <span class="sc">|&gt;</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb50-3"><a href="#cb50-3"></a>        <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> outcome, </span>
-<span id="cb50-4"><a href="#cb50-4"></a>                    <span class="at">y =</span> althamBBinom<span class="fl">.15</span>),</span>
-<span id="cb50-5"><a href="#cb50-5"></a>                    <span class="at">fill =</span> <span class="st">"darkorchid2"</span>) <span class="sc">+</span></span>
-<span id="cb50-6"><a href="#cb50-6"></a>        <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb50-7"><a href="#cb50-7"></a>        <span class="fu">ylab</span>(<span class="st">"Probability"</span>) <span class="sc">+</span></span>
-<span id="cb50-8"><a href="#cb50-8"></a>        <span class="fu">xlab</span>(<span class="st">"Match Outcome"</span>) <span class="sc">+</span></span>
-<span id="cb50-9"><a href="#cb50-9"></a>        <span class="fu">ggtitle</span>(<span class="st">"Altham's Multiplicative Beta-Binomial (Theta = 1.5)"</span>) <span class="sc">+</span></span>
-<span id="cb50-10"><a href="#cb50-10"></a>        <span class="fu">theme_bw</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-25-7.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Lab8WriteUp_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
