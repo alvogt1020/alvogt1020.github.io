@@ -72,6 +72,45 @@ Often when conducting statistical analysis, we do not have information regarding
 
 The two methods for point estimation that we covered in MATH240 are (i) Method of Moments and (ii) Maximum Likelihood Estimation. In short, Method of Moments estimation matches sample moments to population moments, while Maximum Likelihood Estimation finds the parameters that maximize the likelihood of observing the existing data.
 
-To demonstrate each procedure, we will work with data from a study on heart failure survival times from @ahmad2017.
+## Example - Heart Failure Survival Times
+To demonstrate each procedure, we will work with data from a study on heart failure survival times from @ahmad2017.    
 
- 
+### Method of Moments
+The first step in point estimation is identifying an appropriate distribution for the population. The variable of interest in this study is survival time, which naturally guides us toward the exponential distribution. Something to note is that the exponential distribution is best used for events that occur at a constant average rate, and this study notes that mortality is not constant throughout time. Regardless, other features of the data such as right-skewness, strictly positive values, and time-to-event analysis make the exponential distribution a strong fit for the data.  
+
+Now that we have a distribution in mind, we can note what parameter(s) shape the distribution and begin estimating. The exponential distribution is paramaterized by a single parameter, the rate parameter \lambda. \lambda in this context can be thought of us the average rate at which patients die. The expected value of a population that follows the exponential distribution is: $$E(X) = \frac{1}{\lambda}$$
+
+
+With this information under our belt, we can begin with our Method of Moments estimate for \lambda.
+
+As we previously mentioned, the Method of Moments estimates parameters by matching sample moments to population moments. For an exponential distribution, the first population moment is
+
+$$
+E(X) = \frac{1}{\lambda}.
+$$
+
+The first sample moment is the sample mean, $\bar{X}$. 
+
+Because we only have one unknown parameter to solve for, this one equation is enough. It is worth noting that in general, the number of equations we need to obtain our Method of Moments estimates is equal to the number of parameters. Here, solving for $\lambda$ with the first population and sample moments gives the Method of Moments estimator:
+
+$$
+\bar{X} = \frac{1}{\lambda}.
+$$
+
+
+$$
+\hat{\lambda}_{MOM} = \frac{1}{\bar{X}}.
+$$
+
+We can solve this computationally in `R` below:
+
+```{r}
+# Read in the data
+heart.dat = read_csv("heart_failure_data.csv")
+
+x = heart.dat$TIME # pull the variable of interest from the data 
+(lambda.mom = 1 / mean(x, na.rm = T)) # solve for the point estimate
+```
+
+Thus, our Method of Moments estimate is $\hat{\lambda}_{MOM} \approx .007676903.$
+
