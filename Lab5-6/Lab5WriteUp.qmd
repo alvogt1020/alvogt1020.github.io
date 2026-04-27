@@ -202,51 +202,35 @@ In an `R` code block, combine your answers into one code block that completes th
 
 **Solution:**
 ```{r}
-# Loading in the data (part A)
-dat.kitsberg = read_csv(
+dat.kitsberg.cleaned = read_csv(
   "/Users/alexvogt/Documents/GitHub/lab-5-6-data-wrangling-alvogt1020/Lab5Fig3B.csv",
   skip = 1
-)
+) |> 
 
-# Separating columns (part B)
-dat.kitsberg.cleaned = separate(
-  data = dat.kitsberg,
+separate(
   col = "sample",
   into = c("SampleType","CellType","Treatment"),
   sep = "_"
-)
+) |>
 
-dat.kitsberg.cleaned = dat.kitsberg.cleaned[1:4] # eliminate NA columns
+select(1:4) |> 
 
-# Retaining only observations from the treatment group (part C)
-dat.kitsberg.cleaned = dplyr::filter(
-  dat.kitsberg.cleaned,
-  Treatment == "12hpi"
-)
+dplyr::filter(Treatment == "12hpi") |>
 
-# Coding "MDM" --> "mac" (Part D)
-dat.kitsberg.cleaned = dat.kitsberg.cleaned |>
-  mutate(
+mutate(
     CellType = if_else(CellType == "MDM","mac",CellType)
-  )
+) |>
 
-# Retaining only monocyte and macrophage data (part E)
-dat.kitsberg.cleaned = dplyr::filter(
-                                 dat.kitsberg.cleaned, 
-                                 CellType == "mac" | 
-                                 CellType == "mono"
-                                 )
+dplyr::filter(CellType == "mac" | CellType == "mono") |>
 
-# Replacing shorthand with neater format (Part F)
-dat.kitsberg.cleaned = dat.kitsberg.cleaned |> 
-                      mutate(
-                      SampleType = if_else(SampleType == "primary", "Healthy Donor",
+mutate(
+  SampleType = if_else(SampleType == "primary", "Healthy Donor",
                                    if_else(SampleType == "THP1","THP-1",SampleType)),
-                      CellType   = if_else(CellType == "mono", "Monocytes",
+                       CellType   = if_else(CellType == "mono", "Monocytes",
                                    if_else(CellType == "mac", "Macrophages", CellType)),
-                      Treatment  = if_else(Treatment == "12hpi", "12 Hours Post-Infection",
+                       Treatment  = if_else(Treatment == "12hpi", "12 Hours Post-Infection",
                                    if_else(Treatment == "uninfected", "Uninfected",Treatment))
-                     )
+)
 ```
 
 ## Data Summaries
@@ -259,12 +243,17 @@ Recreate Figure 3b as depicted in the paper (see [https://www.nature.com/article
 
 **Solution:**
 ```{r}
+#| label: fig-hcmv
+#| fig-cap: "HCMV genomes in the nucleus for monocytes and macrophages by sample type (Healthy Donor vs THP-1)."
+
 ggplot(data = dat.kitsberg.cleaned |> drop_na(SampleType)) + # data to plot
     geom_violin(aes(x = CellType, 
                     y = `viruses within nucleus`),
                 fill = "lightgrey", alpha=0.5) +
-    geom_boxplot(aes(x = CellType, 
-                     y = `viruses within nucleus`), width = 0.1)+
+    geom_jitter(aes(x = CellType, 
+                    y = `viruses within nucleus`),
+              width = 0.08,
+              height = 0.03) +
     theme_bw() +
     labs(x = "Cell Type",
          y = "HCMV Genomes in the Nucleus")+
