@@ -85,8 +85,6 @@ dinner <- c("website/AfricanPeanutSoup.html",
             "website/SalmonChowder.html",
             "website/Shakshuka.html")
 
-# SOLUTION
-#(apologies for the sloppy code, as you mentioned, sometimes we shoot ourselves in the foot and don't realize until we've already bled out)
 
 
 library("rvest")

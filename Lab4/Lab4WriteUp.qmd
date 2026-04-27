@@ -80,7 +80,7 @@ x <- sample(x=1:10,          # sample from 1, 2, 3, ..., 10
             replace = TRUE)  # allowed to sample the same item multiple times
 ```
 
-**SOLUTION**
+**Solution**:
 To obtain the third item of the vector, x, we use brackets and the index number 3.
 ```{r}
 #| size: "scriptsize"
@@ -89,6 +89,7 @@ To obtain the third item of the vector, x, we use brackets and the index number 
 
 ## Part b
 
+**Solution**:
 Below, I create a data frame filled with random observations.
 
 ```{r}
@@ -109,7 +110,7 @@ df <- data.frame(x1 = sample(x=1:10,          # sample from 1, 2, 3, ..., 10
 ## Part b 
 Use the `head(...)` function to peek at the data frame.
 
-**SOLUTION**
+**Solution**:
 The `head(...)` function allows us to view the top 6 rows (by default) of our data frame.
 ```{r}
 #| size: "scriptsize"
@@ -120,7 +121,7 @@ The `head(...)` function allows us to view the top 6 rows (by default) of our da
 ## Part c
 Ask for the column `x1`.
 
-**SOLUTION**
+**Solution**:
 We can view the column `x1` by using the `$` operator.
 ```{r}
 #| size: "scriptsize"
@@ -130,7 +131,7 @@ We can view the column `x1` by using the `$` operator.
 ## Part d
 Ask for the fifth row of the data frame.
 
-**SOLUTION**
+**Solution**:
 We can view the fifth row of the df by using brackets. The syntax for pulling data with brackets is [rows, cols], where leaving an entry blank tells `R` to pull *all* rows, or *all* columns (depending on which is left blank). Because we want to view all columns of row 5, we leave the columns slot blank.
 ```{r}
 #| size: "scriptsize"
@@ -140,7 +141,7 @@ We can view the fifth row of the df by using brackets. The syntax for pulling da
 ## Part e
 Ask for the the value of `x1` in the fifth row of the data frame.
 
-**SOLUTION**
+**Solution**:
 To obtain the value of `x1` in the fifth row of the data frame, we again use brackets. However, this time, we specify that we want the first column, as *part d* has shown as that `x1` is the first column of our df.
 ```{r}
 #| size: "scriptsize"
@@ -151,7 +152,7 @@ To obtain the value of `x1` in the fifth row of the data frame, we again use bra
 ## Part f
 Ask for the the value of in the third column and the fifth row of the data frame.
 
-**SOLUTION**
+**Solution**:
 To obtain the value in third column and the fifth row of the data frame, we follow a similar procedure to *part e*.
 
 ```{r}
@@ -163,7 +164,7 @@ To obtain the value in third column and the fifth row of the data frame, we foll
 ## Part g
 Create a sequence from 1 to 10 by 2 and use it to print the odd rows of the data frame.
 
-**SOLUTION**
+**Solution**:
 To create such a sequence, we use the `seq` function. The syntax of the function in this instance is intuitive, using `from`, `to`, and `by` as arguments. We can then use this list of odd numbers to pull the odd row numbers of our df by using brackets with the generated vector as our row indices.
 ```{r}
 #| size: "scriptsize"
@@ -172,6 +173,8 @@ To create such a sequence, we use the `seq` function. The syntax of the function
 ```
 
 ## Part h
+
+**Solution**:
 Below, I create an empty column called `x12`. Fill in the details of the `for(...)` loop to ensure `x12` is the product of `x1` and `x2`.
 ```{r}
 #| size: "scriptsize"
@@ -183,7 +186,6 @@ for(i in 1:nrow(df)){
 df
 ```
 
-**SOLUTION EXPLANATION**
 We know that x12 will be the fourth column, so we loop over each row in the fourth column and multiply the value of x1 and x2 for each row `i`.
 
 ## Part i
@@ -191,7 +193,7 @@ Write a function called `calculate.score(...)` that takes three arguments repres
 $$Score = (x_1 \times 2) + x_2 - x_3$$
 Use your function to create a new column `total.score` in our data frame `df`.
 
-**SOLUTION**
+**Solution**:
 We use the $ operator and our function to generate such a column.
 
 ```{r}
@@ -206,7 +208,7 @@ df
 ## Part j
 Create a function called `evaluate.row(...)` that takes one argument and returns "low" when the argument is less than 4, "mid" when the argument is between 4 and 7 (inclusive), and "high" when the arguement is 8 or larger. Then, use `sapply(...)` to apply it to column `x1`.
 
-**SOLUTION**
+**Solution**:
 ```{r}
 #| size: "scriptsize"
 evaluate.row = function(x){
@@ -225,7 +227,7 @@ part.j = sapply(df$x1,evaluate.row)
 ## Part k
 Did we need to use loops or functions in (h.)-(j.)? That is, can we use vectorization to attain the same results in 1 line each? Where it is possible, write the line of code. Where it is not, explain why.
 
-**SOLUTION**
+**Solution**:
 We did not need to use loops for part *(h)*. We could have constructed the vector using the code below:
 ```{r}
 #| size: "scriptsize"
@@ -270,7 +272,7 @@ df$category = ifelse(df$x1<4,"low",
 
 Install and load the `rvest` package [@rvest].
 
-**SOLUTION**
+**Solution**:
 NOTE: Downloaded library installed in the console using `install.packages("...")`.
 ```{r}
 #| size: "scriptsize"
@@ -282,7 +284,7 @@ library("rvest")
 Load the html of the `website/KimchiGrilledCheese.html` using the `read_html()` function and save the result to an object called `recipe.item`. We will use the Kimchi Grilled Cheese recipe as our prototype and extend this workflow to all recipes, so try to be as general as possible. If you do look at it, you'll notice it contains the html we saw in the developer tools in class.<br/>
 **Hint**: You can use `read_html(...)` like `read.csv(...)`. Don't forget you can use the documentation to help use it.
 
-**SOLUTION**
+**Solution**:
 ```{r}
 #| size: "scriptsize"
 recipe.item = read_html("website/KimchiGrilledCheese.html")
@@ -295,7 +297,7 @@ Open the html file in a web browser and open developer tools. In chrome-based br
 Find the name of the Ingredients section of the website and pull the HTML of the function using `html_element(...)` and save the results to an object called `ingredients.section`. <br/>
 **Hint**: You can ask for elements by id using a preceeding "\#". See `?html_element(...)` for a helpful example. 
 
-**SOLUTION**
+**Solution**:
 The name of the ID is `ingredients`. 
 
 ```{r}
@@ -308,7 +310,7 @@ The name of the ID is `ingredients`.
 Now, we want to obtain all of the itemized items. Find the element type the individual ingredients and pull all of them from `ingredients.section` using `html_elements(...)` (note the added s) and save the results to an object called `ingredients`.<br/>
 **Hint**: You can ask for elements by type by simply specifying the tag (e.g., "p" for paragraph). See `?html_element for a helpful example.
 
-**SOLUTION**
+**Solution**:
 We can see from part *(c)* that the ingredients are type `<li>`.
 ```{r}
 #| size: "scriptsize"
@@ -319,7 +321,7 @@ We can see from part *(c)* that the ingredients are type `<li>`.
 ## Part e
 Similar to Part c. Find the name of the Instructions section of the website and pull the HTML of the function using `html_element(...)` and save the results to an object called `instructions.section`.<br/>
 
-**SOLUTION**
+**Solution**:
 The name of the instructions section is `instructions`.
 ```{r}
 #| size: "scriptsize"
@@ -329,7 +331,7 @@ instructions.section = html_element(recipe.item,"#instructions")
 ## Part f
 Now, we want to obtain all of the enumerated items. Find the element type the individual instructions and pull all of them from `instructions.section` using `html_elements(...)` (note the added s) and save the results to an object called `instructions`.
 
-**SOLUTION**
+**Solution**:
 The instructions are similarly, type `<li>`.
 ```{r}
 #| size: "scriptsize"
@@ -340,7 +342,7 @@ The instructions are similarly, type `<li>`.
 Find the class of the recipe image and pull the HTML using `html_element(...)` and save the results to an object called `image.element`. <br/>
 **Hint**: You can ask for elements by class using a preceeding ".". See `?html_element(...)` for a helpful example. Further, note that HTML elements may have more than one class (separated by a space). When that is the case, you need to choose one.
 
-**SOLUTION**
+**Solution**:
 The image element is class `.img-fluid` and `figure-img`. I arbitrarily chose to specify the former.
 ```{r}
 #| size: "scriptsize"
@@ -351,7 +353,7 @@ image.element = html_element(recipe.item,".img-fluid")
 Use the `html_attr(...)` function to pull the source link ("src"). Then, use `paste(...)` to prepend the source link with "website/" so we have the full link.<br/>
 **Note**: This would be like adding "https://www.website.com" to get the absolute link.
 
-**SOLUTION**
+**Solution**:
 
 ```{r}
 #| size: "scriptsize"
@@ -412,7 +414,7 @@ Read [https://www.scrapingbee.com/blog/is-web-scraping-legal/](Is Web Sraping Le
 ## Conditionals
 Did you use conditional statements in your code? If yes, how. If not, are there places you could have used them but did something else?
 
-**RESPONSE**
+**Response:**
 Yes, I used a conditional statement to check if the recipe was the last recipe which, if it was, would label it as the breakfast recipe. This worked because of how I created the object `all.meals`, with breakfast concatenated to the last entry.
 
 ## Loops
@@ -420,10 +422,10 @@ Did you use loops in your code? If yes, how. If not, are there places you could 
 
 Yes, I used two for loops. The first of which I used to build the grocery list, the second I used to print each recipe's image, ingredients, and instructions.
 
-**RESPONSE**
+**Response:**
 
 ## Functions
 Did you use functions in your code? If yes, how. If not, are there places you could have used them but did something else?
 
-**RESPONSE**
+**Response:**
 I did not create any functions of my own. In hindsight, it would've been efficient to create a function that could take html as the input and print the associated image, ingredient, and instructions combo.
