@@ -560,15 +560,14 @@ The difference this time is that our CDF has the additional parameter, $\theta$.
 #| fig-cap: "Probability that Player A wins as a function of θ."
 
 df = tibble(
-  theta = c(0.5, 1, 1.5),
-  win_prob = 1 - sapply(c(0.5, 1, 1.5), function(t) paltbinom(3, 1, 0.7, t))
+  theta = seq(0.5, 1.5, by = 0.005),
+  win_prob = 1 - sapply(theta, function(t) paltbinom(3, 1, 0.7, t))
 )
 
 df |>
   ggplot(aes(x = theta, 
              y = win_prob)) +
   geom_line() +
-  geom_point() +
   theme_bw() +
   labs(
     x = "Theta",
@@ -637,7 +636,6 @@ df = tibble(
   ggplot(aes(x = x, 
              y = pmf, 
              color = theta)) +
-  geom_line() +
   geom_point() +
   theme_bw() +
   labs(
@@ -678,6 +676,9 @@ Compute the probabilities for all outcomes for Player A.
 *Binomial Outcomes:*
 $$P(0-2) = f(0) + \frac{1}{3}f(1)$$
 $$P(1-2) = \frac{2}{3}f(1)$$
+
+This is because there are 3 equally likely ways to have exactly one win: 1 of them gives a 0–2 result and 2 of them give a 1–2 result. Therefore, we split $f(1)$ using $\frac{1}{3}$ and $\frac{2}{3}$
+
 $$P(2-0) = f(3) + \frac{1}{3}f(2)$$
 $$P(2-1) = \frac{2}{3}f(2)$$
 
@@ -744,105 +745,55 @@ b=3
   altBinom4.15 = (2/3)*daltbinom(n=3,x=2,p=p,theta=1.5)
 
 #Altham Beta Binomial
-altBBinom1.05 = daltbbinom(x=0,n=3,a=a,b=b,theta=0.5) + (1/3)*daltbbinom(x=1,n=3,a=a,b=b,theta=0.5)
+altBBinom1.05 = daltbbinom(x=0,n=3,a=a,b=b,theta=0.5) + 
+                (1/3)*daltbbinom(x=1,n=3,a=a,b=b,theta=0.5)
 altBBinom2.05 = (2/3)*daltbbinom(x=1,n=3,a=a,b=b,theta=0.5)
-altBBinom3.05 = daltbbinom(x=3,n=3,a=a,b=b,theta=0.5) + (1/3)*daltbbinom(x=2,n=3,a=a,b=b,theta=0.5)
+altBBinom3.05 = daltbbinom(x=3,n=3,a=a,b=b,theta=0.5) 
+                + (1/3)*daltbbinom(x=2,n=3,a=a,b=b,theta=0.5)
 altBBinom4.05 = (2/3)*daltbbinom(x=2,n=3,a=a,b=b,theta=0.5)
 
-altBBinom1.15 = daltbbinom(x=0,n=3,a=a,b=b,theta=1.5) + (1/3)*daltbbinom(x=1,n=3,a=a,b=b,theta=1.5)
+altBBinom1.15 = daltbbinom(x=0,n=3,a=a,b=b,theta=1.5) + 
+                (1/3)*daltbbinom(x=1,n=3,a=a,b=b,theta=1.5)
 altBBinom2.15 = (2/3)*daltbbinom(x=1,n=3,a=a,b=b,theta=1.5)
-altBBinom3.15 = daltbbinom(x=3,n=3,a=a,b=b,theta=1.5) + (1/3)*daltbbinom(x=2,n=3,a=a,b=b,theta=1.5)
+altBBinom3.15 = daltbbinom(x=3,n=3,a=a,b=b,theta=1.5) + 
+                (1/3)*daltbbinom(x=2,n=3,a=a,b=b,theta=1.5)
 altBBinom4.15 = (2/3)*daltbbinom(x=2,n=3,a=a,b=b,theta=1.5)
 
-# Plots
-# putting data tg
-  df = tibble(
-    outcome = c("0-2", "1-2", "2-0", "2-1"),
 
-    binomial = c(binom1, binom2, binom3, binom4),
-    negativeBinomial = c(negBinom1, negBinom2, negBinom3, negBinom4),
-    betaBinomial = c(betaBinom1, betaBinom2, betaBinom3, betaBinom4),
-    althamBinomial.05 = c(altBinom1.05, altBinom2.05, altBinom3.05, altBinom4.05),
-    althamBinomial.15 = c(altBinom1.15, altBinom2.15, altBinom3.15, altBinom4.15),
-    althamBBinom.05 = c(altBBinom1.05, altBBinom2.05, altBBinom3.05, altBBinom4.05),
-    althamBBinom.15 = c(altBBinom1.15, altBBinom2.15, altBBinom3.15, altBBinom4.15)
+# Plots
+df.long = tibble(
+  outcome = rep(c("0-2", "1-2", "2-0", "2-1"), 7),
+  prob = c(binom1, binom2, binom3, binom4,
+           negBinom1, negBinom2, negBinom3, negBinom4,
+           betaBinom1, betaBinom2, betaBinom3, betaBinom4,
+           altBinom1.05, altBinom2.05, altBinom3.05, altBinom4.05,
+           altBinom1.15, altBinom2.15, altBinom3.15, altBinom4.15,
+           altBBinom1.05, altBBinom2.05, altBBinom3.05, altBBinom4.05,
+           altBBinom1.15, altBBinom2.15, altBBinom3.15, altBBinom4.15),
+  model = rep(c("Binomial",
+                "Negative Binomial",
+                "Beta-Binomial",
+                "Altham Binomial (0.5)",
+                "Altham Binomial (1.5)",
+                "Altham Beta-Binomial (0.5)",
+                "Altham Beta-Binomial (1.5)"),
+              each = 4)
 )
 
 # graphs
+#| label: fig-outcome-comparison
+#| fig-cap: "Comparison of match outcome probabilities across models."
+#| fig-align: center
 
-  #binom
-  df |> ggplot() +
-    geom_col(aes(x = outcome, 
-                 y = binomial),
-                 fill = "darkorchid2") +
-    geom_hline(yintercept = 0) +
-    ylab("Probability") +
-    xlab("Match Outcome") +
-    ggtitle("Binomial") +
-    theme_bw()
-  #neg binom
-  df |> ggplot() +
-        geom_col(aes(x = outcome, 
-                    y = negativeBinomial),
-                    fill = "darkorchid2") +
-        geom_hline(yintercept = 0) +
-        ylab("Probability") +
-        xlab("Match Outcome") +
-        ggtitle("Negative Binomial") +
-        theme_bw()
-  #beta binom
-  df |> ggplot() +
-        geom_col(aes(x = outcome, 
-                    y = betaBinomial),
-                    fill = "darkorchid2") +
-        geom_hline(yintercept = 0) +
-        ylab("Probability") +
-        xlab("Match Outcome") +
-        ggtitle("Beta Binomial") +
-        theme_bw()
-  #Alt 0.5
-  df |> ggplot() +
-        geom_col(aes(x = outcome, 
-                    y = althamBinomial.05),
-                    fill = "darkorchid2") +
-        geom_hline(yintercept = 0) +
-        ylab("Probability") +
-        xlab("Match Outcome") +
-        ggtitle("Altham's Multiplicative Binomial (Theta = 0.5)") +
-        theme_bw()
-  
-  #Alt 1.5
-  df |> ggplot() +
-        geom_col(aes(x = outcome, 
-                    y = althamBinomial.15),
-                    fill = "darkorchid2") +
-        geom_hline(yintercept = 0) +
-        ylab("Probability") +
-        xlab("Match Outcome") +
-        ggtitle("Altham's Multiplicative Binomial (Theta = 1.5)") +
-        theme_bw()
-
-  # alt beta binom 0.5
-  df |> ggplot() +
-        geom_col(aes(x = outcome, 
-                    y = althamBBinom.05),
-                    fill = "darkorchid2") +
-        geom_hline(yintercept = 0) +
-        ylab("Probability") +
-        xlab("Match Outcome") +
-        ggtitle("Altham's Multiplicative Beta-Binomial (Theta = 0.5)") +
-        theme_bw()
-
-  # alt beta binom 1.5
-  df |> ggplot() +
-        geom_col(aes(x = outcome, 
-                    y = althamBBinom.15),
-                    fill = "darkorchid2") +
-        geom_hline(yintercept = 0) +
-        ylab("Probability") +
-        xlab("Match Outcome") +
-        ggtitle("Altham's Multiplicative Beta-Binomial (Theta = 1.5)") +
-        theme_bw()
+df.long |>
+  ggplot(aes(x = outcome, y = prob, fill = model)) +
+  geom_col(position = "dodge") +
+  theme_bw() +
+  labs(
+    x = "Match Outcome",
+    y = "Probability",
+    fill = "Model"
+  )
 ```
 
 **Commentary:**
