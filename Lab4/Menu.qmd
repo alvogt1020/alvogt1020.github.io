@@ -157,6 +157,7 @@ for(file in all.meals){
   cat("\n")
 
   # Ingredients
+  cat("### Ingredients\n\n")
   formatted_list <- paste("-", html_text(ingredients))
   cat(formatted_list, sep = "\n")
 
@@ -165,6 +166,7 @@ for(file in all.meals){
   cat("\n")
 
   # Instructions
+  cat("### Instructions\n\n")
   formatted_list <- paste("1.", html_text(instructions))
   cat(formatted_list, sep = "\n")
   
