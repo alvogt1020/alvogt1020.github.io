@@ -70,8 +70,8 @@ Point estimation is a fundamental skill in the statistician's toolbox. Formally,
 
 Often when conducting statistical analysis, we do not have information regarding the entire population of interest. As such, we must rely on the available data to estimate the true population parameters. To do this, we compute statistics, or functions of the observed data such as the sample mean, and use them as our parameter estimates. Because statistics are functions of the sample, they are, by definition, point estimators. 
 
-The two methods for point estimation that we covered in MATH240 are (i) Method of Moments and (ii) Maximum Likelihood Estimation.
+The two methods for point estimation that we covered in MATH240 are (i) Method of Moments and (ii) Maximum Likelihood Estimation. In short, Method of Moments estimation matches sample moments to population moments, while Maximum Likelihood Estimation finds the parameters that maximize the likelihood of observing the existing data.
 
-
+To demonstrate each procedure, we will work with data from a study on heart failure survival times from @ahmad2017.
 
  
