@@ -1,0 +1,15 @@
+{
+  "hash": "46fa8d3035a07e9fa41950764d8e1641",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: Point Estimation - A Comprehensive Review # Title of the document\n\n# Bibliography Details\nbibliography: ExamReview.bib  # Name of bib file in the same folder \nbibliographystyle: apa            # Bibliography style\n\nexecute:               # Default settings for code blocks\n  warning: false       # Do not print warnings\n  message: false       # Do not print messages\n  size: \"scriptsize\"   # Set code size to script size\n\n# Below will do html by default. To render the entire project\n# Use the following code:\n# quarto::quarto_render(\"Lab8WriteUp.qmd\")\nformat:\n  pdf:        # Specify .pdf formatting options \n    documentclass: article     # Document Class\n    number-sections: true      # Number Sections\n    reference-section-title: \"References\" # Title for reference section\n    code-line-numbers: true    # Line numbers printed in code\n    cap-location: top          # Captions at the top of tables \n    geometry:\n      - top=0.75in\n      - left=0.75in\n      - bottom=0.75in\n      - right=0.75in\n  html:       # Specify HTML formatting options \n    number-sections: true      # Number Sections\n    code-fold: true            # Button to show code\n    code-line-numbers: true    # Line numbers printed in code\n    cap-location: top          # Captions at the top of tables and figures\nformat-links: [pdf]\n---\n\n\n \\normalsize\n\n\n::: {.cell}\n\n:::\n\n\n \\normalsize\n\n\n\n# Introduction and Background\n\nPoint estimation is a fundamental skill in the statistician's toolbox. Formally, we define a point estimator $\\hat{\\theta}(X) = \\hat{\\theta}(X_1, X_2, \\dots, X_n)$ as any function of the sample $X$. We use such functions to obtain point estimates, $\\hat{\\theta}(x) = \\hat{\\theta}(x_1, x_2, \\dots, x_n)$, or any realized value from a point estimator. One might wonder how this applies to practical statistical analysis.\n\n\nOften when conducting statistical analysis, we rarely have information regarding the entire population of interest. As such, we must rely on the available data to estimate the true population parameters. To do this, we compute statistics, or functions of the observed data such as the sample mean, and use them as our parameter estimates. Because statistics are functions of the sample, they are, by definition, point estimators.\n\n\n\n ",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": null,
+    "postProcess": false
+  }
+}
