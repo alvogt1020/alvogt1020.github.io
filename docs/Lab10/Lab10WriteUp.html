@@ -607,22 +607,31 @@ We can use the <code>optim()</code> function, which finds a function’s minimum
   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
 1  2.44  1.20      2     2     1     5 0.374 -0.846</code></pre>
 </div>
+</div>
+<p></p>
+<p></p>
+<div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">#Visualization</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">ggplot</span>(pdc.dat) <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(LegDifference),</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">ggplot</span>(pdc.dat) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(LegDifference,</span>
+<span id="cb9-3"><a href="#cb9-3"></a>               <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"6-5"</span>,<span class="st">"6-4"</span>,<span class="st">"6-3"</span>,<span class="st">"6-2"</span>,<span class="st">"6-1"</span>)),</span>
 <span id="cb9-4"><a href="#cb9-4"></a>               <span class="at">y =</span> <span class="fu">after_stat</span>(count<span class="sc">/</span><span class="fu">sum</span>(count)))) <span class="sc">+</span></span>
 <span id="cb9-5"><a href="#cb9-5"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb9-6"><a href="#cb9-6"></a>  <span class="fu">labs</span>(</span>
-<span id="cb9-7"><a href="#cb9-7"></a>    <span class="at">x =</span> <span class="st">"Leg Difference"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7"></a>    <span class="at">x =</span> <span class="st">"Match Score"</span>,</span>
 <span id="cb9-8"><a href="#cb9-8"></a>    <span class="at">y =</span> <span class="st">"Proportion of Matches"</span></span>
 <span id="cb9-9"><a href="#cb9-9"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Lab10WriteUp_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<div id="fig-leg-diff" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-leg-diff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Distribution of match outcomes by leg difference in the 2024 PDC Premier League season
+</figcaption>
+<div aria-describedby="fig-leg-diff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Lab10WriteUp_files/figure-html/fig-leg-diff-1.png" class="img-fluid figure-img" width="672">
+</div>
 </figure>
 </div>
 </div>
@@ -669,7 +678,7 @@ We can use the <code>optim()</code> function, which finds a function’s minimum
 <span id="cb10-22"><a href="#cb10-22"></a>  mle <span class="ot">=</span> <span class="fu">optim</span>(<span class="at">par=</span>params,</span>
 <span id="cb10-23"><a href="#cb10-23"></a>                 <span class="at">fn=</span>llaltbinom,</span>
 <span id="cb10-24"><a href="#cb10-24"></a>                 <span class="at">x=</span>leg.counts,</span>
-<span id="cb10-25"><a href="#cb10-25"></a>                 <span class="at">n=</span><span class="dv">6</span>,</span>
+<span id="cb10-25"><a href="#cb10-25"></a>                 <span class="at">n=</span><span class="dv">11</span>,</span>
 <span id="cb10-26"><a href="#cb10-26"></a>                 <span class="at">mle=</span>T)</span>
 <span id="cb10-27"><a href="#cb10-27"></a>  </span>
 <span id="cb10-28"><a href="#cb10-28"></a>  p.mle <span class="ot">=</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span>mle<span class="sc">$</span>par[<span class="dv">1</span>]))</span>
@@ -685,20 +694,20 @@ We can use the <code>optim()</code> function, which finds a function’s minimum
 <pre><code># A tibble: 8 × 3
   Player                 p theta
   &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt;
-1 Rob Cross          0.610 0.741
-2 Gerwyn Price       0.610 0.763
-3 Michael Smith      0.629 0.693
-4 Luke Littler       0.692 0.677
-5 Michael van Gerwen 0.618 0.674
-6 Luke Humphries     0.669 0.665
-7 Nathan Aspinall    0.690 0.775
-8 Peter Wright       0.539 0.832</code></pre>
+1 Rob Cross          0.395 1.01 
+2 Gerwyn Price       0.383 1.02 
+3 Michael Smith      0.426 1.05 
+4 Luke Littler       0.469 1.32 
+5 Michael van Gerwen 0.431 1.02 
+6 Luke Humphries     0.461 1.20 
+7 Nathan Aspinall    0.403 1.19 
+8 Peter Wright       0.317 0.989</code></pre>
 </div>
 </div>
 <p></p>
-<p><em>Interpretation:</em> Each value for p represents the players win probability for a given leg, therefore players with higher values for p are more likely to win legs in a given match. Theta in this context represents how each leg affects the subsequent leg. Because all players have theta values below 1, we can say that all players tend toward more balanced wins and losses/closer final scores.</p>
-<p>Knowing this, we can see that Luke Littler has the highest chance of winning any given leg due to his having the highest p value. We can also observe that Luke Humphries, despite not having the highest p value, has the lowest theta value. This means that he experiences more back-and-forth leg victories and losses.</p>
-<p>With regard to the standings, we find that p doesn’t 100% map to the rankings as consistently as one might expect. For example, Luke Humphries was ranked second and has a p value of 0.669, whereas Nathan Aspinall has a greater p value of 0.690 despite being ranked 5th place. Regardless, it still does a good job at roughly predicting the rankings.</p>
+<p><em>Interpretation:</em> Each value for p represents the players win probability for a given leg, therefore players with higher values for p are more likely to win legs in a given match. Theta in this context represents how each leg affects the subsequent leg. Because most players have theta values around or slightly above 1, we can say that the leg outcomes behave similarly to the standard binomial distribution (leg independence), with all players except Wright exhibiting very slight momentum.</p>
+<p>Knowing this, we can see that Luke Littler has the highest chance of winning any given leg due to his having the highest p value.</p>
+<p>With regard to the standings, we find that p maps quite closely to the rankings. Top ranked players (Humphries and Littler) have the highest p values while the lowest ranked player (Wright) has the lowest p value. Generally, the ordering of p values follows the overall ranking, with any differences being subtle.</p>
 </section>
 <section id="althams-multiplicative-beta-binomial-distribution-1" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="althams-multiplicative-beta-binomial-distribution-1"><span class="header-section-number">5.3</span> Altham’s Multiplicative Beta Binomial Distribution</h2>
@@ -757,7 +766,7 @@ sd(X) &amp;= \sqrt{\frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}}
 <span id="cb12-35"><a href="#cb12-35"></a>  mle <span class="ot">=</span> <span class="fu">optim</span>(<span class="at">par=</span>params,</span>
 <span id="cb12-36"><a href="#cb12-36"></a>                 <span class="at">fn=</span>llaltbbinom,</span>
 <span id="cb12-37"><a href="#cb12-37"></a>                 <span class="at">x=</span>leg.counts,</span>
-<span id="cb12-38"><a href="#cb12-38"></a>                 <span class="at">n=</span><span class="dv">6</span>,</span>
+<span id="cb12-38"><a href="#cb12-38"></a>                 <span class="at">n=</span><span class="dv">11</span>,</span>
 <span id="cb12-39"><a href="#cb12-39"></a>                 <span class="at">mle=</span>T)</span>
 <span id="cb12-40"><a href="#cb12-40"></a>  </span>
 <span id="cb12-41"><a href="#cb12-41"></a>  alpha.mle <span class="ot">=</span> <span class="fu">exp</span>(mle<span class="sc">$</span>par[<span class="dv">1</span>])</span>
@@ -777,27 +786,27 @@ sd(X) &amp;= \sqrt{\frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}}
 <pre><code># A tibble: 8 × 6
   Player             alpha  beta theta beta.mean beta.sd
   &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
-1 Rob Cross          0.795 0.210 1.66      0.791   0.287
-2 Gerwyn Price       0.892 0.260 1.64      0.774   0.285
-3 Michael Smith      0.851 0.149 1.51      0.851   0.252
-4 Luke Littler       1.95  0.137 1.46      0.935   0.141
-5 Michael van Gerwen 0.740 0.133 1.50      0.848   0.263
-6 Luke Humphries     3.02  0.425 0.978     0.877   0.156
-7 Nathan Aspinall    1.89  0.215 1.64      0.898   0.172
-8 Peter Wright       5.51  4.33  0.951     0.560   0.151</code></pre>
+1 Rob Cross          0.268 0.813  3.20     0.248   0.299
+2 Gerwyn Price       0.264 0.917  3.18     0.224   0.282
+3 Michael Smith      0.534 1.07   2.24     0.334   0.292
+4 Luke Littler       0.283 0.384 10.8      0.425   0.383
+5 Michael van Gerwen 0.219 0.454  5.00     0.325   0.362
+6 Luke Humphries     0.331 0.490  6.39     0.403   0.363
+7 Nathan Aspinall    2.47  4.34   1.49     0.363   0.172
+8 Peter Wright       1.79  7.29   1.21     0.197   0.125</code></pre>
 </div>
 </div>
 <p></p>
-<p><em>Comments:</em> The mean of beta represents the average win probability. For example, Rob Cross’ average win probability is 0.791 in this model. The standard deviation of beta represents the variability of their leg winning probabilities. The standard deviations are all roughly similar, with the range being from 0.151 to 0.287. Interestingly, we see that Peter Wright, the worst ranked player and the one with the lowest beta mean, has one of the lowest beta standard deviations. Therefore, we can say that he was consistently bad.</p>
-<p>Interestingly, most players in this model have theta values greater than one, indicating more momentum/interdependence between legs with each match.</p>
-<p>With regard to the standings, we notice that the mean of beta also maps roughly to the rankings, with clearer differences between top and bottom players than in the regular Altham Binomial model. That is to say, players with higher mean values for beta tend to be higher in the ranking.</p>
+<p><em>Comments:</em> The mean of beta represents the average leg winning probability. For example, Rob Cross’ average win probability is 0.248 in this model. The standard deviation of beta represents the variability of their leg winning probabilities. The range for these values is 0.125 to 0.383. Interestingly, we see that Peter Wright, the worst ranked player and the one with the lowest beta mean, has one of the lowest beta standard deviations. Therefore, we can say that he was consistently bad. Top players Luke Littler and Luke Humphries have the highest standard deviations, suggesting that despite topping the ranks, their strong performance was less consistent.</p>
+<p>Most players in this model have theta values greater than one, indicating more momentum/interdependence between legs with each match. Luke Littler has a particularly high theta value of 10.8, suggesting that high dependence between his leg outcomes.</p>
+<p>With regard to the standings, we notice that the mean of beta also maps roughly to the rankings, though it is cleaner for the top and bottom players than the middle-tier players.</p>
 </section>
 <section id="executive-summary" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="executive-summary"><span class="header-section-number">5.4</span> Executive Summary</h2>
 <p>Summarize the work you’ve done here to provide a brief (200-300 word) data-driven summary of the 2024 Premier League season using your work in Lab 10. Your summary should be professional, clear, and all claims should be corroborated with statistical support.</p>
 <p><strong>Response:</strong> The 2024 PDC Premier League’s regular season took place over 16 nights, with eight of the World’s best dart players competing in best of 11 matches. With these data, we were able to count the number of legs won in each match for a given player. We first obtain a high-level numerical summary and data visualization for general information regarding the season. The median match ended with a score differential of 2, meaning a final scoreline of 6-4. This, in combination with an IQR of 2, demonstrates how many of the matches during this season were relatively close, with limited blow-out matches.</p>
-<p>After obtaining this initial overview of the season, we then use the data to fit two models for identifying players’ skill levels. The first of these two models is Altham’s Multiplicative Binomial Distribution, which estimates a players per-leg win probability (<span class="math inline">\(p\)</span>) and per-match leg dependence (<span class="math inline">\(\theta\)</span>). In this model, Luke Littler had the highest win probability (<span class="math inline">\(p=0.692\)</span>) and Peter Wright had the lowest (<span class="math inline">\(p = 0.539\)</span>). However, this model was not perfect in its assessment, as 5th place Nathan Aspinall had a higher win probability. Also of note is that <span class="math inline">\(\theta &lt; 1\)</span> for all players in this model, suggesting that within each match, legs tended to be <em>negatively</em> correlated/flip-flop.</p>
-<p>We then analyze the season using Altham’s Multiplicative <em>Beta</em> Binomial Distribution. In this model, <span class="math inline">\(p\)</span> is no longer fixed, but instead variable across matches. The average probabilities in this model differed significantly from before, with clearer separation between high and low-ranked players (Littler = 0.935, Wright = 0.560). Interestingly, the <span class="math inline">\(\theta\)</span> values found by this model were majority greater than 1, indicating that matches featured momentum rather than flip-flopping.</p>
+<p>After obtaining this initial overview of the season, we then use the data to fit two models for identifying players’ skill levels. The first of these two models is Altham’s Multiplicative Binomial Distribution, which estimates a players per-leg win probability (<span class="math inline">\(p\)</span>) and per-match leg dependence (<span class="math inline">\(\theta\)</span>). In this model, Luke Littler had the highest win probability and Peter Wright had the lowest. Additionally, theta values were generally around or slightly above 1, suggesting similar behavior to the standard binomial distribution. Overall, the ordering of <span class="math inline">\(p\)</span> values aligned well with the standings.</p>
+<p>We then analyze the season using Altham’s Multiplicative <em>Beta</em> Binomial Distribution. In this model, <span class="math inline">\(p\)</span> is no longer fixed, but instead variable across matches. The average probabilities in this model showed a similar pattern, with clearer separation between high and low-ranked players. Interestingly, the <span class="math inline">\(\theta\)</span> values found by this model were much greater than in the Altham Binomial model and consequently much greater than 1. Therefore, we can say that the Altham Beta-Binomial Model suggests much stronger dependence between legs, especially for top-ranked players.</p>
 <p>Despite the slightly different outcomes, the player assessments made by each model align with the 2024 PDC Premier League ranking.</p>
 
 
