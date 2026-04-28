@@ -389,7 +389,7 @@ results
 ```
 
 *Interpretation:*
-Each value for p represents the players win probability for a given leg, therefore players with higher values for p are more likely to win legs in a given match. Theta in this context represents how each leg affects the subsequent leg. Because most players have theta values around or slightly above 1, we can say that the leg outcomes are relatively independent, with all players except Wright exhibiting slight momentum.
+Each value for p represents the players win probability for a given leg, therefore players with higher values for p are more likely to win legs in a given match. Theta in this context represents how each leg affects the subsequent leg. Because most players have theta values around or slightly above 1, we can say that the leg outcomes behave similarly to the standard binomial distribution (leg independence), with all players except Wright exhibiting very slight momentum.
 
 Knowing this, we can see that Luke Littler has the highest chance of winning any given leg due to his having the highest p value. 
 
@@ -472,7 +472,7 @@ results
 *Comments:*
 The mean of beta represents the average leg winning probability. For example, Rob Cross' average win probability is 0.248 in this model. The standard deviation of beta represents the variability of their leg winning probabilities. The range for these values is 0.125 to 0.383. Interestingly, we see that Peter Wright, the worst ranked player and the one with the lowest beta mean, has one of the lowest beta standard deviations. Therefore, we can say that he was consistently bad. Top players Luke Littler and Luke Humphries have the highest standard deviations, suggesting that despite topping the ranks, their strong performance was less consistent.
 
-Most players in this model have theta values greater than one, indicating more momentum/interdependence between legs with each match. Luke Littler has a particularly high theta value of 10.8, suggesting that momentum played a significant role in his eventual victory.
+Most players in this model have theta values greater than one, indicating more momentum/interdependence between legs with each match. Luke Littler has a particularly high theta value of 10.8, suggesting that high dependence between his leg outcomes.
 
 With regard to the standings, we notice that the mean of beta also maps roughly to the rankings, though it is cleaner for the top and bottom players than the middle-tier players.
 
@@ -482,9 +482,9 @@ Summarize the work you've done here to provide a brief (200-300 word) data-drive
 **Response:**
 The 2024 PDC Premier League's regular season took place over 16 nights, with eight of the World's best dart players competing in best of 11 matches. With these data, we were able to count the number of legs won in each match for a given player. We first obtain a high-level numerical summary and data visualization for general information regarding the season. The median match ended with a score differential of 2, meaning a final scoreline of 6-4. This, in combination with an IQR of 2, demonstrates how many of the matches during this season were relatively close, with limited blow-out matches.  
 
-After obtaining this initial overview of the season, we then use the data to fit two models for identifying players' skill levels. The first of these two models is Altham's Multiplicative Binomial Distribution, which estimates a players per-leg win probability ($p$) and per-match leg dependence  ($\theta$). In this model, Luke Littler had the highest win probability ($p=0.692$) and Peter Wright had the lowest ($p = 0.539$). However, this model was not perfect in its assessment, as 5th place Nathan Aspinall had a higher win probability. Also of note is that $\theta < 1$ for all players in this model, suggesting that within each match, legs tended to be *negatively* correlated/flip-flop.
+After obtaining this initial overview of the season, we then use the data to fit two models for identifying players' skill levels. The first of these two models is Altham's Multiplicative Binomial Distribution, which estimates a players per-leg win probability ($p$) and per-match leg dependence  ($\theta$). In this model, Luke Littler had the highest win probability and Peter Wright had the lowest. Additionally, theta values were generally around or slightly above 1, suggesting similar behavior to the standard binomial distribution. Overall, the ordering of $p$ values aligned well with the standings.
 
 
-We then analyze the season using Altham's Multiplicative *Beta* Binomial Distribution. In this model, $p$ is no longer fixed, but instead variable across matches. The average probabilities in this model differed significantly from before, with clearer separation between high and low-ranked players (Littler = 0.935, Wright = 0.560). Interestingly, the $\theta$ values found by this model were majority greater than 1, indicating that matches featured momentum rather than flip-flopping.  
+We then analyze the season using Altham's Multiplicative *Beta* Binomial Distribution. In this model, $p$ is no longer fixed, but instead variable across matches. The average probabilities in this model showed a similar pattern, with clearer separation between high and low-ranked players. Interestingly, the $\theta$ values found by this model were much greater than in the Altham Binomial model and consequently much greater than 1. Therefore, we can say that the Altham Beta-Binomial Model suggests much stronger dependence between legs, especially for top-ranked players.
 
 Despite the slightly different outcomes, the player assessments made by each model align with the 2024 PDC Premier League ranking.
