@@ -375,7 +375,7 @@ for(i in 1:length(players)){
   mle = optim(par=params,
                  fn=llaltbinom,
                  x=leg.counts,
-                 n=6,
+                 n=11,
                  mle=T)
   
   p.mle = 1/(1+exp(-mle$par[1]))
@@ -389,11 +389,11 @@ results
 ```
 
 *Interpretation:*
-Each value for p represents the players win probability for a given leg, therefore players with higher values for p are more likely to win legs in a given match. Theta in this context represents how each leg affects the subsequent leg. Because all players have theta values below 1, we can say that all players tend toward more balanced wins and losses/closer final scores.
+Each value for p represents the players win probability for a given leg, therefore players with higher values for p are more likely to win legs in a given match. Theta in this context represents how each leg affects the subsequent leg. Because most players have theta values around or slightly above 1, we can say that the leg outcomes are relatively independent, with all players except Wright exhibiting slight momentum.
 
-Knowing this, we can see that Luke Littler has the highest chance of winning any given leg due to his having the highest p value. We can also observe that Luke Humphries, despite not having the highest p value, has the lowest theta value. This means that he experiences more back-and-forth leg victories and losses.  
+Knowing this, we can see that Luke Littler has the highest chance of winning any given leg due to his having the highest p value. 
 
-With regard to the standings, we find that p doesn't 100% map to the rankings as consistently as one might expect. For example, Luke Humphries was ranked second and has a p value of 0.669, whereas Nathan Aspinall has a greater p value of 0.690 despite being ranked 5th place. Regardless, it still does a good job at roughly predicting the rankings.
+With regard to the standings, we find that p maps quite closely to the rankings. Top ranked players (Humphries and Littler) have the highest p values while the lowest ranked player (Wright) has the lowest p value. Generally, the ordering of p values follows the overall ranking, with any differences being subtle.
 
 ## Altham's Multiplicative Beta Binomial Distribution
 
@@ -452,7 +452,7 @@ for(i in 1:length(players)){
   mle = optim(par=params,
                  fn=llaltbbinom,
                  x=leg.counts,
-                 n=6,
+                 n=11,
                  mle=T)
   
   alpha.mle = exp(mle$par[1])
@@ -470,11 +470,11 @@ results
 ```
 
 *Comments:*
-The mean of beta represents the average win probability. For example, Rob Cross' average win probability is 0.791 in this model. The standard deviation of beta represents the variability of their leg winning probabilities. The standard deviations are all roughly similar, with the range being from 0.151 to 0.287. Interestingly, we see that Peter Wright, the worst ranked player and the one with the lowest beta mean, has one of the lowest beta standard deviations. Therefore, we can say that he was consistently bad.
+The mean of beta represents the average leg winning probability. For example, Rob Cross' average win probability is 0.248 in this model. The standard deviation of beta represents the variability of their leg winning probabilities. The range for these values is 0.125 to 0.383. Interestingly, we see that Peter Wright, the worst ranked player and the one with the lowest beta mean, has one of the lowest beta standard deviations. Therefore, we can say that he was consistently bad. Top players Luke Littler and Luke Humphries have the highest standard deviations, suggesting that despite topping the ranks, their strong performance was less consistent.
 
-Interestingly, most players in this model have theta values greater than one, indicating more momentum/interdependence between legs with each match.
+Most players in this model have theta values greater than one, indicating more momentum/interdependence between legs with each match. Luke Littler has a particularly high theta value of 10.8, suggesting that momentum played a significant role in his eventual victory.
 
-With regard to the standings, we notice that the mean of beta also maps roughly to the rankings, with clearer differences between top and bottom players than in the regular Altham Binomial model. That is to say, players with higher mean values for beta tend to be higher in the ranking. 
+With regard to the standings, we notice that the mean of beta also maps roughly to the rankings, though it is cleaner for the top and bottom players than the middle-tier players.
 
 ## Executive Summary
 Summarize the work you've done here to provide a brief (200-300 word) data-driven summary of the 2024 Premier League season using your work in Lab 10. Your summary should be professional, clear, and all claims should be corroborated with statistical support.
