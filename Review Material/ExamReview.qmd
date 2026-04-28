@@ -59,8 +59,6 @@ knitr::knit_hooks$set(chunk = function(x, options) {
 #| label: load-packages
 #| include: false
 library(tidyverse)
-library(patchwork)
-library(ggplot2)
 ```
 
 # Introduction and Background
@@ -76,9 +74,9 @@ The two methods for point estimation that we covered in MATH240 are (i) Method o
 To demonstrate each procedure, we will work with data from a study on heart failure survival times from @ahmad2017.    
 
 ### Method of Moments
-The first step in point estimation is identifying an appropriate distribution for the population. The variable of interest in this study is survival time, which naturally guides us toward the exponential distribution. Something to note is that the exponential distribution is best used for events that occur at a constant average rate, and this study notes that mortality is not constant throughout time. Regardless, other features of the data such as right-skewness, strictly positive values, and time-to-event analysis make the exponential distribution a strong fit for the data.  
+The first step in point estimation is identifying an appropriate distribution for the population. The variable of interest in this study is survival time, which naturally guides us toward the exponential distribution. Something to note is that the exponential distribution is best used for events that occur at a constant average rate, and this study notes that mortality is not constant throughout time. Regardless, other features of the data such as right-skewness, strictly positive values, and time-to-event analysis make the exponential distribution a reasonable fit for the data.  
 
-Now that we have a distribution in mind, we can note what parameter(s) shape the distribution and begin estimating. The exponential distribution is paramaterized by a single parameter, the rate parameter \lambda. \lambda in this context can be thought of us the average rate at which patients die. The expected value of a population that follows the exponential distribution is: $$E(X) = \frac{1}{\lambda}$$
+Now that we have a distribution in mind, we can note what parameter(s) shape the distribution and begin estimating. The exponential distribution is parameterized by a single parameter, the rate parameter \lambda. \lambda in this context can be thought of as the average rate at which patients die. The expected value of a population that follows the exponential distribution is: $$E(X) = \frac{1}{\lambda}$$
 
 
 With this information under our belt, we can begin with our Method of Moments estimate for \lambda.
@@ -114,10 +112,10 @@ x = heart.dat$TIME # pull the variable of interest from the data
 (expected.value.mom = 1 / lambda.mom) # find the expected value using lambda hat
 ```
 
-Thus, our Method of Moments estimate is $\hat{\lambda}_{MOM} \approx .007676903.$ We interpret this directly as the estimated daily death rate (because survival time is measured in days), and can plug that value back in to our expected value formula to find the expected survival time, $$E(X) = \frac{1}{\hat{\lambda}_{MOM}} \approx 130.2609 \text{ days}.$$
+Thus, our Method of Moments estimate is $\hat{\lambda}_{MOM} \approx 0.007676903.$ We interpret this directly as the estimated daily death rate (because survival time is measured in days), and can plug that value back in to our expected value formula to find the expected survival time, $$E(X) = \frac{1}{\hat{\lambda}_{MOM}} \approx 130.2609 \text{ days}.$$
 
 ## Maximum Likelihood Estimation
-A more robust method for point estimation is Maximum Likelihood Estimaion. This involves finding the parameter estimate that maximizes the likelihood function, $$L(\theta \mid x) = \prod_{i=1}^n f_X(x_i \mid \theta).$$
+A more robust method for point estimation is Maximum Likelihood Estimation. This involves finding the parameter estimate that maximizes the likelihood function, $$L(\theta \mid x) = \prod_{i=1}^n f_X(x_i \mid \theta).$$
 
 In other words, we find the parameter estimate that maximizes the probability of observing the existing data. In practice, we often maximize the log-likelihood function, allowing us to work with sums instead of products. This does not change our final estimate because of the natural log's monotonicity:
 
@@ -125,5 +123,91 @@ $$\ell(\theta \mid x) = \ln\left(L(\theta \mid x)\right)
 = \ln\left(\prod_{i=1}^n f_X(x_i \mid \theta)\right)
 = \sum_{i=1}^n \ln\left(f_X(x_i \mid \theta)\right)$$
 
-We can solve this computationally using `R`'s `optim()` function to find the minimum of $-\ell(\theta \mid x).$
+We can solve this computationally using `R`'s `optim()` function to find the minimum of $-\ell(\theta \mid x)$:
 
+```{r}
+llexp = function(par, data, neg=F){
+  lambda = par[1]
+
+  ll = sum(log(dexp(x = data, rate = lambda)))
+  ifelse(neg, -ll, ll)
+}
+
+mll = optim(par = lambda.mom, # use the MoM estimate as initial guess for this example
+              fn = llexp,
+              data = x,
+              neg = T, # minimizing
+)
+
+(lambda.mle = mll$par)
+```
+
+
+From Maximum Likelihood Estimation, we obtain the same value, $\hat{\lambda}_{MLE} \approx 0.007676903.$ The fact that MLE and MOM provide identical estimates is because of the exponential distribution's particular likelihood function and optimization, though that is not the focus of this exercise (extended explanation can be found at the bottom of this page).
+
+## Evaluating the Estimator Using Simulation
+
+We have three primary measures for how good an estimator is: (i) bias, (ii) precision, and (iii) mean squared error (MSE).   
+
+$\text{Bias}_\theta(\hat{\theta}) = E(\hat{\theta}-\theta)$ measures the average error of the point estimate. When bias is equal to or sufficiently close to 0, we call the estimate unbiased.  
+
+$\text{Precision}_\theta(\hat{\theta}) = 1/\text{var}_\theta(\hat{\theta})$ measures how much an estimator varies across repeated samples. Higher precision is preferable to lower precision.  
+
+$\text{MSE}_\theta(\hat{\theta}) = E_\theta\left[(\hat{\theta} - \theta)^2\right] 
+= \text{var}_\theta(\hat{\theta}) + \left(E_\theta(\hat{\theta}) - \theta\right)^2 
+= \text{var}_\theta(\hat{\theta}) + \text{Bias}_\theta(\hat{\theta})^2$ is a more comprehensive metric that considers both accuracy and precision.  
+
+We can evaluate the MOM/MLE estimator for the exponential distribution by computing these values for a simulated dataset with a known $\lambda$, taking many samples to generate point estimates for this true $\lambda$.
+
+```{r}
+set.seed(394787)
+
+lambda.true = lambda.mle
+n = 50
+n.simulations = 1000
+
+lambda.hat = numeric(n.simulations)
+
+for(i in 1:n.simulations){
+  sim.data = rexp(n, rate = lambda.true) #create simulated data with the true lambda equal to our estimated lambda
+  lambda.hat[i] = 1 / mean(sim.data) # apply estimator to simulated data
+}
+
+bias = mean(lambda.hat) - lambda.true
+variance = var(lambda.hat)
+precision = 1 / variance
+mse = bias^2 + variance
+
+tibble(
+  Bias = bias,
+  Precision = precision,
+  MSE = mse
+) |> knitr::kable()
+```
+
+From our simulation, we see that even for a modest sample size of $n=50$, the estimator is close enough to 0 to be considered unbiased, and features high precision and negligible MSE. This all indicates that the estimator is very accurate on average and does not vary much across repeated samples. This is important information to have, because we only obtain one estimate from our sample in practice, and need to know how reliable it truly is.
+
+
+### Why Do MOM and MLE Provide the Same Estimates for the Exponential Distribution?
+The likelihood function for the exponential distribution is as follows: 
+$$L(\lambda) = \prod_{i=1}^n \lambda e^{-\lambda x_i}
+= \lambda^n e^{-\lambda \sum_{i=1}^n x_i}
+$$
+
+Taking the natural log of this function yields:
+$$
+\ell(\lambda) = \ln L(\lambda)
+= n \ln(\lambda) - \lambda \sum_{i=1}^n x_i
+$$
+
+We then take the derivative and set it equal to 0, finding the value of $\hat{\lambda}$ that satisfies the equation:
+$$
+\frac{d\ell}{d\lambda} = \frac{n}{\lambda} - \sum_{i=1}^n x_i
+$$
+
+$$
+\frac{n}{\lambda} = \sum_{i=1}^n x_i
+\quad \Rightarrow \quad
+\hat{\lambda}_{MLE} = \frac{n}{\sum_{i=1}^n x_i} = \frac{1}{\bar{X}}$$
+
+Therefore, the Maximum Likelihood procedure for the exponential distribution yields the same estimator as the Method of Moments
