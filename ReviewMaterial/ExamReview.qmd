@@ -169,7 +169,8 @@ n.simulations = 1000
 lambda.hat = numeric(n.simulations)
 
 for(i in 1:n.simulations){
-  sim.data = rexp(n, rate = lambda.true) #create simulated data with the true lambda equal to our estimated lambda
+  sim.data = rexp(n, rate = lambda.true) #create simulated data with the true lambda equal to 
+                                         # our estimated lambda
   lambda.hat[i] = 1 / mean(sim.data) # apply estimator to simulated data
 }
 
@@ -185,7 +186,7 @@ tibble(
 ) |> knitr::kable()
 ```
 
-From our simulation, we see that even for a modest sample size of $n=50$, the estimator is close enough to 0 to be considered unbiased, and features high precision and negligible MSE. This all indicates that the estimator is very accurate on average and does not vary much across repeated samples. This is important information to have, because we only obtain one estimate from our sample in practice and thus need to know how reliable it is.
+From our simulation, we see that even for a modest sample size of $n=50$, the estimator is close enough to 0 to be considered unbiased, and features high precision and negligible MSE. This all indicates that the estimator is very accurate on average and does not vary much across repeated samples under the assumed value of $\lambda$. It is important to note, however, that the performance of an estimator can vary for the same distribution, depending on the value of the true population parameter. Regardless, the resampling procedure provides us with an approximate idea of how much we can trust the estimator in an environment similar to our data.
 
 
 ### Why Do MOM and MLE Provide the Same Estimates for the Exponential Distribution?
